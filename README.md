@@ -1,4 +1,4 @@
-# frame-main
+# frame-frontend-main
 
 ## Project setup
 ```
