@@ -10,7 +10,7 @@
           <br />EVERYWHERE
         </h1>
         <p>‘프레임’ 에서 언제 어디서든 자신의 생각을 자유롭게 표현해보세요.</p>
-        <router-link to="/" @click.native="goStart">
+        <router-link to="/login" @click.native="goStart">
           <span>시작하기</span>
         </router-link>
       </main>
