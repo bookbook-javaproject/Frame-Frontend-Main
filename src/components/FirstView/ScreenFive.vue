@@ -4,7 +4,7 @@
       <main>
         <h1>지금, 프레임에서 시작해보세요.</h1>
         <p>프레임은 짧은 글 커뮤니티입니다. 다양하고 많은 사람들과 소통하며 자신의 글 실력을 키워보세요.</p>
-        <router-link to="/" v-on:click.native="goStart">
+        <router-link to="/login" v-on:click.native="goStart">
           <span>시작하기</span>
         </router-link>
       </main>
