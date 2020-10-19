@@ -1,0 +1,9 @@
+export { default as FirstViewFooter } from './FirstViewFooter.vue';
+export { default as CommonMain } from './CommonMain.vue';
+export { default as ScreenOne } from './ScreenOne.vue';
+export { default as ScreenTwo } from './ScreenTwo.vue';
+export { default as ScreenThree } from './ScreenThree.vue';
+export { default as ScreenFour } from './ScreenFour.vue';
+export { default as ScreenFive } from './ScreenFive.vue';
+export { default as PostItem } from './PostItem.vue';
+export { default as EtcButton } from './EtcButton.vue';
