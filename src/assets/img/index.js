@@ -12,3 +12,5 @@ export { default as facebookIcon } from './facebook-icon.svg';
 export { default as githubIcon } from './github-icon.svg';
 export { default as authBackground } from './auth-background.svg';
 export { default as authArt } from './auth-art.svg';
+export {default as headerSearchIcon} from './header-search-icon.svg';
+export {default as headerSelectButtonIcon} from './header-select-button.svg';
