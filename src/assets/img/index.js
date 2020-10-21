@@ -10,3 +10,5 @@ export { default as screenFourBackground } from './screen-four-background.svg';
 export { default as screenFiveBackground } from './screen-five-background.svg';
 export { default as facebookIcon } from './facebook-icon.svg';
 export { default as githubIcon } from './github-icon.svg';
+export { default as authBackground } from './auth-background.svg';
+export { default as authArt } from './auth-art.svg';
