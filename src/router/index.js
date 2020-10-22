@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import { FirstView } from '@/components';
+import { FirstView, SignUp } from '@/components';
 
 Vue.use(Router);
 
@@ -12,5 +12,10 @@ export default new Router({
       path: '/first',
       component: FirstView,
     },
+    {
+      name : 'signUp',
+      path : '/signUp',
+      component : SignUp
+    }
   ],
 });
