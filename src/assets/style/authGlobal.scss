@@ -1,0 +1,79 @@
+$beforeColor : #0f4c8130;
+$color : #0f4c81;
+$font : "AppleSDGothicNeo";
+
+.auth-container {
+    padding: 0 0 0 20.625rem;
+    overflow: hidden;
+    display: flex;
+     .auth-logo {
+        margin-top : 1.5rem;
+    }
+}
+
+.auth-section {
+    margin-top : 10rem;
+    
+    .auth-form {
+        margin-top : 2.5rem;
+        margin-bottom: 3rem;
+        div {
+            margin-top : 3.2rem;
+            input {
+                border : none;
+                width : 25rem;
+                height: 3rem;
+                outline : none;
+                font-size : 1.4rem;
+                font-weight: 200;
+                border-bottom: 1px solid rgba(155, 155, 155, 0.712);
+                color: #717171;
+                &::placeholder {
+                    color: #D1D1D1;
+                }
+            }
+        }
+    }
+    h1 {
+        color : $color;
+        font-size : 3.6rem;
+        font-weight: 500;
+        font-family : $font;
+    }
+    p {
+        color : $color;
+        font-family: $font;
+        font-size: 1.2rem;
+        font-weight: 200;
+    }
+    .auth-link {
+        display: block;
+        font-size: 0.8rem;
+        margin-bottom: 0.7rem;
+        text-decoration: none;
+        
+        span {
+            color: #707070;
+        }
+        .point-link {
+            color : $color;
+        }
+    }
+    button {
+        background-color : $beforeColor;
+        color: white;
+        width: 25rem;
+        height: 2.9rem;
+        border: none;
+        border-radius: 2px;
+        font-size: 1.2rem;
+        font-family: $font;
+        margin-top: 1.6rem;
+        outline: none;
+        cursor: pointer;
+        &:hover { 
+            background-color: $color; 
+            transition: 0.5s;
+        }
+    }
+}
