@@ -1,11 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import { FirstView, MainPage, Login } from '@/components';
+import { FirstView, SignUp, Login, MainPage } from '@/components';
 import {TrendingPostList, RecentPostList, NoticePostList} from '@/components/Post/index.js';
-
-
-
-// import { RecentView } from '@/components';
 
 Vue.use(Router);
 
@@ -54,6 +50,11 @@ export default new Router({
       name : 'login',
       path : '/login',
       component : Login
+    },
+    {
+      name : 'signUp',
+      path : '/signUp',
+      component : SignUp
     }
   ],
 });
