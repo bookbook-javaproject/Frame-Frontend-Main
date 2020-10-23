@@ -38,12 +38,14 @@ export default {
         justify-content: space-around;    
         height: 15rem;
         width: 10rem;
-box-shadow: 1px 1px 5px;
+        box-shadow: 1px 1px 5px;
         position: relative;
         top: 10rem;
         right: 3rem;
         font-size: 1.5rem;
         text-align: center;
+        z-index: 1;
+        background-color: #fdfdfd;
     }
     .modal-userImage{
         width: 3rem;
