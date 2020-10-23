@@ -8,17 +8,20 @@
             <h1>Sign Up</h1>
             <form class="auth-form">
                 <div>
-                    <input type="text" placeholder="Email">
+                    <input type="text" placeholder="Email" v-model="email">
                 </div>
+                <span class="auth-error">{{ emailError }}</span>
                 <div>
-                    <input type="text" placeholder="nickname">
+                    <input type="text" placeholder="nickname" v-model="nickname">
                 </div>
+                <span class="auth-error">{{ nameError }}</span>
                 <div>
-                    <input type="password" placeholder="password">
+                    <input type="password" placeholder="password" v-model="password">
                 </div>
+                <span class="auth-error">{{ passwordError }}</span>
             </form>
             <router-link to="/login" class="auth-link"><span>이미 <span class="point-link">계정이 있으신가요?</span></span></router-link>
-            <button>다음으로</button>
+            <button @click="onSignUp">다음으로</button>
         </section>
         </main>
 </template>
@@ -30,9 +33,39 @@ export default {
     name : "SignUpPage",
     data () {
         return {
-            frameLogo
+            frameLogo,
+            email : '',
+            nickname : '',
+            password : '',
+            emailError : '',
+            nameError : '',
+            passwordError : ''
         }
     },
+    methods : {
+        onSignUp () {
+            if(this.email === '') {
+                this.emailError = '이메일을 올바르게 입력해주세요.';
+            }
+            else {
+                this.emailError = '';
+            }
+
+            if(this.nickname === '') {
+                this.nameError = '닉네임을 입력해주세요.';
+            }
+            else {
+                this.nameError = '';
+            }
+
+            if(this.password.length < 8) {
+                this.passwordError = '비밀번호는 8자 이상이어야합니다.';
+            }
+            else {
+                this.passwordError = '';
+            }
+        }
+    }
 }
 </script>
 
