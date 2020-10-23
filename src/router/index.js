@@ -13,14 +13,14 @@ export default new Router({
       component: FirstView,
     },
     {
-      name : 'signUp',
-      path : '/signUp',
-      component : SignUp
-    },
-    {
       name : 'login',
       path : '/login',
       component : Login
+    },
+    {
+      name : 'signUp',
+      path : '/signUp',
+      component : SignUp
     }
   ],
 });
