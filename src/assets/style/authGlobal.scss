@@ -11,6 +11,14 @@ $font : "AppleSDGothicNeo";
     }
 }
 
+.auth-error {
+    color: #DD1160;
+    font-size: 0.8rem;
+    font-family: $font;
+    float: right;
+    margin-top: 0.3rem;
+}
+
 .auth-section {
     margin-top : 10rem;
     
@@ -37,7 +45,7 @@ $font : "AppleSDGothicNeo";
     h1 {
         color : $color;
         font-size : 3.6rem;
-        font-weight: 500;
+        font-weight: 600;
         font-family : $font;
     }
     p {
