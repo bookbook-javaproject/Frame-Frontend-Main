@@ -1,5 +1,5 @@
 <template>
-  <div class="post-item-box">
+  <div class="post-item-box" :style="slideStyle">
     <header>
       <img src="https://picsum.photos/200/300" alt="프로필" class="profile-image" />
       <div class="profile-box">
@@ -37,14 +37,21 @@ export default {
   components: {
     EtcButton
   },
+  props: ["currentPage", "page"],
+  computed: {
+    slideStyle() {
+      return { transform: `translateX(calc(-100% * ${this.currentPage - 1}))` };
+    }
+  },
   data() {
-    return {
+    const returnData = {
       etcImage: {
         commentButton,
         emotionButton,
         reTweetButton
       }
     };
+    return returnData;
   }
 };
 </script>
@@ -54,6 +61,9 @@ $main-color: #0f4c81;
 $border-color: #dae2ea;
 
 .post-item-box {
+  position: relative;
+  transition: 0.5s;
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
