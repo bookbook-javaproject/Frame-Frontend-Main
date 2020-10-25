@@ -36,13 +36,8 @@ export default {
             else {
                 this.isPasswordAuth = false;
                 this.$emit('onPasswordAuth', this.isPasswordAuth);
-                //this.$router.push('/passwordReset');
             }
         }
     }
 }
 </script>
-
-<style lang="scss">
-
-</style>
