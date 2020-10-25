@@ -36,14 +36,14 @@ export default {
     methods : {
         onPasswordReset () {
             if(this.resetCode === '') {
-                this.codeError = '인킁조드가 올바르지 않습니다.';
+                this.codeError = '인증코드가 올바르지 않습니다.';
             }
             else {
                 this.codeError = '';
             }
 
             if(this.password.length < 8) {
-                this.passwordError = '비밀번호는 8자 이성이어야합니다.';
+                this.passwordError = '비밀번호는 8자 이상이어야합니다.';
             }
             else {
                 this.passwordError = '';
@@ -52,7 +52,3 @@ export default {
     }
 }
 </script>
-
-<style lang="scss">
-
-</style>
