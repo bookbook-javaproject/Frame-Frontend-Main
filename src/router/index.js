@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import { FirstView, SignUp, Login, MainPage } from '@/components';
+import { FirstView, SignUp, Login, MainPage, PasswordResetAuth } from '@/components';
 import {TrendingPostList, RecentPostList, NoticePostList} from '@/components/Post/index.js';
 
 Vue.use(Router);
@@ -13,7 +13,11 @@ export default new Router({
       path: '/first',
       component: FirstView,
     },
- 
+    {
+      name : 'passwordResetAuth',
+      path : '/passwordResetAuth',
+      component : PasswordResetAuth
+    },
     {
       name: 'test',
       path: '/',
