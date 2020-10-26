@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import { FirstView, SignUp, Login, MainPage, PasswordResetAuth, WriterApply } from '@/components';
+import { FirstView, SignUp, Login, MainPage, PasswordResetAuth, WriterApply, PoembookApply } from '@/components';
 import {TrendingPostList, RecentPostList, NoticePostList} from '@/components/Post/index.js';
 
 Vue.use(Router);
@@ -64,6 +64,11 @@ export default new Router({
       name : 'writerApply',
       path : '/writerApply',
       component : WriterApply
+    }, 
+    {
+      name : 'poembookApply',
+      path : '/poembookApply',
+      component : PoembookApply
     }
   ],
 });
