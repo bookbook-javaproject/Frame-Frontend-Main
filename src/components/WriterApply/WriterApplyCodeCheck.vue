@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import "../../assets/style/formGlobal.scss"
+import "../../assets/style/formGlobal.scss";
 export default {
     data () {
         return {
