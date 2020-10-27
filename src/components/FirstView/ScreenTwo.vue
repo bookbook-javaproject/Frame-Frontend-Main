@@ -5,14 +5,13 @@
       <p>프레임에서 현재 인기있는 게시물들을 확인해보세요</p>
     </header>
     <main>
-      <img v-bind:src="prevButton" alt="이전버튼" />
+      <img v-bind:src="prevButton" alt="이전버튼" @click="goPrevPage" />
       <div class="post-item-wrapper">
-        <!-- <img v-bind:src="screenTwoBackground" />
-        <img v-bind:src="screenTwoBackground" />-->
-        <post-item />
-        <!-- <post-item /> -->
+        <post-item :current-page="currentPage" page="1" />
+        <post-item :current-page="currentPage" page="2" />
+        <post-item :current-page="currentPage" page="3" />
       </div>
-      <img v-bind:src="prevButton" alt="다음버튼" />
+      <img v-bind:src="prevButton" alt="다음버튼" @click="goNextPage" />
     </main>
     <footer />
   </common-main>
@@ -30,13 +29,22 @@ export default {
       backgrondStyle: {
         backgroundImage: `url(${screenTwoBackground})`
       },
+      currentPage: 1,
       prevButton,
       screenTwoBackground
     };
   },
+  methods: {
+    goPrevPage() {
+      this.currentPage--;
+    },
+    goNextPage() {
+      this.currentPage++;
+    }
+  },
   components: {
-    CommonMain,
-    PostItem
+    "common-main": CommonMain,
+    "post-item": PostItem
   }
 };
 </script>
@@ -56,6 +64,7 @@ export default {
 header {
   text-align: center;
   height: 28vh;
+
   > h1 {
     font-size: 2.5rem;
     font-family: "AppleSDGothicNeo";
@@ -89,6 +98,7 @@ main {
 
   .post-item-wrapper {
     display: flex;
+    flex: 1;
     overflow: hidden;
     width: 100%;
     height: 100%;
