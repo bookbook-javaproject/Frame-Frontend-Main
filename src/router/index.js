@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import { FirstView, SignUp, Login, MainPage, PasswordResetAuth, WriterApply } from '@/components';
+import { FirstView, SignUp, Login, MainPage, PasswordResetAuth, WriterApply, PoembookApply } from '@/components';
 import {TrendingPostList, RecentPostList, NoticePostList} from '@/components/Post/index.js';
 
 Vue.use(Router);
@@ -15,7 +15,7 @@ export default new Router({
     },
     {
       name : 'passwordResetAuth',
-      path : '/passwordResetAuth',
+      path : '/password-reset',
       component : PasswordResetAuth
     },
     {
@@ -57,13 +57,18 @@ export default new Router({
     },
     {
       name : 'signUp',
-      path : '/signUp',
+      path : '/sign-up',
       component : SignUp
     },
     {
       name : 'writerApply',
-      path : '/writerApply',
+      path : '/writer-apply',
       component : WriterApply
+    }, 
+    {
+      name : 'poembookApply',
+      path : '/poembook-apply',
+      component : PoembookApply
     }
   ],
 });

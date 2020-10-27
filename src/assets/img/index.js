@@ -21,3 +21,4 @@ export {default as trendingIcon} from './trending-icon.svg';
 export {default as writeButtonPencilIcon} from './write-button-pencil-icon.svg';
 export { default as backgroundPublic } from './background-public.svg';
 export { default as writerApplyImg } from './writer-apply-img.svg';
+export { default as file } from './add-file.svg';
