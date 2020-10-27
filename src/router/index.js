@@ -15,7 +15,7 @@ export default new Router({
     },
     {
       name : 'passwordResetAuth',
-      path : '/passwordResetAuth',
+      path : '/password-reset',
       component : PasswordResetAuth
     },
     {
@@ -57,17 +57,17 @@ export default new Router({
     },
     {
       name : 'signUp',
-      path : '/signUp',
+      path : '/sign-up',
       component : SignUp
     },
     {
       name : 'writerApply',
-      path : '/writerApply',
+      path : '/writer-apply',
       component : WriterApply
     }, 
     {
       name : 'poembookApply',
-      path : '/poembookApply',
+      path : '/poembook-apply',
       component : PoembookApply
     }
   ],
