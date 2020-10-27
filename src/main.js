@@ -11,6 +11,8 @@ if (localStorage.getItem('isFirstTime') !== 'false') {
   router.push('first');
 }
 
+
+
 new Vue({
   router,
   store,
