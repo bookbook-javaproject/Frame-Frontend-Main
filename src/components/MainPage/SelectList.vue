@@ -64,9 +64,8 @@ export default {
 .selectList-Container{
     display:flex;
     flex-direction: row;
-    width: 30rem;
-    justify-content: space-around;
-    
+    justify-content: space-between;
+    width: 26%;
 
 }
 .selectList-item{
@@ -75,14 +74,16 @@ export default {
     align-items: center;
     color: #0F4C81;
     cursor: pointer;
-    padding-bottom: 0.5rem;
-    margin-bottom: 0.5rem;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
 }
 .selectListItemClicked{
     border-bottom: 3px solid #0F4C81;
-    
+    padding-bottom: -3px;
+
 }
 .selectList-item div{
     margin-left: 1rem;
 }
+
 </style>
