@@ -25,7 +25,7 @@ export default new Router({
       children:[
         {
           name: 'TrendingPostList',
-          path:'trending',
+          path:'/trending',
           component: TrendingPostList
         },
         {
