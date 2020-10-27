@@ -25,8 +25,6 @@ export default {
         MainSelectList,
         MainHeader,
         MainWriteButton,
-        
-
     }
 }
 </script>
