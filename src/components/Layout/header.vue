@@ -1,7 +1,7 @@
 <template>
   <div class="header-container" v-bind:class="{headerSelectedMain: showUserI}">
-    <div class="header-logo">
-        <img :src="frameLogo" alt="로고오브프레임" />
+    <div class="header-logo" >
+        <img :src="frameLogo" v-on:click="frameLogoClick"  alt="로고오브프레임" />
     </div>
     <div class="header-items" >
         <input class="header-searchBox" type="text"  placeholder="검색" />
@@ -19,6 +19,7 @@
 <script>
 import { frameLogo, headerSearchIcon, headerSelectButtonIcon} from "@/assets/img";
 import {modal} from './index';
+import router from '@/router';
 export default {
     name:'MainHeader',
     components:{modal},
@@ -34,6 +35,9 @@ export default {
     methods:{
         showUser(){
             this.showUserI= !this.showUserI
+        },
+        frameLogoClick(){
+            router.push("/");
         }
     }
 
@@ -53,6 +57,7 @@ export default {
     }
     .header-logo{
         width: inherit;
+        cursor: pointer;
     }
     .header-items{
         display: flex;
