@@ -1,9 +1,9 @@
 <template>
-  <div class="header-container">
+  <div class="header-container" v-bind:class="{headerSelectedMain: showUserI}">
     <div class="header-logo">
         <img :src="frameLogo" alt="로고오브프레임" />
     </div>
-    <div class="header-items" v-bind:class="{headerSelectedMain: showUserI}">
+    <div class="header-items" >
         <input class="header-searchBox" type="text"  placeholder="검색" />
         <img class="header-serachIcon" :src="headerSearchIcon" />
         <img class="header-userImage" :src="UserImage" alt="너의 사진"/>
@@ -46,12 +46,10 @@ export default {
         display:flex;
         flex-direction: row;
         color:red;
-        justify-content: space-between;        
+        justify-content: space-around;        
         align-items: center;
-        height: 20%;
-        width:80%;
-        position: relative;
-        left: 10%;
+        height: 7.5rem;
+        
     }
     .header-logo{
         width: inherit;
@@ -107,8 +105,12 @@ export default {
         
 
     }
-    .headerSelectedMain{
+    .headerSelectedMain .header-items{
         position: relative;
-        left: 3.7rem;
+        left: 5.6rem;
+    }
+    .headerSelectedMain .header-logo{
+        position: relative;
+        left: 1.9rem;
     }
 </style>

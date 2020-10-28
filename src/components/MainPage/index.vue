@@ -25,8 +25,6 @@ export default {
         MainSelectList,
         MainHeader,
         MainWriteButton,
-        
-
     }
 }
 </script>
@@ -35,7 +33,6 @@ export default {
 .mainPage-container{
     display:flex;
     flex-direction: column;
-    align-items: center;
     justify-items: space-around;
 }
 .mainPage-header{
@@ -46,7 +43,7 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    width:95%;
+    width:100%;
 }
 .mainPage-content{
     display: flex;

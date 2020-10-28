@@ -46,6 +46,7 @@ export default {
         text-align: center;
         z-index: 1;
         background-color: #fdfdfd;
+        
     }
     .modal-userImage{
         width: 3rem;
