@@ -21,6 +21,14 @@ $font : "AppleSDGothicNeo";
 
 .auth-section {
     margin-top : 10rem;
+    .complete {
+        width: 25rem;
+        img {
+            width: 100%;
+            height: 80%;
+            margin: 3.5rem 0rem 2.4rem 0rem;
+        }
+    }
     
     .auth-form {
         margin-top : 2.5rem;
@@ -42,6 +50,7 @@ $font : "AppleSDGothicNeo";
                 }
             }
         }
+        
     }
     h1 {
         color : $color;
