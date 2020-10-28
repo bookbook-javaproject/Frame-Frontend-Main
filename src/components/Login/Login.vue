@@ -8,108 +8,59 @@
                 <h1>FRAME</h1>
                 <form class="auth-form">
                     <div>
-                        <input type="text" placeholder="Email">
+                        <input type="text" placeholder="Email" v-model="email">
                     </div>
+                    <span class="auth-error">{{ emailError }}</span>
                     <div>
-                        <input type="password" placeholder="password">
+                        <input type="password" placeholder="password" v-model="password">
                     </div>
+                    <span class="auth-error">{{ passwordError }}</span>
                 </form>
-                <router-link to="/passwordReset" class="auth-link"><span>혹시 <span class="point-link">비밀번호를 잊으셨나요?</span></span></router-link>
-                <router-link to="/signUp" class="auth-link"><span>아직 <span class="point-link">계정이 없으신가요?</span></span></router-link>
-                <button>로그인</button>
+                <router-link to="/password-reset" class="auth-link"><span>혹시 <span class="point-link">비밀번호를 잊으셨나요?</span></span></router-link>
+                <router-link to="/sign-up" class="auth-link"><span>아직 <span class="point-link">계정이 없으신가요?</span></span></router-link>
+                <button @click="onLogin">로그인</button>
             </section>
         </main>
 </template>
 
 <script>
 import { frameLogo } from "@/assets/img";
+import "../../assets/style/authGlobal.scss";
 export default {
     name : "LoginPage",
     data () {
         return {
-            frameLogo
+            frameLogo,
+            email : "",
+            password : "",
+            emailError : "",
+            passwordError : ""
         }
     },
+    methods : {
+        onLogin () {
+            if(!this.validEmail(this.email)) {
+                this.emailError = "이메일을 올바르게 입력하세요.";
+            }
+            else {
+                this.emailError = "";
+            }
+            if(this.password.length < 8) {
+                this.passwordError = "비밀번호는 8자 이상이어야 합니다.";
+            }
+            else {
+                this.passwordError = "";
+            }
+
+            if(this.emailError == "" && this.passwordError == "") {
+                // 로그인 연동 여기서
+                console.log("login");
+            }
+        },
+        validEmail (email) {
+            let emailCheck = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return emailCheck.test(email);
+        }
+    }
 }
 </script>
-
-<style lang="scss">
-$beforeColor : #0f4c8130;
-$color : #0f4c81;
-$font : "AppleSDGothicNeo";
-
-
-.auth-section {
-    margin-top : 10rem;
-    
-    .auth-form {
-        margin-top : 2.5rem;
-        margin-bottom: 3rem;
-
-        div {
-            margin-top : 3.2rem;
-
-            input {
-                border : none;
-                width : 25rem;
-                height: 3rem;
-                outline : none;
-                font-size : 1.4rem;
-                font-weight: 200;
-                border-bottom: 1px solid rgba(155, 155, 155, 0.712);
-                color: #717171;
-                &::placeholder {
-                    color: #D1D1D1;
-                }
-            }
-        }
-    }
-
-    h1 {
-        color : $color;
-        font-size : 3.6rem;
-        font-weight: 500;
-        font-family : $font;
-    }
-
-    p {
-        color : $color;
-        font-family: $font;
-        font-size: 1.2rem;
-        font-weight: 200;
-    }
-
-    .auth-link {
-        display: block;
-        font-size: 0.8rem;
-        margin-bottom: 0.7rem;
-        text-decoration: none;
-        
-        span {
-            color: #707070;
-        }
-
-        .point-link {
-            color : $color;
-        }
-    }
-
-    button {
-        background-color : $beforeColor;
-        color: white;
-        width: 25rem;
-        height: 2.9rem;
-        border: none;
-        border-radius: 2px;
-        font-size: 1.2rem;
-        font-family: $font;
-        margin-top: 1.6rem;
-        outline: none;
-        cursor: pointer;
-        &:hover { 
-            background-color: $color; 
-            transition: 0.5s;
-        }
-    }
-}
-</style>
