@@ -11,7 +11,7 @@
         </p>
       </div>
     </div>
-    <div class="postItem-card-content">
+    <div class="postItem-card-content" v-on:click="postItemClicked">
             {{post.content}}
     </div>
     <div class="postItem-card-ev"> <!-- ev means Evaluation-->
@@ -34,6 +34,7 @@
 
 <script>
 import {commentButton,emotionButton,emotionButtonClicked} from '@/assets/img'
+import router from '@/router';
 export default {
     props:['post','user'],
 
@@ -50,6 +51,9 @@ export default {
             empth :function(){ // empth means  공감
                 console.log("empth버튼 눌림");
                 this.isEmotioned = !this.isEmotioned
+            },
+            postItemClicked: function(){
+                router.push(`/post/${this.post.id}`);
             }
         },
         created(){
