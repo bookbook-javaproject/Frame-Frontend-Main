@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import { frameLogo } from "@/assets/img";
 import "../../assets/style/authGlobal.scss";
 export default {
@@ -38,6 +39,9 @@ export default {
         }
     },
     methods : {
+        ...mapActions([
+            'LOGIN'
+        ]),
         onLogin () {
             if(!this.validEmail(this.email)) {
                 this.emailError = "이메일을 올바르게 입력하세요.";
@@ -53,8 +57,13 @@ export default {
             }
 
             if(this.emailError == "" && this.passwordError == "") {
-                // 로그인 연동 여기서
-                console.log("login");
+                this.LOGIN({email : this.email, password : this.password})
+                .then(() => {
+                    this.$router.push("/");
+                })
+                .catch(err => {
+                    console.log(err);
+                })
             }
         },
         validEmail (email) {
