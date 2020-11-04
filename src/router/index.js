@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import { FirstView, SignUp, Login, MainPage } from '@/components';
-import {TrendingPostList, RecentPostList, NoticePostList} from '@/components/Post/index.js';
+import { FirstView, SignUp, Login, MainPage, PasswordResetAuth, WriterApply, PoembookApply,Write } from '@/components';
+import {TrendingPostList,PICommentForm, RecentPostList, NoticePostList} from '@/components/Post/index.js';
 
 Vue.use(Router);
 
@@ -13,7 +13,11 @@ export default new Router({
       path: '/first',
       component: FirstView,
     },
- 
+    {
+      name : 'passwordResetAuth',
+      path : '/password-reset',
+      component : PasswordResetAuth
+    },
     {
       name: 'test',
       path: '/',
@@ -21,9 +25,10 @@ export default new Router({
       children:[
         {
           name: 'TrendingPostList',
-          path:'trending',
+          path:'/',
           component: TrendingPostList
         },
+      
         {
           name: 'RecentPostList',
           path:'/recent',
@@ -34,10 +39,15 @@ export default new Router({
           path:'/notice',
           component: NoticePostList
         },
-        // {
-        //   path:'write',
-        //   component: Write
-        // }
+        {
+
+          path:'/write',
+          component: Write
+        },
+        { 
+          path: '/post/:id', component: PICommentForm 
+        }
+
       ]
     },
     // {
@@ -53,8 +63,18 @@ export default new Router({
     },
     {
       name : 'signUp',
-      path : '/signUp',
+      path : '/sign-up',
       component : SignUp
+    },
+    {
+      name : 'writerApply',
+      path : '/writer-apply',
+      component : WriterApply
+    }, 
+    {
+      name : 'poembookApply',
+      path : '/poembook-apply',
+      component : PoembookApply
     }
   ],
 });

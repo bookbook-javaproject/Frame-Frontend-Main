@@ -3,7 +3,7 @@
         <div class="mainPage-header">
             <main-header></main-header>
         </div>
-        <div class="mainPage-nav">
+        <div class="mainPage-nav" v-show="isNavNeed" >
             <main-select-list></main-select-list>
             <main-write-button></main-write-button>
         </div>
@@ -25,17 +25,54 @@ export default {
         MainSelectList,
         MainHeader,
         MainWriteButton,
+    },
+    data(){
+        return{
+            isNavNeed:true
+        }
+    },
+    created: function(){
+            let path = window.location.pathname;
+            
+            if(path === '/'){
+                this.isNavNeed = true;
+            }else if(path ==='/recent'){
+                this.isNavNeed = true;                
+            }else if(path === '/notice'){
+                this.isNavNeed = true;
+            }else if(path==='/Write'){
+                this.isNavNeed =true;                
+            }else{
+                this.isNavNeed = false;                
+            }
         
-
+    },
+    watch:{
+        '$route'(to){
+            console.log(to.fullPath);
+            if(to.fullPath === '/'){
+                this.isNavNeed = true;
+            }else if(to.fullPath ==='/recent'){
+                this.isNavNeed = true;                
+            }else if(to.fullPath === '/notice'){
+                this.isNavNeed = true;
+            }else if(to.fullPath==='/Write'){
+                this.isNavNeed =true;                
+            }else{
+                this.isNavNeed = false;                
+            }
+        }
+        
     }
+    
 }
+
 </script>
 
 <style>
 .mainPage-container{
     display:flex;
     flex-direction: column;
-    align-items: center;
     justify-items: space-around;
 }
 .mainPage-header{
@@ -46,8 +83,9 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    width:95%;
+    width:100%;
 }
+
 .mainPage-content{
     display: flex;
     flex-direction: column;
