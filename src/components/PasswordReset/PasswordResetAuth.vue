@@ -34,17 +34,12 @@ export default {
   },
   methods: {
     onPasswordAuth() {
-      if (!this.validEmail(this.email)) {
-        this.emailError = "이메일을 올바르게 입력하세요.";
-      } else {
-        this.isPasswordAuth = false;
-        this.$emit("onPasswordAuth", this.isPasswordAuth);
-      }
+      !this.validEmail(this.email) ? (this.emailError = "이메일을 올바르게 입력하세요.") : (this.isPasswordAuth = false); this.$emit("onPasswordAuth", this.isPasswordAuth);
     },
     validEmail(email) {
       let emailCheck = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return emailCheck.test(email);
     },
-  },
+  }
 };
 </script>
