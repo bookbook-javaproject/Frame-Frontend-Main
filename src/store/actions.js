@@ -1,4 +1,4 @@
-import { login, signUp } from "../api/user";
+import { login, signUp, signUpCheck } from "../api/user";
 
 export default {
   LOGIN({ commit }, { email, password }) {
@@ -11,5 +11,10 @@ export default {
       commit("SIGN_UP", data);
     });
   },
-  
+  SIGN_UP_CHECK({ code }) {
+    return signUpCheck(code).then((res) => { console.log(res);
+    }).catch(err => {
+        console.log(err);
+    })
+  },
 };
