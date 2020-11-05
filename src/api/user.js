@@ -23,3 +23,9 @@ export const signUpCheck = (code) => {
     .then((res)=> console.log(res))
     .catch((err) => console.log(err));
 };
+
+export const passwordReset = (newPassword, authCode) => {
+    return client.patch("/user/password", { newPassword, authCode })
+    .then((res)=> console.log(res))
+    .catch((err) => console.log(err));
+};
