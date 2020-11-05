@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import { frameLogo } from "@/assets/img";
 import '../../assets/style/authGlobal.scss';
 export default {
@@ -39,36 +40,26 @@ export default {
             password : '',
             emailError : '',
             nameError : '',
-            passwordError : ''
+            passwordError : '',
+            isSignUp : false
         }
     },
     methods : {
+        ...mapActions([
+            'SIGN_UP'
+        ]),
         onSignUp () {
-            if(this.email === '') {
-                this.emailError = '이메일을 올바르게 입력해주세요.';
-            }
-            else {
-                this.emailError = '';
-            }
+            !this.validEmail(this.email) ? this.emailError = "이메일을 올바르게 입력하세요." : this.emailError = "";
+           
+            this.nickname === '' ? this.nameError = "닉네임을 입력해주세요." : this.nameError = "";
 
-            if(this.nickname === '') {
-                this.nameError = '닉네임을 입력해주세요.';
-            }
-            else {
-                this.nameError = '';
-            }
+            this.password.length < 8 ? this.passwordError = "비밀번호는 8자 이상이어야합니다." : this.passwordError = "";
 
-            if(this.password.length < 8) {
-                this.passwordError = '비밀번호는 8자 이상이어야합니다.';
-            }
-            else {
-                this.passwordError = '';
-            }
+        },
+        validEmail (email) {
+            let emailCheck = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return emailCheck.test(email);
         }
     }
 }
 </script>
-
-<style lang="scss">
-
-</style>
