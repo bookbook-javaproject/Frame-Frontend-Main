@@ -18,7 +18,7 @@
 
 <script>
     import {trendingIcon, recentIcon, noticeIcon} from '@/assets/img';
-import router from '@/router';
+    import router from '@/router';
 export default {
     data(){
         return{

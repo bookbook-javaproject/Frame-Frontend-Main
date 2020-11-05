@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import { FirstView, SignUp, Login, MainPage, PasswordResetAuth, WriterApply, PoembookApply,Write } from '@/components';
-import {TrendingPostList, RecentPostList, NoticePostList} from '@/components/Post/index.js';
+import {TrendingPostList,PICommentForm, RecentPostList, NoticePostList} from '@/components/Post/index.js';
 
 Vue.use(Router);
 
@@ -41,9 +41,13 @@ export default new Router({
         },
         {
 
-          path:'write',
+          path:'/write',
           component: Write
+        },
+        { 
+          path: '/post/:id', component: PICommentForm 
         }
+
       ]
     },
     // {
