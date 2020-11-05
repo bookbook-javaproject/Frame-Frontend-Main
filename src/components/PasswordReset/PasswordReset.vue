@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import { frameLogo, passwordReset } from "@/assets/img";
 import "../../assets/style/authGlobal.scss";
 export default {
@@ -54,12 +55,21 @@ export default {
     };
   },
   methods: {
+      ...mapActions([
+            'PASSWORD_RESET'
+        ]),
     onPasswordReset() {
       this.resetCode === "" ? this.codeError = "인증코드가 올바르지 않습니다." : this.codeError = "";
       this.password.length < 8 ? this.passwordError = "비밀번호는 8자 이상이어야합니다." : this.passwordError = "";
       
       if (this.codeError === "" && this.passwordError === "") {
-        this.isPasswordReset = false;
+        this.PASSWORD_RESET({ newPassword : this.password, authCode : this.resetCode })
+            .then(() => {
+                this.isPasswordReset = false;
+            })
+            .catch(err => {
+                console.log(err);
+            })
       }
     },
   },
