@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import { frameLogo } from "@/assets/img";
 import "../../assets/style/authGlobal.scss";
 export default {
@@ -33,8 +34,22 @@ export default {
     };
   },
   methods: {
+      ...mapActions([
+            'PASSWORD_RESET_AUTH'
+        ]),
     onPasswordAuth() {
-      !this.validEmail(this.email) ? (this.emailError = "이메일을 올바르게 입력하세요.") : (this.isPasswordAuth = false); this.$emit("onPasswordAuth", this.isPasswordAuth);
+      !this.validEmail(this.email) ? (this.emailError = "이메일을 올바르게 입력하세요.") : this.emailError ="" (this.isPasswordAuth = false); 
+      if(this.emailError == "")
+      {
+        this.PASSWORD_RESET_AUTH({ email : this.email })
+            .then(() => {
+                this.isPasswordReset = false;
+                this.$emit("onPasswordAuth", this.isPasswordAuth);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+      }
     },
     validEmail(email) {
       let emailCheck = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
