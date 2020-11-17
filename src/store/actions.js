@@ -6,13 +6,13 @@ export default {
       commit("LOGIN", data);
     });
   },
-  SIGN_UP({ commit }, { email, nickname, password }) {
+  SIGN_UP({ commit } , { email, nickname, password }) {
     return signUp(email, nickname, password).then((data) => {
       commit("SIGN_UP", data);
     });
   },
-  SIGN_UP_CHECK({ code }) {
-    return signUpCheck(code).then((res) => { console.log(res);
+  SIGN_UP_CHECK(_ , { code }) {
+    return signUpCheck(code).then(() => { 
     }).catch(err => {
         console.log(err);
     })
