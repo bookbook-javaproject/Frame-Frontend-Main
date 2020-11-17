@@ -4,9 +4,11 @@
       <div style="font-weight: bold">
         {{user.nickname}}
       </div>
-        <div >
-            계정설정
-        </div>
+        <router-link to="/setProfile">
+            <div>
+                계정설정
+            </div>
+        </router-link>
         <div class="modal-logout-button">
             로그아웃
         </div>
