@@ -1,7 +1,7 @@
 <template>
   <div class="postItem-container">
     <div class="postItem-card-title">
-      <img class="postItem-userImage" :src="user.userProfilePicture" >
+      <img class="postItem-userImage" v-on:click="userImageClicked" :src="user.userProfilePicture" >
       <div class="postItem-card-subtitle">
         <p>
             {{user.nickname}}
@@ -54,6 +54,9 @@ export default {
             },
             postItemClicked: function(){
                 router.push(`/post/${this.post.id}`);
+            },
+            userImageClicked: function(){
+                router.push(`/userpage/${this.user.nickname}`)
             }
         },
         created(){
