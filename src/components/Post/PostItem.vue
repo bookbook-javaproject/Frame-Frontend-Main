@@ -47,6 +47,9 @@ export default {
                 isEmotioned: false
             };
         },
+        // created(){
+        //     if(this.post.clicked === true) this.empth();
+        // },
         methods:{
             empth :function(){ // empth means  공감
                 console.log("empth버튼 눌림");
