@@ -49,7 +49,9 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["SIGN_UP"]),
+    ...mapActions([
+        "SIGN_UP"
+    ]),
     onSignUp() {
       !this.validEmail(this.email)
         ? (this.emailError = "이메일을 올바르게 입력하세요.")
@@ -68,18 +70,13 @@ export default {
         this.passwordError === "" &&
         this.nameError === ""
       ) {
-        this.SIGN_UP({
-          email: this.email,
-          nickname: this.nickname,
-          password: this.password,
-        })
-          .then((res) => {
+        this.SIGN_UP({email : this.email, nickname : this.nickname, password : this.password})
+        .then(() => {
             this.$emit("onSignUp", this.isSignUp);
-            console.log(res);
-          })
-          .catch((err) => {
+        })
+        .catch((err) => {
             console.log(err);
-          });
+        });
       }
     },
     validEmail(email) {

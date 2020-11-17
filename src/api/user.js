@@ -14,13 +14,13 @@ export const setAuthInHeader = (accessToken, refreshToken) => {
 
 export const signUp = (email, nickname, password) => {
     return client.post("/user", { email, nickname, password })
-    .then((res)=> console.log(res))
+    .then(({data}) => data)
     .catch((err) => console.log(err));
 };
 
 export const signUpCheck = (code) => {
-    return client.get(`/user/auth${code}`)
-    .then((res)=> console.log(res))
+    return client.get(`/user/auth?auth-code=${code}`)
+    .then(({data})=> data)
     .catch((err) => console.log(err));
 };
 
