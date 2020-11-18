@@ -1,7 +1,7 @@
 <template>
   <div class="postItem-container">
     <div class="postItem-card-title">
-      <img class="postItem-userImage" :src="user.userProfilePicture" >
+      <img class="postItem-userImage" v-on:click="userImageClicked" :src="user.userProfilePicture" >
       <div class="postItem-card-subtitle">
         <p>
             {{user.nickname}}
@@ -47,6 +47,9 @@ export default {
                 isEmotioned: false
             };
         },
+        // created(){
+        //     if(this.post.clicked === true) this.empth();
+        // },
         methods:{
             empth :function(){ // empth means  공감
                 console.log("empth버튼 눌림");
@@ -54,6 +57,9 @@ export default {
             },
             postItemClicked: function(){
                 router.push(`/post/${this.post.id}`);
+            },
+            userImageClicked: function(){
+                router.push(`/userpage/${this.user.nickname}`)
             }
         },
         created(){

@@ -1,3 +1,3 @@
-- PICommentForm means PostItem CommnentForm 
+- PICommentForm means PostItem CommentForm 
 
-- PICommentItem means PostItem CommnentForm 
+- PICommentItem means PostItem CommentForm 
