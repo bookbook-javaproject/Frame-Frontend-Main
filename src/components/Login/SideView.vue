@@ -14,7 +14,6 @@
             </div>
         <img :src="authArt">
         </div>
-        
     </div>
 </template>
 

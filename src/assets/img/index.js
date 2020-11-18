@@ -31,3 +31,5 @@ export { default as authBlocked} from './auth-blocked.svg';
 export { default as authFollow} from './auth-follow.svg';
 export { default as authFollowClicked} from './auth-followClicked.svg';
 export { default as selectImage} from './select-image.svg';
+export { default as passwordReset } from './password-image.svg';
+export { default as trashCommentIcon } from './trash-comment-icon.svg';
