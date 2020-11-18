@@ -17,16 +17,10 @@ export default {
         console.log(err);
     })
   },
-  PASSWORD_RESET({ newPassword, authCode }) {
-    return passwordReset(newPassword, authCode).then((res) => { console.log(res);
-    }).catch(err => {
-        console.log(err);
-    })
+  PASSWORD_RESET(_, { newPassword, authCode }) {
+    return passwordReset(newPassword, authCode)
   },
-  PASSWORD_RESET_AUTH({ email }) {
-    return passwordResetAuth(email).then((res) => { console.log(res);
-    }).catch(err => {
-        console.log(err);
-    })
+  PASSWORD_RESET_AUTH(_, { email }) {
+    return passwordResetAuth(email)
   },
 };
