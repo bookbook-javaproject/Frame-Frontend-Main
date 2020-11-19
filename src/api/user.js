@@ -14,24 +14,24 @@ export const setAuthInHeader = (accessToken, refreshToken) => {
 
 export const signUp = (email, nickname, password) => {
     return client.post("/user", { email, nickname, password })
-    .then((res)=> console.log(res))
+    .then(({data}) => data)
     .catch((err) => console.log(err));
 };
 
 export const signUpCheck = (code) => {
-    return client.get(`/user/auth${code}`)
-    .then((res)=> console.log(res))
+    return client.get(`/user/auth?auth-code=${code}`)
+    .then(({data})=> data)
     .catch((err) => console.log(err));
 };
 
 export const passwordReset = (newPassword, authCode) => {
     return client.patch("/user/password", { newPassword, authCode })
-    .then((res)=> console.log(res))
-    .catch((err) => console.log(err));
+    .catch((err) => {
+        console.log(err);
+    });
 };
 
 export const passwordResetAuth = (email) => {
     return client.post("/user/password/auth-code", { email })
-    .then((res)=> console.log(res))
     .catch((err) => console.log(err));
 };

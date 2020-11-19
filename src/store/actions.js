@@ -7,36 +7,27 @@ export default {
       commit("LOGIN", data);
     });
   },
-  SIGN_UP({ commit }, { email, nickname, password }) {
+  SIGN_UP({ commit } , { email, nickname, password }) {
     return signUp(email, nickname, password).then((data) => {
       commit("SIGN_UP", data);
     });
   },
-  SIGN_UP_CHECK(_, { code }) {
-    return signUpCheck(code).then((res) => { console.log(res);
-    }).catch(err => {
-        console.log(err);
-    })
+  SIGN_UP_CHECK(_ , { code }) {
+    return signUpCheck(code)
   },
   PASSWORD_RESET(_, { newPassword, authCode }) {
-    return passwordReset(newPassword, authCode).then((res) => { console.log(res);
-    }).catch(err => {
-        console.log(err);
-    })
+    return passwordReset(newPassword, authCode)
   },
   PASSWORD_RESET_AUTH(_, { email }) {
-    return passwordResetAuth(email).then((res) => { console.log(res);
-    }).catch(err => {
-        console.log(err);
-    })
+    return passwordResetAuth(email)
   },
-  WRITER_APPLYCATION(_, {link, goal}) {
+  WRITER_APPLYCATION(_, { link, goal }) {
     return writerApplycation(goal, link);
   },
-  WRITER_AUTH(_, {email}) {
+  WRITER_AUTH(_, { email }) {
     return writerAuth(email);
   },
-  WRITER_CHECK_CODE(_, {code}) {
+  WRITER_CHECK_CODE(_, { code }) {
     return writerCheckCode(code);
   }
 };
