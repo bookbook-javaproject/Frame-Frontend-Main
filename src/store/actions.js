@@ -1,4 +1,5 @@
 import { login, signUp, signUpCheck, passwordReset, passwordResetAuth } from "../api/user";
+import { writerApplycation, writerAuth } from "../api/application";
 
 export default {
   LOGIN({ commit }, { email, password }) {
@@ -11,22 +12,28 @@ export default {
       commit("SIGN_UP", data);
     });
   },
-  SIGN_UP_CHECK({ code }) {
+  SIGN_UP_CHECK(_, { code }) {
     return signUpCheck(code).then((res) => { console.log(res);
     }).catch(err => {
         console.log(err);
     })
   },
-  PASSWORD_RESET({ newPassword, authCode }) {
+  PASSWORD_RESET(_, { newPassword, authCode }) {
     return passwordReset(newPassword, authCode).then((res) => { console.log(res);
     }).catch(err => {
         console.log(err);
     })
   },
-  PASSWORD_RESET_AUTH({ email }) {
+  PASSWORD_RESET_AUTH(_, { email }) {
     return passwordResetAuth(email).then((res) => { console.log(res);
     }).catch(err => {
         console.log(err);
     })
   },
+  WRITER_APPLYCATION(_, {link, goal}) {
+    return writerApplycation(goal, link);
+  },
+  WRITER_AUTH(_, {email}) {
+    return writerAuth(email);
+  }
 };
