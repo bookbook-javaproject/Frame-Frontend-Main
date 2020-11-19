@@ -38,12 +38,12 @@ export default {
             'PASSWORD_RESET_AUTH'
         ]),
     onPasswordAuth() {
-      !this.validEmail(this.email) ? (this.emailError = "이메일을 올바르게 입력하세요.") : this.emailError ="" (this.isPasswordAuth = false); 
+      !this.validEmail(this.email) ? (this.emailError = "이메일을 올바르게 입력하세요.") : this.emailError ="";
       if(this.emailError == "")
       {
         this.PASSWORD_RESET_AUTH({ email : this.email })
             .then(() => {
-                this.isPasswordReset = false;
+                this.isPasswordAuth = false;
                 this.$emit("onPasswordAuth", this.isPasswordAuth);
             })
             .catch(err => {

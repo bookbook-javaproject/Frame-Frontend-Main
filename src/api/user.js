@@ -26,12 +26,12 @@ export const signUpCheck = (code) => {
 
 export const passwordReset = (newPassword, authCode) => {
     return client.patch("/user/password", { newPassword, authCode })
-    .then((res)=> console.log(res))
-    .catch((err) => console.log(err));
+    .catch((err) => {
+        console.log(err);
+    });
 };
 
 export const passwordResetAuth = (email) => {
     return client.post("/user/password/auth-code", { email })
-    .then((res)=> console.log(res))
     .catch((err) => console.log(err));
 };
