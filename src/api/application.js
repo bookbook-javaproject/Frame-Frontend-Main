@@ -11,3 +11,9 @@ export const writerCheckCode = (code) => {
     .then(({ data }) => data)
     .catch((err) => console.log(err));
 };
+
+export const writerApplycation = (goal, link) => {
+    return getClientAccessToken.post("/submission/author", { goal, link })
+      .then(({ data }) => data)
+      .catch((err) => console.log(err));
+};
