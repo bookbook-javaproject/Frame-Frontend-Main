@@ -1,7 +1,7 @@
 <template>
   <div class="postItem-container">
     <div class="postItem-card-title">
-      <img class="postItem-userImage" :src="user.userProfilePicture" >
+      <img class="postItem-userImage" v-on:click="userImageClicked" :src="user.userProfilePicture" >
       <div class="postItem-card-subtitle">
         <p>
             {{user.nickname}}
@@ -11,7 +11,7 @@
         </p>
       </div>
     </div>
-    <div class="postItem-card-content">
+    <div class="postItem-card-content" v-on:click="postItemClicked">
             {{post.content}}
     </div>
     <div class="postItem-card-ev"> <!-- ev means Evaluation-->
@@ -34,6 +34,7 @@
 
 <script>
 import {commentButton,emotionButton,emotionButtonClicked} from '@/assets/img'
+import router from '@/router';
 export default {
     props:['post','user'],
 
@@ -46,10 +47,19 @@ export default {
                 isEmotioned: false
             };
         },
+        // created(){
+        //     if(this.post.clicked === true) this.empth();
+        // },
         methods:{
             empth :function(){ // empth means  공감
                 console.log("empth버튼 눌림");
                 this.isEmotioned = !this.isEmotioned
+            },
+            postItemClicked: function(){
+                router.push(`/post/${this.post.id}`);
+            },
+            userImageClicked: function(){
+                router.push(`/userpage/${this.user.nickname}`)
             }
         },
         created(){

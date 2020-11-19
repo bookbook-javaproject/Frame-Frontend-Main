@@ -4,9 +4,11 @@
       <div style="font-weight: bold">
         {{user.nickname}}
       </div>
-        <div >
-            계정설정
-        </div>
+        <router-link to="/setProfile">
+            <div>
+                계정설정
+            </div>
+        </router-link>
         <div class="modal-logout-button">
             로그아웃
         </div>
@@ -46,6 +48,7 @@ export default {
         text-align: center;
         z-index: 1;
         background-color: #fdfdfd;
+        
     }
     .modal-userImage{
         width: 3rem;

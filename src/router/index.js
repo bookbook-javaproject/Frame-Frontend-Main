@@ -1,7 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import { FirstView, SignUp, Login, MainPage, PasswordResetAuth, WriterApply, PoembookApply } from '@/components';
-import {TrendingPostList, RecentPostList, NoticePostList} from '@/components/Post/index.js';
+import { FirstView, SignUp, UserPage,Login, MainPage, PasswordResetAuth, WriterApply, PoembookApply,Write,userProfile } from '@/components';
+import {TrendingPostList,PICommentForm, RecentPostList, NoticePostList} from '@/components/Post/index.js';
+import {ILoveItForm, MyWritingForm,userFollowing,userFollower} from '@/components/UserPage/index.js';
 
 Vue.use(Router);
 
@@ -25,9 +26,10 @@ export default new Router({
       children:[
         {
           name: 'TrendingPostList',
-          path:'trending',
+          path:'/',
           component: TrendingPostList
         },
+      
         {
           name: 'RecentPostList',
           path:'/recent',
@@ -38,18 +40,51 @@ export default new Router({
           path:'/notice',
           component: NoticePostList
         },
-        // {
-        //   path:'write',
-        //   component: Write
-        // }
+        {
+
+          path:'/write',
+          component: Write
+        },
+        { 
+          path: '/post/:id', component: PICommentForm 
+        },
+        {
+          name: 'userpage',
+          path: '/userpage/:username',
+          component: UserPage,
+          children:[
+            {
+              name: 'MyWriting',
+              path:'/',
+              component:MyWritingForm
+            },
+            {
+              name: 'ILoveItForm',
+              path: 'ILoveItForm',
+              component: ILoveItForm
+            },
+            {
+              name: 'Following',
+              path:'userFollowing',
+              component: userFollowing
+            },
+            {
+              name: 'Follower',
+              path:'userFollower',
+              component: userFollower
+            }
+          ]
+        },
+        {
+          name:'setting-user-profile',
+          path:'setProfile',
+          component:userProfile
+  
+        }
       ]
     },
-    // {
-    //   name: 'recent',
-    //   path: '/recent',
-    //   component:'RecentView'
-    
-    // }
+
+
     { 
       name : 'login',
       path : '/login',

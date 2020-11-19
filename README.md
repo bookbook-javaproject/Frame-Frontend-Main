@@ -72,7 +72,7 @@ ex) login-plugin
 ```
 ## Project setup
 ```
-yarn install ssds
+yarn install
 ```
 
 ### Compiles and hot-reloads for development
