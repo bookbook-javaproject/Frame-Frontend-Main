@@ -1,5 +1,5 @@
 import { login, signUp, signUpCheck, passwordReset, passwordResetAuth } from "../api/user";
-import { writerApplycation, writerAuth } from "../api/application";
+import { writerApplycation, writerAuth, writerCheckCode } from "../api/application";
 
 export default {
   LOGIN({ commit }, { email, password }) {
@@ -35,5 +35,8 @@ export default {
   },
   WRITER_AUTH(_, {email}) {
     return writerAuth(email);
+  },
+  WRITER_CHECK_CODE(_, {code}) {
+    return writerCheckCode(code);
   }
 };
