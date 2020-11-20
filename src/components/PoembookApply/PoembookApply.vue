@@ -7,11 +7,11 @@
                 <p>자신의 실력을 입증할 파일이나 글의 링크를 입력해주세요.</p>
                 <form class="writer-form">
                     <div>
-                        <input type="text" placeholder="Link">
+                        <input type="text" placeholder="Link" v-model="link">
                     </div>
                     <div class="input-button-box">
                         <label for="poemApplyInput">
-                            <input class="poem-apply-file-input" id="poemApplyInput" type="file">
+                            <input class="poem-apply-file-input" id="poemApplyInput" type="file" ref="fileObj">
                             <img :src="file" class="icon">
                             <span class="button-text">File</span>
                         </label>   
@@ -25,19 +25,43 @@
 </template>
 
 <script>
+import { mapActions, mapState } from "vuex";
 import { file } from "@/assets/img";
 import "../../assets/style/formGlobal.scss";
 export default {
     data () {
         return {
             file,
+            link : '',
+            fileObj : '',
+            fileId : '',
             isPoembookApply : true
         }
     },
+    computed : {
+        ...mapState({
+            fileState : 'file'
+        })
+    },
     methods : {
+        ...mapActions([
+            "POEMBOOK_APPLYCATION",
+            "FILE_UPLOAD"
+        ]),
         onPoembookApply () {
-            this.isPoembookApply = false;
-            this.$emit("onPoembookApply", this.isPoembookApply);
+            this.fileObj = this.$refs.fileObj.files[0];
+            let formData = new FormData();   
+            console.log(this.fileObj)
+            formData.append('file', this.fileObj);   
+
+            this.FILE_UPLOAD({file : formData})
+            this.fileId = this.fileState;
+
+            this.POEMBOOK_APPLYCATION({link : this.link, fileId : this.fileId})
+            .then(() => {
+                this.isPoembookApply = false;
+                this.$emit("onPoembookApply", this.isPoembookApply);
+            })
         }
     }
     
