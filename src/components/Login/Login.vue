@@ -6,7 +6,7 @@
             <section class="auth-section">
                 <p>WELCOME TO</p>
                 <h1>FRAME</h1>
-                <form class="auth-form">
+                <article class="auth-form">
                     <div>
                         <input type="text" placeholder="Email" v-model="email">
                     </div>
@@ -15,7 +15,7 @@
                         <input type="password" placeholder="password" v-model="password">
                     </div>
                     <span class="auth-error">{{ passwordError }}</span>
-                </form>
+                </article>
                 <router-link to="/password-reset" class="auth-link"><span>혹시 <span class="point-link">비밀번호를 잊으셨나요?</span></span></router-link>
                 <router-link to="/sign-up" class="auth-link"><span>아직 <span class="point-link">계정이 없으신가요?</span></span></router-link>
                 <button @click="onLogin">로그인</button>
