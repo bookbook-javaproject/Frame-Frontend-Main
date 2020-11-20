@@ -1,4 +1,5 @@
 import { login, signUp, signUpCheck, passwordReset, passwordResetAuth } from "../api/user";
+import { fileUpload } from "../api/application";
 
 export default {
   LOGIN({ commit }, { email, password }) {
@@ -23,4 +24,9 @@ export default {
   PASSWORD_RESET_AUTH(_, { email }) {
     return passwordResetAuth(email)
   },
+  FILE_UPLOAD({ commit }, { file }) {
+    return fileUpload(file).then((data) => {
+        commit("FILE_UPLOAD", data);
+    })
+  }
 };
