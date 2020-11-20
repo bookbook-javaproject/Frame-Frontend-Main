@@ -1,5 +1,5 @@
 import { login, signUp, signUpCheck, passwordReset, passwordResetAuth } from "../api/user";
-import { fileUpload } from "../api/application";
+import { poembookApplycation, fileUpload } from "../api/application";
 
 export default {
   LOGIN({ commit }, { email, password }) {
@@ -28,5 +28,8 @@ export default {
     return fileUpload(file).then((data) => {
         commit("FILE_UPLOAD", data);
     })
+  },
+  POEMBOOK_APPLYCATION(_, { link, fileId }) {
+    return poembookApplycation(link, fileId);
   }
 };
