@@ -6,6 +6,7 @@ $font : "AppleSDGothicNeo";
     padding: 0 0 0 20.625rem;
     overflow: hidden;
     display: flex;
+
      .auth-logo {
         margin-top : 1.5rem;
     }
@@ -105,5 +106,14 @@ $font : "AppleSDGothicNeo";
             background-color: $color; 
             transition: 0.5s;
         }
+    }
+}
+
+@media screen and (max-width: 1540px) {
+    .auth-container {
+        padding: 0 0 0 14.625rem;
+    }
+    .auth-section {
+        margin-top: 5.6rem;
     }
 }
