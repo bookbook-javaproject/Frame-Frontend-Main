@@ -7,7 +7,7 @@
         <span>2020-10-01</span>
       </div>
     </header>
-    <pre>
+    <pre @wheel="onWheel">
       얼음이 되려니와, 과실이
        넣는 같은 이상은 이상, 인류의 하였으며, 뿐이다. 그들은 우리의 그들은 구하지 목숨을 이는 
       위하여서, 쓸쓸하랴? 낙원을 피가 간에 있는 얼음에 수 보이는 위하여서. 얼마나 없으면 주며, 튼튼하며, 가슴이 곳이 
@@ -52,6 +52,12 @@ export default {
       }
     };
     return returnData;
+  },
+  methods: {
+    onWheel(e) {
+      console.log(1);
+      e.stopPropagation();
+    }
   }
 };
 </script>

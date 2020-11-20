@@ -11,4 +11,10 @@ export default {
     localStorage.setItem("refreshToken", refreshToken);
     setAuthInHeader(accessToken, refreshToken);
   },
+  SIGN_UP(state, data) {
+    state.userError = data.status;
+  },
+  FILE_UPLOAD(state, data) {
+    state.file = data;
+  }
 };

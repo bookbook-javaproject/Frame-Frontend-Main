@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import "../../assets/style/formGlobal.scss";
 export default {
     data () {
@@ -25,10 +26,13 @@ export default {
             isApplyCodeCheck : true,
             authCode : "",
             codeError : "",
-            authCodeCheck : 11111
+            authCodeCheck : ''
         }
     },
     methods : {
+        ...mapActions([
+            "WRITER_CHECK_CODE"
+        ]),
         applyFail () {
             this.isApplyAuth = true;
             this.$emit("applyFail", this.isApplyAuth);
@@ -37,12 +41,16 @@ export default {
             if(this.authCode == "") {
                 this.codeError = "인증코드를 입력해주세요.";
             }
-            else if(this.authCode != this.authCodeCheck) {
-                this.codeError = "인증코드가 올바르지 않습니다.";
-            }
+            // else if(this.authCode != this.authCodeCheck) {
+            //     this.codeError = "인증코드가 올바르지 않습니다.";
+            // }
             else {
-                this.isApplyCodeCheck = false;
-                this.$emit("onApplyCodeCheck", this.isApplyCodeCheck);
+                this.WRITER_CHECK_CODE({code : this.authCode})
+                .then(() => {
+                    this.isApplyCodeCheck = false;
+                    this.$emit("onApplyCodeCheck", this.isApplyCodeCheck);
+                })
+                
             }
             
         }
