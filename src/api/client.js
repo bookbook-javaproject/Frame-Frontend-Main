@@ -14,3 +14,10 @@ export const getClientAccessToken = axios.create({
     Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
   },
 });
+
+export const uploadFile = axios.create({
+    baseURL : process.env.VUE_APP_FILE_API_URL,
+    headers: {
+        "Content-Type": "application/json",
+    },
+});

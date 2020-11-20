@@ -1,5 +1,5 @@
 import { login, signUp, signUpCheck, passwordReset, passwordResetAuth } from "../api/user";
-import { writerApplycation, writerAuth, writerCheckCode } from "../api/application";
+import { writerApplycation, writerAuth, writerCheckCode, poembookApplycation, fileUpload } from "../api/application";
 
 export default {
   LOGIN({ commit }, { email, password }) {
@@ -20,6 +20,14 @@ export default {
   },
   PASSWORD_RESET_AUTH(_, { email }) {
     return passwordResetAuth(email)
+  },
+  FILE_UPLOAD({ commit }, { file }) {
+    return fileUpload(file).then((data) => {
+        commit("FILE_UPLOAD", data);
+    })
+  },
+  POEMBOOK_APPLYCATION(_, { link, fileId }) {
+    return poembookApplycation(link, fileId);
   },
   WRITER_APPLYCATION(_, { link, goal }) {
     return writerApplycation(goal, link);
