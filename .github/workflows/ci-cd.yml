@@ -27,9 +27,12 @@ jobs:
         run: yarn install
 
       - name: Build
-        run: VUE_APP_API_URL={{ secrets.VUE_APP_API_URL }} \
-          VUE_APP_FILE_API_URL={{ secrets.VUE_APP_FILE_API_URL }} \
+        run: VUE_APP_API_URL=${VUE_APP_API_URL}\
+          VUE_APP_FILE_API_URL=${secrets.VUE_APP_FILE_API_URL} \
           yarn build
+        env:
+          VUE_APP_API_URL: ${{ secrets.VUE_APP_API_URL }}
+          VUE_APP_FILE_API_URL: ${{ secrets.VUE_APP_FILE_API_URL }}
         
       - name: Deploy to S3
         env:
