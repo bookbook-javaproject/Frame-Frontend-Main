@@ -4,5 +4,8 @@ export default {
   },
   isSignUp(state) {
     return state.userError;
+  },
+  isApplyError(state) {
+    return state.applyError;
   }
 };

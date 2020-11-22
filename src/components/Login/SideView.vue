@@ -55,7 +55,7 @@ $font : "AppleSDGothicNeo";
     display: flex;
     justify-content: center;
     position: relative;
-}
+} 
 
 .frame-info-container
 {
@@ -71,6 +71,15 @@ $font : "AppleSDGothicNeo";
     p {
         margin-bottom: 1.5rem;
         font-weight: 100;
+    }
+}
+
+@media screen and (max-width: 1540px) {
+    .side-container img {
+        width: 20rem;
+    }
+    .frame-info-container {
+        font-size: 0.7rem;
     }
 }
 </style>

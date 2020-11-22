@@ -16,5 +16,14 @@ export default {
   },
   FILE_UPLOAD(state, data) {
     state.file = data;
+  },
+  APPLY_AUTH(state, data) {
+    state.applyError.auth = data;
+  },
+  APPLY_CODE(state, data) {
+    state.applyError.codeCheck = data;
+  },
+  APPLY_FORM(state, data) {
+    state.applyError.form = data;
   }
 };

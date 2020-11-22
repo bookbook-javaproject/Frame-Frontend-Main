@@ -35,13 +35,31 @@ export default {
   POEMBOOK_APPLYCATION(_, { link, fileId }) {
     return poembookApplycation(link, fileId);
   },
-  WRITER_APPLYCATION(_, { link, goal }) {
-    return writerApplycation(goal, link);
+  WRITER_APPLYCATION({ commit }, { link, goal }) {
+    return writerApplycation(goal, link)
+    .then(() => {
+        commit("APPLY_FORM", true);
+    })
+    .catch(() => {
+        commit("APPLY_FORM", false);
+    })
   },
-  WRITER_AUTH(_, { email }) {
-    return writerAuth(email);
+  WRITER_AUTH({ commit }, { email }) {
+    return writerAuth(email)
+    .then(() => {
+        commit("APPLY_AUTH", true);
+    })
+    .catch(() => {
+        commit("APPLY_AUTH", false);
+    })
   },
-  WRITER_CHECK_CODE(_, { code }) {
-    return writerCheckCode(code);
+  WRITER_CHECK_CODE({ commit }, { code }) {
+    return writerCheckCode(code)
+    .then(() => {
+        commit("APPLY_CODE", true);
+    })
+    .catch(() => {
+        commit("APPLY_CODE", false);
+    })
   }
 };
