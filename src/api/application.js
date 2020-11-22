@@ -19,11 +19,7 @@ export const writerAuth = (email) => {
 
 export const writerCheckCode = (code) => {
     return getClientAccessToken.get(`/submission/author/auth?code=${ code }`)
-    .then(({ data })=> data)
-    .catch(() => {
-        alert("인증번호가 잘못되었습니다.");
-        location.reload();
-    });
+    .then(({ data })=> data);
 };
 
 export const writerApplycation = (goal, link) => {
