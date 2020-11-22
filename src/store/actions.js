@@ -21,8 +21,16 @@ export default {
         else commit("SIGN_UP", false);
     })
   },
-  PASSWORD_RESET(_, { newPassword, authCode }) {
+  PASSWORD_RESET({ commit }, { newPassword, authCode }) {
     return passwordReset(newPassword, authCode)
+    .then(() => {
+        commit("CHANGE_PASSWORD", true)
+    })
+    .catch((err) => {
+        console.log(err.response.status)
+        if(err.response.status == 400) commit("CHANGE_PASSWORD", "400");
+        else commit("CHANGE_PASSWORD", false);
+    })
   },
   PASSWORD_RESET_AUTH(_, { email }) {
     return passwordResetAuth(email)
