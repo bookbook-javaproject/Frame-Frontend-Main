@@ -1,7 +1,7 @@
 const state = {
   accessToken: null,
   refreshToken: null,
-  userError : null,
+  userError : false,
   file : null
 };
 
