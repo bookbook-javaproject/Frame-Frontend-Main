@@ -6,7 +6,7 @@
     <section class="auth-section">
       <p>프레임으로 당신의 생각을 공유해보세요</p>
       <h1>Sign Up</h1>
-      <form class="auth-form">
+      <article class="auth-form">
         <div>
           <input type="text" placeholder="Email" v-model="email" @keyup.enter="onSignUp"/>
         </div>
@@ -19,7 +19,7 @@
           <input type="password" placeholder="password" v-model="password" @keyup.enter="onSignUp"/>
         </div>
         <span class="auth-error">{{ passwordError }}</span>
-      </form>
+      </article>
       <router-link to="/login" class="auth-link"
         ><span
           >이미 <span class="point-link">계정이 있으신가요?</span></span
