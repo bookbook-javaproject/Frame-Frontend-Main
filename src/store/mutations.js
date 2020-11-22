@@ -12,12 +12,24 @@ export default {
     setAuthInHeader(accessToken, refreshToken);
   },
   SIGN_UP(state, data) {
-    state.userError = data.status;
+    state.userError = data;
   },
   FILE_UPLOAD(state, data) {
     state.file = data;
   },
   IS_FILE(state, data) {
     state.isFile = data;
+  },
+  CHANGE_PASSWORD(state, data){
+    state.passwordError = data;
+  },
+  APPLY_AUTH(state, data) {
+    state.applyError.auth = data;
+  },
+  APPLY_CODE(state, data) {
+    state.applyError.codeCheck = data;
+  },
+  APPLY_FORM(state, data) {
+    state.applyError.form = data;
   }
 };
