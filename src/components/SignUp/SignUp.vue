@@ -8,15 +8,15 @@
       <h1>Sign Up</h1>
       <form class="auth-form">
         <div>
-          <input type="text" placeholder="Email" v-model="email" />
+          <input type="text" placeholder="Email" v-model="email" @keyup.enter="onSignUp"/>
         </div>
         <span class="auth-error">{{ emailError }}</span>
         <div>
-          <input type="text" placeholder="nickname" v-model="nickname" />
+          <input type="text" placeholder="nickname" v-model="nickname" @keyup.enter="onSignUp"/>
         </div>
         <span class="auth-error">{{ nameError }}</span>
         <div>
-          <input type="password" placeholder="password" v-model="password" />
+          <input type="password" placeholder="password" v-model="password" @keyup.enter="onSignUp"/>
         </div>
         <span class="auth-error">{{ passwordError }}</span>
       </form>
