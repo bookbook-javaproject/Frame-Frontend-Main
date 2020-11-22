@@ -15,13 +15,11 @@ export const setAuthInHeader = (accessToken, refreshToken) => {
 export const signUp = (email, nickname, password) => {
     return client.post("/user", { email, nickname, password })
     .then(({data}) => data)
-    .catch((err) => console.log(err));
+    .catch(() => alert("회원가입에 실패하였습니다. 다시 시도하세요."));
 };
 
 export const signUpCheck = (code) => {
     return client.get(`/user/auth?auth-code=${code}`)
-    .then(({data})=> data)
-    .catch((err) => console.log(err));
 };
 
 export const passwordReset = (newPassword, authCode) => {
