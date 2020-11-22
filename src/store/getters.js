@@ -4,5 +4,11 @@ export default {
   },
   isPassword(state) {
     return state.passwordError;
+  },
+  isSignUp(state) {
+    return state.userError;
+  },
+  isApplyError(state) {
+    return state.applyError;
   }
 };

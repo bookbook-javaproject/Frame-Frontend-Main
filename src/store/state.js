@@ -1,9 +1,18 @@
+const writerApplyData = () => {
+    return {
+      auth : false,
+      codeCheck : false,
+      form : false
+    }
+} 
+
 const state = {
   accessToken: null,
   refreshToken: null,
-  userError : null,
   file : null,
-  passwordError : false
+  passwordError : false,
+  userError : false,
+  applyError : writerApplyData()
 };
 
 export default state;

@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import "../../assets/style/formGlobal.scss";
 export default {
     data () {
@@ -28,6 +28,11 @@ export default {
             codeError : "",
             authCodeCheck : ''
         }
+    },
+    computed : {
+        ...mapGetters([
+            "isApplyError"
+        ])
     },
     methods : {
         ...mapActions([
@@ -40,19 +45,20 @@ export default {
         onApplyCodeCheck () {
             if(this.authCode == "") {
                 this.codeError = "인증코드를 입력해주세요.";
+                console.log(this.applyError);
             }
-            // else if(this.authCode != this.authCodeCheck) {
-            //     this.codeError = "인증코드가 올바르지 않습니다.";
-            // }
-            else {
+            else if(localStorage.getItem("accessToken")){
                 this.WRITER_CHECK_CODE({code : this.authCode})
                 .then(() => {
-                    this.isApplyCodeCheck = false;
-                    this.$emit("onApplyCodeCheck", this.isApplyCodeCheck);
+                    if(this.isApplyError.codeCheck == true) {
+                        this.isApplyCodeCheck = false;
+                        this.$emit("onApplyCodeCheck", this.isApplyCodeCheck);
+                    }
+                    else {
+                        this.codeError = "인증코드가 올바르지 않습니다.";
+                    }
                 })
-                
             }
-            
         }
     }
 }

@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import "../../assets/style/formGlobal.scss";
 export default {
     data () {
@@ -31,6 +31,11 @@ export default {
             goal : ''
         }
     },
+    computed : {
+        ...mapGetters([
+            "isApplyError"
+        ])
+    },
     methods : {
         ...mapActions([
             "WRITER_APPLYCATION"
@@ -38,8 +43,11 @@ export default {
         onWriterApply () {
             this.WRITER_APPLYCATION({link : this.link, goal : this.goal})
             .then(() => {
-                this.isWriterApply = false;
-                this.$emit("onWriterApply", this.isWriterApply);
+                if(this.isApplyError.form == true)
+                {
+                    this.isWriterApply = false;
+                    this.$emit("onWriterApply", this.isWriterApply);
+                }
             })
         }
     }
