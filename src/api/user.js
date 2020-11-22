@@ -1,5 +1,5 @@
 import axios from "axios";
-import client from "./client";
+import { client } from "./client";
 
 export const login = (email, password) => {
   return client.post("/user/auth", { email, password })
