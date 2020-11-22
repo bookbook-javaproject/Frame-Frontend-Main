@@ -6,15 +6,14 @@
     <section class="auth-section">
       <p>가입 시 등록한 이메일을 입력해주세요</p>
       <h1>Password Reset</h1>
-      <form class="auth-form">
+      <article class="auth-form">
         <div>
           <input type="text" placeholder="Email" v-model="email" />
         </div>
         <span class="auth-error">{{ emailError }}</span>
-      </form>
-      <router-link to="/login" class="auth-link"
-        ><span class="point-link">로그인 페이지로 돌아가기</span></router-link
-      >
+      </article>
+      <router-link to="/login" class="auth-link">
+      <span class="point-link">로그인 페이지로 돌아가기</span></router-link>
       <button @click="onPasswordAuth">비밀번호 재설정 코드 전송</button>
     </section>
   </main>
