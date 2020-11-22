@@ -1,5 +1,9 @@
 import { login, signUp, signUpCheck, passwordReset, passwordResetAuth } from "../api/user";
 import { writerApplycation, writerAuth, writerCheckCode, poembookApplycation, fileUpload } from "../api/application";
+import { getHighlightPosts } from '../api/highlight';
+import { GET_HIGLIGHT_POSTS_SUCCESS, GET_HIGLIGHT_POSTS_FAILURE } from './mutations';
+
+export const GET_HIGLIGHT_POSTS = 'GET_HIGLIGHT_POSTS';
 
 export default {
   LOGIN({ commit }, { email, password }) {
@@ -69,5 +73,12 @@ export default {
     .catch(() => {
         commit("APPLY_CODE", false);
     })
-  }
+  },
+  [GET_HIGLIGHT_POSTS]({ commit }) {
+    getHighlightPosts().then(res => {
+      commit(GET_HIGLIGHT_POSTS_SUCCESS, res);
+    }).catch(err => {
+      commit(GET_HIGLIGHT_POSTS_FAILURE, err);
+    });
+  },
 };
