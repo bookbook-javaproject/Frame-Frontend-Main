@@ -74,6 +74,7 @@ export default {
             }
             else {
                 alert("로그인을 먼저 해주세요.");
+                this.$router.push("/login");
             }
         }
     }
