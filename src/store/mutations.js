@@ -16,5 +16,8 @@ export default {
   },
   FILE_UPLOAD(state, data) {
     state.file = data;
+  },
+  IS_FILE(state, data) {
+    state.isFile = data;
   }
 };
