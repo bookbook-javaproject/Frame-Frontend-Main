@@ -4,7 +4,7 @@ import { client } from "./client";
 export const login = (email, password) => {
   return client.post("/user/auth", { email, password })
     .then(({ data }) => data)
-    .catch((err) => console.log(err));
+    .catch(() => alert("로그인에 실패하였습니다. 다시 시도하세요."));
 };
 
 export const setAuthInHeader = (accessToken, refreshToken) => {
