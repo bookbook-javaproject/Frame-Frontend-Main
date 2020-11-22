@@ -13,5 +13,8 @@ export default {
   },
   SIGN_UP(state, data) {
     state.userError = data.status;
+  },
+  FILE_UPLOAD(state, data) {
+    state.file = data;
   }
 };
