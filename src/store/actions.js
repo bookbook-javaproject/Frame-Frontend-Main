@@ -22,8 +22,13 @@ export default {
     return passwordResetAuth(email)
   },
   FILE_UPLOAD({ commit }, { file }) {
-    return fileUpload(file).then((data) => {
+    return fileUpload(file)
+    .then((data) => {
         commit("FILE_UPLOAD", data);
+        commit("IS_FILE", true);
+    })
+    .catch(() => {
+        commit("IS_FILE", false)
     })
   },
   POEMBOOK_APPLYCATION(_, { link, fileId }) {
