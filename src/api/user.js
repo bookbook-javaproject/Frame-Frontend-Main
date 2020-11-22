@@ -8,8 +8,8 @@ export const login = (email, password) => {
 };
 
 export const setAuthInHeader = (accessToken, refreshToken) => {
-  axios.defaults.headers.common["Authorization"] = accessToken ? `${accessToken}` : null;
-  axios.defaults.headers.common["Authorization"] = refreshToken ? `${refreshToken}` : null;
+  axios.defaults.headers.common["Authorization"] = accessToken ? `Bearer ${accessToken}` : null;
+  axios.defaults.headers.common["Authorization"] = refreshToken ? `Bearer ${refreshToken}` : null;
 };
 
 export const signUp = (email, nickname, password) => {
