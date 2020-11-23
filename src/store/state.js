@@ -9,6 +9,7 @@ const writerApplyData = () => {
 const state = {
   accessToken: null,
   refreshToken: null,
+  isFile : true,
   file : null,
   passwordError : false,
   userError : false,

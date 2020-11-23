@@ -17,6 +17,9 @@ export default {
   FILE_UPLOAD(state, data) {
     state.file = data;
   },
+  IS_FILE(state, data) {
+    state.isFile = data;
+  },
   CHANGE_PASSWORD(state, data){
     state.passwordError = data;
   },
