@@ -1,5 +1,8 @@
 import { setAuthInHeader } from "../api/user";
 
+export const GET_HIGLIGHT_POSTS_SUCCESS = 'GET_HIGLIGHT_POSTS_SUCCESS';
+export const GET_HIGLIGHT_POSTS_FAILURE = 'GET_HIGLIGHT_POSTS_FAILURE';
+
 export default {
   LOGIN(state, data) {
     const accessToken = data.accessToken;
@@ -31,5 +34,15 @@ export default {
   },
   APPLY_FORM(state, data) {
     state.applyError.form = data;
-  }
+  },
+  GET_HIGLIGHT_POSTS_SUCCESS(state, payload) {
+    state.highlightPost = {
+      status: payload.status,
+      data: payload.data.posts,
+    };
+  },
+  GET_HIGLIGHT_POSTS_FAILURE(state, payload) {
+    const { status } = payload.response;
+    state.highlightPost = { status };
+  },
 };

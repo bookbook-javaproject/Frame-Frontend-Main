@@ -1,7 +1,7 @@
 <template>
   <div class="full-screen" @wheel="onWheel" v-bind:style="fullScreenStyle">
     <screen-one />
-    <screen-two />
+    <screen-two v-bind:posts="highlightPost.data" />
     <screen-three />
     <screen-four />
     <screen-five />
@@ -9,18 +9,22 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+import { GET_HIGLIGHT_POSTS } from '../../store/actions';
+
 import { ScreenOne, ScreenTwo, ScreenThree, ScreenFour, ScreenFive } from "./";
 
 export default {
   name: "FirstView",
   computed: {
+    ...mapState(['highlightPost']),
     fullScreenStyle() {
       return {
         transform: `translateY(calc(-100vh * ${this.screenNumber - 1}))`,
         transition: "all 1000ms ease 0s",
         touchAction: "none"
       };
-    }
+    },
   },
   data() {
     return {
@@ -29,6 +33,16 @@ export default {
       isMoving: false,
       lastTime: 0
     };
+  },
+  watch: {
+    highlightPost: {
+      deep: true,
+      handler({ status }) {
+        if (Math.floor(status / 100) === 4) {
+          alert('하이라이트 게시글을 불러오는데 실패하였습니다.')
+        }
+      },
+    },
   },
   methods: {
     onWheel(event) {
@@ -81,6 +95,7 @@ export default {
         behavior: "smooth"
       });
     }, 1000);
+    this.$store.dispatch(GET_HIGLIGHT_POSTS);
   }
 };
 </script>

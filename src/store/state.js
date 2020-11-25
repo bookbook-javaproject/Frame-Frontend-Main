@@ -13,7 +13,11 @@ const state = {
   file : null,
   passwordError : false,
   userError : false,
-  applyError : writerApplyData()
+  applyError : writerApplyData(),
+  highlightPost: {
+    statusCode: null,
+    data: [],
+  },
 };
 
 export default state;
