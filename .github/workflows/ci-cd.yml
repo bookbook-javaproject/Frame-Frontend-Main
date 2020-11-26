@@ -25,6 +25,9 @@ jobs:
 
       - name: Install dependencies
         run: yarn install
+        
+      - name: Upgrade dependencies
+        run: yarn upgrade
 
       - name: Build
         run: VUE_APP_API_URL=${CORE} VUE_APP_FILE_API_URL=${FILE} yarn build
