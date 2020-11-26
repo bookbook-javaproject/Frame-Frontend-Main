@@ -15,7 +15,7 @@
     "vue": "^2.6.11",
     "vue-router": "^3.4.6",
     "vuex": "^3.5.1",
-    "frame-qna": "https://github.com/bookbook-javaproject/Frame-Frontend-QnA.git#v1.1"
+    "frame-qna": "https://github.com/bookbook-javaproject/Frame-Frontend-QnA.git#v1.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
