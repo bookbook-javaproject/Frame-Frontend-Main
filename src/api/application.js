@@ -12,8 +12,6 @@ export const poembookApplycation = (link, fileId) => {
 
 export const writerAuth = (email) => {
   return getClientAccessToken.post("/submission/author/auth", { email })
-  .then(({ data })=> data)
-  .catch(({ data }) => data);
 };
 
 export const writerCheckCode = (code) => {
