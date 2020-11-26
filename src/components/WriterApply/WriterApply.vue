@@ -44,11 +44,10 @@ export default {
                 this.emailError = "";
                 this.isWriterAuth = false;
             }
-
             if(!localStorage.getItem("accessToken")) {
                 alert("로그인을 먼저 해주세요.");
             }
-            else if(this.isWriterAuth === false && localStorage.getItem("accessToken")) {
+            else if(this.isWriterAuth === false) {
                 this.WRITER_AUTH({email : this.email})
                 .then(() => {
                     if(this.isApplyError.auth == true) 

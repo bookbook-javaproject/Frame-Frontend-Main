@@ -45,7 +45,6 @@ export default {
         onApplyCodeCheck () {
             if(this.authCode == "") {
                 this.codeError = "인증코드를 입력해주세요.";
-                console.log(this.applyError);
             }
             else if(localStorage.getItem("accessToken")){
                 this.WRITER_CHECK_CODE({code : this.authCode})
