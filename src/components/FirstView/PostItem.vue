@@ -3,45 +3,37 @@
     <header>
       <img src="https://picsum.photos/200/300" alt="프로필" class="profile-image" />
       <div class="profile-box">
-        <span>어떤작가</span>
-        <span>2020-10-01</span>
+        <span v-text="post.writerEmail" />
+        <span v-text="createdAt" />
       </div>
     </header>
-    <pre @wheel="onWheel">
-      얼음이 되려니와, 과실이
-       넣는 같은 이상은 이상, 인류의 하였으며, 뿐이다. 그들은 우리의 그들은 구하지 목숨을 이는 
-      위하여서, 쓸쓸하랴? 낙원을 피가 간에 있는 얼음에 수 보이는 위하여서. 얼마나 없으면 주며, 튼튼하며, 가슴이 곳이 
-      위하여 밝은 것은 것이다. 영락과 대한 가지에 불어 힘있다. 구하지 그들은 사라지지 같이, 관현악이며,구하기 때문이다.
-      얼음이 되려니와, 과실이
-       넣는 같은 이상은 이상, 인류의 하였으며, 뿐이다. 그들은 우리의 그들은 구하지 목숨을 이는 
-      위하여서, 쓸쓸하랴? 낙원을 피가 간에 있는 얼음에 수 보이는 위하여서. 얼마나 없으면 주며, 튼튼하며, 가슴이 곳이 
-      위하여 밝은 것은 것이다. 영락과 대한 가지에 불어 힘있다. 구하지 그들은 사라지지 같이, 관현악이며,구하기 때문이다.
-      얼음이 되려니와, 과실이
-       넣는 같은 이상은 이상, 인류의 하였으며, 뿐이다. 그들은 우리의 그들은 구하지 목숨을 이는 
-      위하여서, 쓸쓸하랴? 낙원을 피가 간에 있는 얼음에 수 보이는 위하여서. 얼마나 없으면 주며, 튼튼하며, 가슴이 곳이 
-      위하여 밝은 것은 것이다. 영락과 대한 가지에 불어 힘있다. 구하지 그들은 사라지지 같이, 관현악이며,구하기 때문이다.
-    </pre>
+    <pre @wheel="onWheel" v-text="post.content" />
     <footer>
-      <etc-button v-bind:imgSrc="etcImage.emotionButton" count="10" />
-      <etc-button v-bind:imgSrc="etcImage.commentButton" count="10" />
+      <etc-button v-bind:imgSrc="etcImage.emotionButton" :count="post.hearts" />
+      <etc-button v-bind:imgSrc="etcImage.commentButton" :count="post.comments" />
       <etc-button v-bind:imgSrc="etcImage.reTweetButton" count="10" />
     </footer>
   </div>
 </template>
 
 <script>
-import EtcButton from "./EtcButton";
-import { commentButton, emotionButton, reTweetButton } from "@/assets/img";
+import EtcButton from './EtcButton';
+import { commentButton, emotionButton, reTweetButton } from '@/assets/img';
+import { getDate } from '@/utils/date';
+
 export default {
-  name: "FirstViewPostItem",
+  name: 'FirstViewPostItem',
   components: {
     EtcButton
   },
-  props: ["currentPage", "page"],
+  props: ['post', 'currentPage', 'page'],
   computed: {
     slideStyle() {
       return { transform: `translateX(calc(-100% * ${this.currentPage - 1}))` };
-    }
+    },
+    createdAt() {
+      return getDate(this.post.createdAt);
+    },
   },
   data() {
     const returnData = {
@@ -55,10 +47,17 @@ export default {
   },
   methods: {
     onWheel(e) {
-      console.log(1);
+      const { deltaY, target: { scrollHeight, clientHeight, scrollTop } } = e;
+      if (
+        scrollHeight === clientHeight ||
+        scrollTop === 0 && deltaY < 0 ||
+        scrollHeight - clientHeight === scrollTop && deltaY > 0
+      ) {
+        e.preventDefault();
+      }
       e.stopPropagation();
-    }
-  }
+    },
+  },
 };
 </script>
 

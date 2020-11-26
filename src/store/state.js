@@ -9,9 +9,15 @@ const writerApplyData = () => {
 const state = {
   accessToken: null,
   refreshToken: null,
-  userError : null,
+  isFile : true,
   file : null,
-  applyError : writerApplyData()
+  passwordError : false,
+  userError : false,
+  applyError : writerApplyData(),
+  highlightPost: {
+    statusCode: null,
+    data: [],
+  },
 };
 
 export default state;
