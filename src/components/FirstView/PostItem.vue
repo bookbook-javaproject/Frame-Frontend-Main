@@ -11,7 +11,7 @@
     <footer>
       <etc-button v-bind:imgSrc="etcImage.emotionButton" :count="post.hearts" />
       <etc-button v-bind:imgSrc="etcImage.commentButton" :count="post.comments" />
-      <etc-button v-bind:imgSrc="etcImage.reTweetButton" count="10" />
+      <!-- <etc-button v-bind:imgSrc="etcImage.reTweetButton" count="10" /> -->
     </footer>
   </div>
 </template>
