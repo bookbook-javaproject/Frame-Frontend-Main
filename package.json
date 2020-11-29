@@ -10,6 +10,7 @@
   "dependencies": {
     "axios": "^0.20.0",
     "core-js": "^3.6.5",
+    "frame-qna": "git+https://github.com/bookbook-javaproject/Frame-Frontend-QnA.git#v1.2",
     "node-sass": "^4.14.1",
     "sass-loader": "^10.0.3",
     "vue": "^2.6.11",
