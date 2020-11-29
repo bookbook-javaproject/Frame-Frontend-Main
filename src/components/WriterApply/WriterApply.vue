@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
 import "../../assets/style/formGlobal.scss";
 export default {
     data () {
@@ -26,7 +27,15 @@ export default {
             isWriterAuth : true
         }
     },
+    computed : {
+        ...mapGetters([
+            "isApplyError"
+        ])
+    },
     methods : {
+        ...mapActions([
+            "WRITER_AUTH"
+        ]),
         onWriterApplyAuth () {
             if(!this.validEmail(this.email)) {
                 this.emailError = "이메일을 올바르게 입력하세요.";
@@ -34,7 +43,23 @@ export default {
             else {
                 this.emailError = "";
                 this.isWriterAuth = false;
-                this.$emit("onWriterApplyAuth", this.isWriterAuth);
+            }
+
+            if(!localStorage.getItem("accessToken")) {
+                alert("로그인을 먼저 해주세요.");
+            }
+            else if(this.isWriterAuth === false && localStorage.getItem("accessToken")) {
+                this.WRITER_AUTH({email : this.email})
+                .then(() => {
+                    if(this.isApplyError.auth == true) 
+                    {
+                        this.$emit("onWriterApplyAuth", this.isWriterAuth);  
+                    }
+                    else 
+                    {
+                        alert("작가 신청 이메일 인증에 실패하였습니다. 다시 시도해주세요.");
+                    }
+                })
             }
         },
         validEmail (email) {
