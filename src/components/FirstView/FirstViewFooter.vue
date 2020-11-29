@@ -1,6 +1,6 @@
 <template>
   <footer>
-    <common-main>
+    <main>
       <aside>
         <img v-bind:src="frameLogo" alt="프레임로고" />
         <pre>
@@ -26,7 +26,7 @@
           <h6>신서림</h6>
         </div>
       </article>
-    </common-main>
+    </main>
     <div class="sns-wrapper">
       <a href="https://facebook.com">
         <img v-bind:src="facebookIcon" alt="페이스북로고" />
@@ -39,14 +39,10 @@
 </template>
 
 <script>
-import CommonMain from "./CommonMain";
 import { frameLogo, facebookIcon, githubIcon } from "@/assets/img";
 
 export default {
   name: "FirstViewFooter",
-  components: {
-    CommonMain
-  },
   data() {
     return {
       frameLogo,
@@ -68,8 +64,17 @@ footer {
   background-color: #e5eaef;
 }
 
-.container {
+main {
   display: flex;
+  padding: 0 20.625rem;
+  box-sizing: border-box;
+  width: 100vw;
+}
+
+@media screen and (max-width: 1540px) {
+  main {
+    padding: 0 1.875rem;
+  }
 }
 
 aside {

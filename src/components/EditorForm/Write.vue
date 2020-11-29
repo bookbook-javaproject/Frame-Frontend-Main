@@ -2,37 +2,37 @@
   <div class="Write-container">
     <div class="Write-content">
         <img  class="Write-content-userImage" :src="profileImage">
-        <textarea class="Write-content-editor" />
+        <textarea class="Write-content-editor" v-model="content" />
     </div>
     <div class="Write-footer">
         <div class="Write-nature">
           <div class="Write-nature-item">
             <label for="Emotional">감성</label>
-            <input type="radio" id="Emotional" value="Emotional" checked name="Write-nature" >
+            <input type="radio" id="Emotional" v-model="contentType" value="SENSIBILITY" checked name="Write-nature" >
           </div>
           <div class="Write-nature-item">
             <label for="Romantic">낭만</label>
-            <input type="radio" id="Romantic" value="Romantic"  name="Write-nature">
+            <input type="radio" id="Romantic" v-model="contentType"  value="ROMANCE"  name="Write-nature">
           </div>
           <div class="Write-nature-item">
             <label for="Life">인생</label>
-            <input type="radio" id="Life" value="Life"  name="Write-nature" >
+            <input type="radio" id="Life" v-model="contentType"   value="LIFE"  name="Write-nature" >
           </div>
           <div class="Write-nature-item">
             <label for="Philosophy">철학</label>
-            <input type="radio" id="Philosophy" value="Philosophy" name="Write-nature" >
+            <input type="radio" id="Philosophy" v-model="contentType"  value="PHILOSOPHY" name="Write-nature" >
           </div>
         </div>
         <div class="Write-select-list">
           <div class="Write-edit-radio">
             <label for="Write-public">공개</label>
-            <input type="radio" id="Write-public" name="Write-edit">
+            <input type="radio" id="Write-public" v-model="accessType" value="PUBLIC" name="Write-edit">
           </div>
           <div class="Write-edit-radio">
-            <label for="Write-private">비공개</label>
-            <input type="radio" id="Write-private" name="Write-edit">
+            <label for="Write-private"  >비공개</label>
+            <input type="radio" id="Write-private" v-model="accessType" value="PRIVATE" name="Write-edit">
           </div>
-          <div class="Write-edit-button">발행</div>
+          <div class="Write-edit-button" v-on:click="submit">발행</div>
         </div>
     </div>
   </div>
@@ -40,10 +40,22 @@
 
 <script>
 
+import {mapActions} from 'vuex';
 export default {
   data(){
-    return{
-      profileImage: 'https://i.pinimg.com/originals/28/37/5f/28375f1b51f3f4c40c6da45ff4ef2f0a.jpg'
+    return{ 
+      profileImage: 'https://i.pinimg.com/originals/28/37/5f/28375f1b51f3f4c40c6da45ff4ef2f0a.jpg',
+      contentType:'',
+      accessType:'',
+      content:''
+    }
+  },
+  methods:{
+    ...mapActions([
+      'POST_CREATE_POST'
+    ]),
+    submit: function(){
+      this.POST_CREATE_POST({contentType:this.contentType,accessType:this.accessType,content:this.content})
     }
   }
 
@@ -160,4 +172,4 @@ box-shadow: 5px 6px 13px -2px rgba(0,0,0,0.33);
         visibility: visible;
         border: 3px solid white;
     }
-</style>
+ </style>
