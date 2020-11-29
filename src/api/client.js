@@ -1,6 +1,23 @@
-import axios from 'axios';
+import axios from "axios";
 
-// export const getClient = () =>
-//   axios.create({
-//     url: 'https://domain.com',
-//   });
+export const client = axios.create({
+  baseURL: process.env.VUE_APP_API_URL,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
+export const getClientAccessToken = axios.create({
+  baseURL: process.env.VUE_APP_API_URL,
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+  },
+});
+
+export const uploadFile = axios.create({
+    baseURL : process.env.VUE_APP_FILE_API_URL,
+    headers: {
+        "Content-Type": "application/json",
+    },
+});
