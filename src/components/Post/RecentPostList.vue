@@ -1,30 +1,38 @@
 <template>
     <div class="postList-container">
+        <post-item v-for="(item,index) of posts" v-bind:key="index" v-bind:post="item" ></post-item>
     </div>
 
 </template>
 
 <script>
-import axios from 'axios';
+import { mapActions,mapState  } from "vuex";
+
+import postItem from  './PostItem';
 export default {
     name:'RecentPostList',
     components:{
+        postItem
     },
     data(){
         return{
             items: null 
         }
     },
-       methods:{
-        getPostItem : async ()=> {
-            return  axios.get('https://raw.githubusercontent.com/zofqofhtltm8015/fs/master/db.json');
-            
-        }
+    computed: mapState({
+        posts: state=>state.posts
+    }),
+    methods:{
+        ...mapActions([
+            'GET_POST'
+        ])
     },
+    
     async created(){
-        const items = await this.getPostItem();
-        this.items = items.data;
-        console.log(this.items);
+        await this.GET_POST('recency');
+
+         console.log(this.posts)
+        
     },
  
 }
@@ -36,5 +44,7 @@ export default {
         flex-direction: column;
         align-items: center;
         justify-content: space-around;
+              margin-left: -20rem;
+
     }
 </style>
