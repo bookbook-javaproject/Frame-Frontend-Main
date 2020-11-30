@@ -1,6 +1,18 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import { FirstView, SignUp, UserPage,Login, MainPage, PasswordResetAuth, WriterApply, PoembookApply,Write,userProfile } from '@/components';
+import {
+  FirstView,
+  SignUp,
+  UserPage,
+  Login,
+  MainPage,
+  PasswordResetAuth,
+  WriterApply,
+  PoembookApply,
+  Write,
+  userProfile,
+  PageNotFound,
+} from '@/components';
 import {TrendingPostList,PICommentForm, RecentPostList, NoticePostList} from '@/components/Post/index.js';
 import {ILoveItForm, MyWritingForm,userFollowing,userFollower} from '@/components/UserPage/index.js';
 
@@ -15,95 +27,93 @@ export default new Router({
       component: FirstView,
     },
     {
-      name : 'passwordResetAuth',
-      path : '/password-reset',
-      component : PasswordResetAuth
+      name: 'passwordResetAuth',
+      path: '/password-reset',
+      component: PasswordResetAuth,
     },
     {
       name: 'test',
       path: '/',
       component: MainPage,
-      children:[
+      children: [
         {
           name: 'TrendingPostList',
-          path:'/',
-          component: TrendingPostList
+          path: '/',
+          component: TrendingPostList,
         },
-      
+
         {
           name: 'RecentPostList',
-          path:'/recent',
-          component: RecentPostList
+          path: '/recent',
+          component: RecentPostList,
         },
         {
           name: 'NoticePostList ',
-          path:'/notice',
-          component: NoticePostList
+          path: '/notice',
+          component: NoticePostList,
         },
         {
-
-          path:'/write',
-          component: Write
+          path: '/write',
+          component: Write,
         },
-        { 
-          path: '/post/:id', component: PICommentForm 
+        {
+          path: '/post/:id',
+          component: PICommentForm,
         },
         {
           name: 'userpage',
           path: '/userpage/:username',
           component: UserPage,
-          children:[
+          children: [
             {
               name: 'MyWriting',
-              path:'/',
-              component:MyWritingForm
+              path: '/',
+              component: MyWritingForm,
             },
             {
               name: 'ILoveItForm',
               path: 'ILoveItForm',
-              component: ILoveItForm
+              component: ILoveItForm,
             },
             {
               name: 'Following',
-              path:'userFollowing',
-              component: userFollowing
+              path: 'userFollowing',
+              component: userFollowing,
             },
             {
               name: 'Follower',
-              path:'userFollower',
-              component: userFollower
-            }
-          ]
+              path: 'userFollower',
+              component: userFollower,
+            },
+          ],
         },
         {
-          name:'setting-user-profile',
-          path:'setProfile',
-          component:userProfile
-  
-        }
-      ]
-    },
-
-
-    { 
-      name : 'login',
-      path : '/login',
-      component : Login
+          name: 'setting-user-profile',
+          path: 'setProfile',
+          component: userProfile,
+        },
+      ],
     },
     {
-      name : 'signUp',
-      path : '/sign-up',
-      component : SignUp
+      name: 'login',
+      path: '/login',
+      component: Login,
     },
     {
-      name : 'writerApply',
-      path : '/writer-apply',
-      component : WriterApply
-    }, 
+      name: 'signUp',
+      path: '/sign-up',
+      component: SignUp,
+    },
     {
-      name : 'poembookApply',
-      path : '/poembook-apply',
-      component : PoembookApply
-    }
+      name: 'writerApply',
+      path: '/writer-apply',
+      component: WriterApply,
+    },
+    {
+      name: 'poembookApply',
+      path: '/poembook-apply',
+      component: PoembookApply,
+    },
+    { path: '*', component: PageNotFound },
   ],
 });
