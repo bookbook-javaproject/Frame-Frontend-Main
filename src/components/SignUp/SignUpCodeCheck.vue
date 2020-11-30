@@ -46,7 +46,6 @@ export default {
       } 
       else {
         this.SIGN_UP_CHECK({ code: this.code }).then(() => {
-            console.log(this.isSignUp);
             if(this.isSignUp === true) this.$router.push("/login");
             else if(this.isSignUp == 403) this.codeError = "인증코드가 잘못되었습니다."
             else if(this.isSignUp == 409) {
