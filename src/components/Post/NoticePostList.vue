@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import { mapActions } from 'vuex';
 export default {
     name:'NoticePostList',
     components:{
@@ -16,13 +16,13 @@ export default {
         }
     },
        methods:{
-        getPostItem : async ()=> {
-            return  axios.get('https://raw.githubusercontent.com/zofqofhtltm8015/fs/master/db.json');
-            
-        }
+           ...mapActions([
+               'GET_NOTICE'
+           ])
+    
     },
     async created(){
-        const items = await this.getPostItem();
+        const items = this.GET_NOTICE();
         this.items = items.data;
         console.log(this.items);
     },
