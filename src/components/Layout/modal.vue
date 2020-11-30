@@ -9,7 +9,7 @@
                 계정설정
             </div>
         </router-link>
-        <div class="modal-logout-button">
+        <div class="modal-logout-button" @click="onLogOut">
             로그아웃
         </div>
   </div>
@@ -18,8 +18,13 @@
 <script>
 export default {
     props:['imageUri','nickname'],
-  
-
+    methods: {
+        onLogOut() {
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('refreshToken');
+            this.$router.push('/login');
+        }
+    }
 }
 </script>
 
@@ -46,6 +51,9 @@ export default {
         width: 3rem;
         height: 3rem;
         border-radius: 100px;
+    }
+    .modal-logout-button {
+        cursor:pointer;
     }
 
 </style>
