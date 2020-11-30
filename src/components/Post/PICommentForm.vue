@@ -2,13 +2,13 @@
   <div class="PICommentForm-container PICommentForm-layout">
       <div class="PICommentForm-header PICommentForm-layout">
       <div  class="PICommentForm-header2">
-          <img class="PICommentForm-userImage" :src="userImage" />
+          <img class="PICommentForm-userImage" alt="미구현" />
           <div class="PICommentForm-userInformation">
               <div class="PICommentForm-userNickName"> 
-                벨근
+                {{posts_detail.writer}}
               </div>
               <div class="PICommentForm-WroteDate"> 
-                2020-10-28
+                {{createdAtDate}}
               </div>
           </div>
         </div>
@@ -19,48 +19,34 @@
 
       <div class="PICommentForm-section PICommentForm-layout">
           <div class="PICommentForm-postContent"> 
-            오늘부터 넌 내 꿈만 꿔
-            LALALALILALA
-            LALALALILALA
-            주문을 외울 테니
-            Oh 넌 내 꿈만 꿔
-            LALALALILALA
-            LALALALILALA
-            asdlfasdfkjasd
-            flasdkjf
-            asdjkfjasdkfjljasdkfhjas
-            d';fkjja
-            sd'fkjjasd
-            kfjsdafk;asdjkfjasdkfjljasdkfhjasa'sdfl
-            asd'fj
-            asd'kfjkjasdkfjs
+              {{posts_detail.content}}
           </div>
       </div>
       <div class="PICommentForm-article PICommentForm-layout">
           <div class="PICommentForm-emotion"> 
             <img :src="emotionButton" />
             <div class="PICommentForm-emotionSum"> 
-              15
+              {{posts_detail.hearts.length}}
             </div>
           </div>
           <div class="PICommentForm-emotion"> 
             <img :src="commentButton" />
             <div class="PICommentForm-emotionSum">
-              10  
+              {{posts_detail.comments.length  }}
             </div>
           </div>
       </div>
       <div class="PICommentForm-content PICommentForm-layout" >
         <div class="PICommentForm-commentList">
-            <PICommentItem v-for="(item,index) of items" v-bind:key="index" :user="item.user" /> 
+          <PICommentItem v-for="(item,index) of this.posts_detail.comments" v-bind:key="index" :detail="item" />   
             
         </div>
       
       </div>
       <div class="PICommentForm-footer PICommentForm-layout">
           <img  :src="userImage" class="PICommentForm-userImage" />
-          <input type="text" placeholder="댓글을 입력하세요" class="PICommentForm-mainComment">
-          <div class="PICommentForm-commentSubmit-button">입력</div>
+          <input type="text" placeholder="댓글을 입력하세요" class="PICommentForm-mainComment" v-model="comment">
+          <div v-on:click="submitComment" class="PICommentForm-commentSubmit-button">입력</div>
       </div>
   </div>
 </template>
@@ -68,23 +54,48 @@
 <script>
 import {emotionButton,emotionButtonClicked, commentButton} from '@/assets/img';
 import PICommentItem from './PICommentItem.vue';
-import axios from 'axios';
+import {mapActions} from 'vuex';
 export default {
+  props:['posts_detail'],
   data(){
     return{
       userImage: 'https://images8.alphacoders.com/958/958091.jpg',
       emotionButton,
       emotionButtonClicked,
       commentButton,
+      comment:'',
       items:null
     }
   },
    components:{PICommentItem},
-  async created(){
-    const data = await axios.get('https://raw.githubusercontent.com/zofqofhtltm8015/fs/master/fakeComment.json');
-    this.items = data.data;
-    console.log(this.items);
-  }
+   methods:{
+     ...mapActions([
+       'POST_COMMENT'
+     ]),
+     submitComment: function(){
+       console.log(this.comment);
+       this.POST_COMMENT({comment:this.comment}).then(()=>{
+         console.log("성공")
+       }).catch(()=>{
+         console.log("실패")
+       })
+     }
+   },
+           computed:{
+            createdAtDate: function(){
+                const Date = this.posts_detail.createdAt.split('T')
+                return Date[0]
+            },
+
+           },
+          created(){
+            console.log(`ficl ${this.posts_detail}`)
+          },
+          
+          
+      
+
+
 }
 </script>
 
