@@ -45,4 +45,15 @@ export default {
     const { status } = payload.response;
     state.highlightPost = { status };
   },
+  GET_USER(state,data){
+    state.user = data;
+  },
+  GET_POST(state,data){
+    state.posts = data;
+    console.log(state.posts);
+  },
+  GET_POST_DETAIL(state,data){
+    console.log(data);
+    state.posts_detail = data;
+  }
 };
