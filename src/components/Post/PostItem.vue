@@ -1,7 +1,7 @@
 <template>
   <div class="postItem-container" v-on:click="setLocalUser">
     <div class="postItem-card-title">
-      <img class="postItem-userImage" v-on:click="userImageClicked" alt="아직 구현 안됨" >
+      <img class="postItem-userImage" v-on:click="userImageClicked" alt="아직 구현 안됨" v-if="!isNotice">
       <div class="postItem-card-subtitle">
         <p>
             {{post.writer}}
@@ -15,13 +15,13 @@
             {{post.content}}
     </div>
     <div class="postItem-card-ev"> <!-- ev means Evaluation-->
-        <div class="postItem-card-ev-items" v-on:click="empth">
+        <div class="postItem-card-ev-items" v-on:click="empth" v-if="!isNotice">
             <img :src="isEmotioned ? emotionButtonClicked :emotionButton " />
             <p>
                 {{post.hearts}}
             </p>
         </div>
-        <div class="postItem-card-ev-items" >
+        <div class="postItem-card-ev-items" v-if="!isNotice">
             <img :src="commentButton" />
             <p>
                 {{post.comments}}
@@ -35,9 +35,9 @@
 <script>
 import {commentButton,emotionButton,emotionButtonClicked} from '@/assets/img'
 import router from '@/router';
-import {mapActions} from 'vuex';
+import {mapActions, mapState} from 'vuex';
 export default {
-    props:['post'],
+    props:['post', 'isNotice'],
 
 
     data:function() {
@@ -49,8 +49,22 @@ export default {
                 isEmotioned: false,
             };
         },
+        watch: {
+            async patchHeartRequest() {
+                await this.GET_POST('trending');
+            },
+            post: {
+                deep: true,
+                handler(data) {
+                    if (data) {
+                        this.$store.commit('PATCH_HEART', false);
+                    }
+                }
+            }
+        },
         methods:{
             ...mapActions([
+                'GET_POST',
                 'PATCH_HEART'
             ]),
             setLocalUser: function(){
@@ -70,6 +84,7 @@ export default {
             }
         },
         computed:{
+            ...mapState(['patchHeartRequest']),
             createdAtDate: function(){
                 const Date = this.post.createdAt.split('T')
                 return Date[0]
