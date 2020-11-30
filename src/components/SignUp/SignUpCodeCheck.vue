@@ -12,7 +12,7 @@
         </div>
         <span class="auth-error">{{ codeError }}</span>
       </article>
-      <router-link to="/sign-up" class="auth-link"
+      <router-link to="/sign-up" class="auth-link" @click.native="goSignUp"
         ><span class="point-link">회원가입 페이지로 돌아가기</span></router-link
       >
       <button @click="onSignUpCheck">다음으로</button>
@@ -57,6 +57,9 @@ export default {
         });
       }
     },
+    goSignUp() {
+      this.$emit("onSignUp", true);
+    }
   },
 };
 </script>
