@@ -1,7 +1,7 @@
 <template>
     <div class="mainPage-container">
         <div class="mainPage-header">
-            <main-header></main-header>
+            <main-header :imageUri="user.imageUri" v-bind:nickname="user.nickname"></main-header>
         </div>
         <div class="mainPage-nav" v-show="isNavNeed" >
             <main-select-list></main-select-list>
@@ -10,7 +10,7 @@
         <div class="mainPage-content">
             <router-view />
         </div>
-      
+        <img :src="backgroundPublic" class="mainPage-footer" />
     </div>
 </template>
 
@@ -19,7 +19,8 @@
 import MainSelectList from './SelectList.vue';
 import {MainHeader} from '../Layout';
 import {MainWriteButton} from './';
-// import {PostItem} from '@/components/Post/index.js';
+import { mapActions,mapState } from "vuex";
+import {backgroundPublic} from '@/assets/img';
 export default {
     components:{
         MainSelectList,
@@ -28,10 +29,17 @@ export default {
     },
     data(){
         return{
-            isNavNeed:true
+            isNavNeed:true,
+            backgroundPublic
         }
     },
-    created: function(){
+      methods:{
+        ...mapActions([
+            'GET_USER'
+        ])
+    },
+    created: async function(){
+        await this.GET_USER();
             let path = window.location.pathname;
             
             if(path === '/'){
@@ -47,6 +55,7 @@ export default {
             }
         
     },
+  
     watch:{
         '$route'(to){
             console.log(to.fullPath);
@@ -63,7 +72,10 @@ export default {
             }
         }
         
-    }
+    },
+    computed: mapState({
+        user: state=>state.user
+    })
     
 }
 
@@ -73,7 +85,7 @@ export default {
 .mainPage-container{
     display:flex;
     flex-direction: column;
-    justify-items: space-around;
+    
 }
 .mainPage-header{
     height: 20%;
@@ -89,6 +101,13 @@ export default {
 .mainPage-content{
     display: flex;
     flex-direction: column;
-    align-items: center;
+      margin-left: 20rem;
+
+}
+.mainPage-footer{
+    position: fixed;
+    bottom:0;
+    z-index:-999;
+    
 }
 </style>
