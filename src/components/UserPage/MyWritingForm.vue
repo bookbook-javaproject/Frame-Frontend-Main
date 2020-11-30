@@ -1,13 +1,12 @@
 <template>
     <div class="MyWritintForm-container">
-        <post-item v-for="(item,index) in items" v-bind:key="index" :user="item.user" :post="item.post" />
+        <post-item v-for="(item,index) in items" v-bind:key="index" :post="item" />
     </div>
 </template>
 
 <script>
     import postItem from '../Post/PostItem';
-    import axios from 'axios';
-
+    import {mapActions,mapState} from 'vuex'
 export default {
     components:{postItem},
             data(){
@@ -15,10 +14,19 @@ export default {
         items: null
       }
     },
+    methods:{
+        ...mapActions([
+            'GET_MYPOST'
+        ])
+    },
+    computed: mapState([
+        'myPost'
+    ]),
     async created(){
-        const data = await axios.get('https://raw.githubusercontent.com/zofqofhtltm8015/fs/master/db.json');
-        this.items = data.data;
-        console.log(`items : ${this.items}`);        
+        const item =  await this.GET_MYPOST({accessType:"public"});
+       this.items = item.data.userPostPreviews,
+       console.log(this.items);
+        
     }
 }
 </script>

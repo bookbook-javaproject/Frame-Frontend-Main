@@ -1,50 +1,79 @@
 <template>
     <div class="UserInfor-container">
-        <img class="UserInfor-userImage" :src="UserImage" />
+        <img class="UserInfor-userImage" :src="user.imageUri" />
         <div class="UserInfor-content">
             <div class="UserInfor-infor">
-                <div class="UserInfor-userNickname">사랑스러운 종근</div>
+                <div class="UserInfor-userNickname">{{user.nickname}}</div>
                 <div class="UserInfor-userAction">
                     <img :src="authBlocked">
-                    <img :src="authReport" >
+                    <img :src="authReport" v-on:click="report" >
                     <img :src="authSponser" >
                 </div>
             </div>
-            <div class="UserInfor-introduce">아무리 도망쳐도 내 선한 본성은 이길 수 없었다. 거짓과 위선은 너 같은 사람에게나 필요한 것 나도 이젠 내 자신에게 솔직해져야 겠다.</div>
+            <div class="UserInfor-introduce">{{user.description}}</div>
             <div class="UserInfor-content-container">
                 <div class="UserInfor-userFollwer-Infor" v-on:click="showLog">
                     <div class="UserInfor-following">팔로잉</div>
-                    <div class="UserInfor-followingSum">801</div>
+                    <div class="UserInfor-followingSum">{{follow.following}}</div>
                 </div>
                 <div class="UserInfor-userFollwer-Infor" v-on:click="showLog">
                     <div class="UserInfor-follwer" >팔로워</div>
-                    <div class="UserInfor-follwerSum">1</div>
+                    <div class="UserInfor-follwerSum">{{follow.follower}}</div>
                 </div>
                 <div class="UserInfor-application">작가신청</div>
             </div>
-
+           
         </div>
-    
+    <div  v-show="clickedReport" class="UserInfor-report-modal">
+            <div class="UserInfor-report-modal-container">
+                    <img class="close-button" v-on:click="close_Reportmodal" :src="closeButton"/>
+                    <img class="reaport-logo" :src="frameLogo"/>
+                    <h1>신고하기</h1>
+                    <div class="report-reason">신고 사유</div>
+                    <textarea class="report-content" v-model="reportContent" />
+                    <div class="UserInfor-report-modal-button" v-on:click="submit_report">신고</div>
+            </div>
+    </div>
     </div>
 </template>
 
 <script>
     
-import {authBlocked, authReport, authSponser} from '@/assets/img';
+import {authBlocked, authReport,frameLogo, authSponser,closeButton} from '@/assets/img';
+import {mapActions} from 'vuex';
 export default {
+    props:['user','follow'],
     data(){
         return{
             UserImage: 'https://pbs.twimg.com/media/Ef8sDBhUcAAhv_c.jpg',
             authBlocked,
             authReport, 
-            authSponser
+            authSponser,
+            clickedReport:false,
+            closeButton,
+            frameLogo,
+            reportContent:''
         }
     },
     methods:{
+        ...mapActions([
+            'POST_REPORT'
+        ]),
         showLog: function(){
             this.$emit('showFollow');
+        },
+        report:function(){
+            this.clickedReport= true
+            
+        },
+        close_Reportmodal:function(){
+            this.clickedReport=false
+        },
+        submit_report:function(){
+            this.POST_REPORT(this.reportContent);
         }
-    }
+    
+    },
 }
 </script>
 
@@ -110,5 +139,58 @@ export default {
     font-size: 1.5rem;
     font-weight: bold;
 }
-
+.UserInfor-report-modal{
+    z-index:3;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    right: 0%;
+    top: 0%;
+    background-color: rgba(80, 80, 80, 0.9);
+    
+}
+.UserInfor-report-modal-container{
+    width: 70rem;
+    position: fixed;
+    left: 10%;
+    top: 10%;
+    height: 40rem;
+    opacity: 1;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-around;
+    background-color: white;
+    color: #838383;
+    align-items:flex-start;
+}
+.UserInfor-report-modal-container h1{
+    color: #0F4C81;
+}
+.UserInfor-report-modal-button{
+    padding: 0.5rem 2rem 0.5rem 2rem; 
+    background-color: #0F4C81;
+    color:white;
+}
+.UserInfor-report-modal-container .report-content{
+    width: 50rem;
+    height: 20rem;
+}
+.UserInfor-report-modal-container .close-button{
+    margin-left: auto;
+    cursor: pointer;
+}
+.UserInfor-report-modal-container .reaport-logo{
+    margin-left: 5rem;
+}
+.UserInfor-report-modal-container h1{
+        margin-left: 5rem;
+}
+.UserInfor-report-modal-container div{
+        margin-left: 5rem;
+}
+.UserInfor-report-modal-container textarea{
+    margin-left: 5rem;
+    font-size: 1.5rem;
+    color: #838383;
+}
 </style>

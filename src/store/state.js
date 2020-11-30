@@ -18,6 +18,9 @@ const state = {
     statusCode: null,
     data: [],
   },
+  posts:[],
+  posts_detail:[],
+  user:{}
 };
 
 export default state;

@@ -67,9 +67,6 @@ export default {
 
 <style>
     .userFollowing-container-2{
-    
-        justify-content: space-around;
-
     }
     
 </style>
