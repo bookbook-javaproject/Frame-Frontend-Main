@@ -8,4 +8,4 @@ export { default as PoembookApply } from './PoembookApply/index.vue';
 export {default as Write} from './EditorForm/Write.vue';
 export {default as UserPage} from './UserPage/UserPage.vue';
 export {default as userProfile} from './userProfile/index.vue';
-
+export { default as PageNotFound } from './PageNotFound/index.vue';
