@@ -51,7 +51,7 @@ $font : "AppleSDGothicNeo";
     background-position: 100% 100%;
     background-size: 100vh;
     height: 99vh;
-    width: 65vw;
+    width: 66vw;
     display: flex;
     justify-content: center;
     position: relative;
