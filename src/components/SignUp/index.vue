@@ -1,7 +1,7 @@
 <template>
   <div class="auth-container">
     <sign-up @onSignUp="onSignUpAuth" v-if="isSignUp" />
-    <sign-up-check v-else />
+    <sign-up-check @onSignUp="onSignUpAuth" v-else />
     <side-view />
   </div>
 </template>
