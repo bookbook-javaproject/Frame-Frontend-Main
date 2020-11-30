@@ -1,30 +1,37 @@
 <template>
     <div class="postList-container">
-            <post-item v-for="item of items" v-bind:key="item.user.nickname" v-bind:user="item.user"  v-bind:post="item.post">a</post-item>
-
+        <post-item v-for="(item,index) of posts" v-bind:key="index" v-bind:post="item" ></post-item>
     </div>
+
 </template>
 
 <script>
-import PostItem from './PostItem.vue';
-import axios from 'axios';
+import { mapActions,mapState  } from "vuex";
+
+import postItem from  './PostItem';
 export default {
+    name:'TrendingPostList',
     components:{
-       'post-item': PostItem
+        postItem
     },
     data(){
         return{
-            items: null,
+            items: null 
         }
     },
-  
-    async created(){
-        const data = await axios.get('https://raw.githubusercontent.com/zofqofhtltm8015/fs/master/db.json');
-        this.items = data.data;
-        console.log(this.items);
+    computed: mapState({
+        posts: state=>state.posts
+    }),
+    methods:{
+        ...mapActions([
+            'GET_POST'
+        ])
     },
     
-
+    async created(){
+        await this.GET_POST('trending');
+         console.log(this.posts)
+    },
  
 }
 </script>
@@ -35,5 +42,7 @@ export default {
         flex-direction: column;
         align-items: center;
         justify-content: space-around;
+              margin-left: -20rem;
+
     }
 </style>
