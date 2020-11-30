@@ -1,10 +1,10 @@
 <template>
   <div class="postItem-container" v-on:click="setLocalUser">
     <div class="postItem-card-title">
-      <img class="postItem-userImage" v-on:click="userImageClicked" alt="아직 구현 안됨" v-if="!isNotice">
+      <img class="postItem-userImage" v-on:click="userImageClicked" alt="아직 구현 안됨" v-if="!isNotice" :src="post.writer.imageUri ? post.writer.imageUri : defaultProfileImage">
       <div class="postItem-card-subtitle">
         <p>
-            {{post.writer}}
+            {{ isNotice ? '관리자' : post.writer.nickname}}
         </p>
         <p style="color: #555555">
             {{createdAtDate}}
@@ -16,9 +16,9 @@
     </div>
     <div class="postItem-card-ev"> <!-- ev means Evaluation-->
         <div class="postItem-card-ev-items" v-on:click="empth" v-if="!isNotice">
-            <img :src="isEmotioned ? emotionButtonClicked :emotionButton " />
+            <img :src="~post.hearts.indexOf(user.email) ? emotionButtonClicked :emotionButton " />
             <p>
-                {{post.hearts}}
+                {{post.hearts.length ? post.hearts.length : 0}}
             </p>
         </div>
         <div class="postItem-card-ev-items" v-if="!isNotice">
@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import {commentButton,emotionButton,emotionButtonClicked} from '@/assets/img'
+import {commentButton,emotionButton,emotionButtonClicked, authArt } from '@/assets/img'
 import router from '@/router';
 import {mapActions, mapState} from 'vuex';
 export default {
@@ -47,6 +47,7 @@ export default {
                 emotionButton,
                 emotionButtonClicked,
                 isEmotioned: false,
+                defaultProfileImage: authArt,
             };
         },
         watch: {
@@ -58,6 +59,8 @@ export default {
                 handler(data) {
                     if (data) {
                         this.$store.commit('PATCH_HEART', false);
+                        this.isEmotioned = ~data.comments.hearts.indexOf(this.user.email)
+                        console.log(this.user.email)
                     }
                 }
             }
@@ -84,7 +87,7 @@ export default {
             }
         },
         computed:{
-            ...mapState(['patchHeartRequest']),
+            ...mapState(['patchHeartRequest', 'user']),
             createdAtDate: function(){
                 const Date = this.post.createdAt.split('T')
                 return Date[0]
