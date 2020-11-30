@@ -2,8 +2,6 @@
     <div class="userFollowing-container-2">
     <div v-for="(item, index) of items" v-bind:key="index">
           <FollowItem  v-bind:user="item" />
-          <FollowItem  v-bind:user="item" />
-
     </div>
 
         <!-- v-for="(item,index) of items" v-bind:key="index"-->
@@ -63,10 +61,9 @@ export default {
 </script>
 
 <style>
-    .userFollowing-container-2 div{
-        display:flex;
-        justify-content: space-around;
-
+    .userFollowing-container-2{
+        
+      
     }
     
 </style>
