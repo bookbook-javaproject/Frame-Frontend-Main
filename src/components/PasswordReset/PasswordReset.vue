@@ -77,8 +77,7 @@ export default {
                 else if(this.isPassword === true) {
                     this.codeError = "";
                     alert("비밀번호 재설정이 완료되었습니다.");
-                    if(localStorage.getItem("accessToken")) this.$router.push("/");
-                    else this.$router.push("/login");
+                   this.$router.push("/login");
                 }
                 else
                 {
