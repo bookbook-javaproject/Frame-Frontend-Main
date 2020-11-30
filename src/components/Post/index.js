@@ -4,3 +4,4 @@ export {default as TrendingPostList} from './TrendingPostList.vue';
 export {default as PostItem} from './PostItem.vue';
 export {default as PICommentForm} from './PICommentForm';
 export {default as PICommentItem} from './PICommentItem';
+export {default as PICForm} from './PICForm';
