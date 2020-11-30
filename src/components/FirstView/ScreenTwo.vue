@@ -124,6 +124,7 @@ main {
     > h1 {
       flex: 1;
       text-align: center;
+      font-family: AppleSDGothicNeo;
     }
   }
 }
