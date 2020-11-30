@@ -22,7 +22,7 @@ export default {
   },
   SIGN_UP_CHECK({ commit }, { code }) {
     return signUpCheck(code)
-    .then(() => commit("SIGN_UP"), true)
+    .then(() => commit("SIGN_UP", true))
     .catch((error) => {
         if(error.response.status == 409) commit("SIGN_UP", "409");
         else if(error.response.status == 404) commit("SIGN_UP", "404");
