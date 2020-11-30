@@ -4286,9 +4286,9 @@ fragment-cache@^0.2.1:
   dependencies:
     map-cache "^0.2.2"
 
-"frame-qna@https://github.com/bookbook-javaproject/Frame-Frontend-QnA.git":
+"frame-qna@https://github.com/bookbook-javaproject/Frame-Frontend-QnA.git#v1.2":
   version "1.0.0"
-  resolved "https://github.com/bookbook-javaproject/Frame-Frontend-QnA.git#933fe2d4001549687d75b37a1971e3116951c069"
+  resolved "https://github.com/bookbook-javaproject/Frame-Frontend-QnA.git#883846e77acc28738d95fe9b8b6d4395ee00b3ac"
   dependencies:
     "@vue/cli-service" "^4.5.8"
     rollup "^2.32.1"
