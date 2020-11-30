@@ -1,19 +1,19 @@
 <template>
   <div class="PICommentItem-container">
-      <img :src="user.profileImage" class="PICommentItem-userImage"/>
+      <img alt="미구현" class="PICommentItem-userImage"/>
 
       <div class="PICommentItem-content">
           <div class="PICommentItem-userInformation">
               <div class="PICommentItem-userNickname">
-                {{user.nickname}}
+                {{detail.writer}}
               </div>
               <div class="PICommentItem-userPostDate">
-                {{user.postDate}}
+                {{createdAtDate}}
               </div>
               <img class="PICommentItem-Trashcomment-icon" :src="trashCommentIcon" />
           </div>
           <div class="PICommentItem-comment-content">
-              {{user.comment}}
+              {{detail.comment}}
           </div>
       </div>
   </div>
@@ -23,8 +23,13 @@
 import {trashCommentIcon} from '@/assets/img';
 
 export default {
-    props:['user'],
-
+    props:['detail'],
+    computed:{
+            createdAtDate: function(){
+                const Date = this.detail.createdAt.split('T')
+                return Date[0]
+            },
+    },
     data(){
         return{
             trashCommentIcon,
