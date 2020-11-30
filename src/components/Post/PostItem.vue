@@ -1,13 +1,13 @@
 <template>
-  <div class="postItem-container">
+  <div class="postItem-container" v-on:click="setLocalUser">
     <div class="postItem-card-title">
-      <img class="postItem-userImage" v-on:click="userImageClicked" :src="user.userProfilePicture" >
+      <img class="postItem-userImage" v-on:click="userImageClicked" alt="아직 구현 안됨" >
       <div class="postItem-card-subtitle">
         <p>
-            {{user.nickname}}
+            {{post.writer}}
         </p>
         <p style="color: #555555">
-            {{post.dateTime}}
+            {{createdAtDate}}
         </p>
       </div>
     </div>
@@ -18,13 +18,13 @@
         <div class="postItem-card-ev-items" v-on:click="empth">
             <img :src="isEmotioned ? emotionButtonClicked :emotionButton " />
             <p>
-                {{post.emotionSum}}
+                {{post.hearts}}
             </p>
         </div>
         <div class="postItem-card-ev-items" >
             <img :src="commentButton" />
             <p>
-                {{post.comment}}
+                {{post.comments}}
             </p>
         </div>
     </div>
@@ -35,8 +35,10 @@
 <script>
 import {commentButton,emotionButton,emotionButtonClicked} from '@/assets/img'
 import router from '@/router';
+import {mapActions} from 'vuex';
 export default {
-    props:['post','user'],
+    props:['post'],
+
 
     data:function() {
         return {
@@ -44,22 +46,33 @@ export default {
                 commentButton,
                 emotionButton,
                 emotionButtonClicked,
-                isEmotioned: false
+                isEmotioned: false,
             };
         },
-        // created(){
-        //     if(this.post.clicked === true) this.empth();
-        // },
         methods:{
+            ...mapActions([
+                'PATCH_HEART'
+            ]),
+            setLocalUser: function(){
+                localStorage.setItem('postId',this.post.postId);
+                console.log("로컬스토리지 셋 됨");
+            },
             empth :function(){ // empth means  공감
-                console.log("empth버튼 눌림");
-                this.isEmotioned = !this.isEmotioned
+                this.isEmotioned = !this.isEmotioned;
+                this.PATCH_HEART();
+                
             },
             postItemClicked: function(){
-                router.push(`/post/${this.post.id}`);
+                router.push(`/post/${localStorage.getItem('postId')}`);
             },
             userImageClicked: function(){
-                router.push(`/userpage/${this.user.nickname}`)
+                 router.push(`/userpage/${this.post.writerEmail}`)
+            }
+        },
+        computed:{
+            createdAtDate: function(){
+                const Date = this.post.createdAt.split('T')
+                return Date[0]
             }
         },
         created(){
@@ -130,3 +143,7 @@ export default {
 
     
 </style>    
+
+
+
+
