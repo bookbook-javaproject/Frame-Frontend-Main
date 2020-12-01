@@ -1,7 +1,7 @@
 <template>
   <div class="Write-container">
     <div class="Write-content">
-        <img  class="Write-content-userImage" :src="profileImage">
+        <img  class="Write-content-userImage" :src="user.imageUri ? user.imageUri : defaultProfileImage">
         <textarea class="Write-content-editor" v-model="content" />
     </div>
     <div class="Write-footer">
@@ -39,15 +39,18 @@
 </template>
 
 <script>
+import { mapState, mapActions} from 'vuex';
 
-import {mapActions} from 'vuex';
+import { authArt } from '@/assets/img'
+
 export default {
   data(){
     return{ 
       profileImage: 'https://i.pinimg.com/originals/28/37/5f/28375f1b51f3f4c40c6da45ff4ef2f0a.jpg',
       contentType:'',
       accessType:'',
-      content:''
+      content:'',
+      defaultProfileImage: authArt
     }
   },
   methods:{
@@ -57,7 +60,8 @@ export default {
     submit: function(){
       this.POST_CREATE_POST({contentType:this.contentType,accessType:this.accessType,content:this.content})
     }
-  }
+  },
+  computed: mapState(['user'])
 
 }
 </script>
