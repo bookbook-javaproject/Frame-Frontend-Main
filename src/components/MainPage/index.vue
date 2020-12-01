@@ -38,10 +38,9 @@ export default {
             'GET_USER'
         ])
     },
-    created: async function(){
+    async created (){
         await this.GET_USER();
             let path = window.location.pathname;
-            
             if(path === '/'){
                 this.isNavNeed = true;
             }else if(path ==='/recent'){
@@ -50,7 +49,10 @@ export default {
                 this.isNavNeed = true;
             }else if(path==='/Write'){
                 this.isNavNeed =true;                
-            }else{
+            }else if(path===`/update/${this.$route.params.postId}`){
+                this.isNavNeed =true;                
+            }
+            else{
                 this.isNavNeed = false;                
             }
         
@@ -58,7 +60,6 @@ export default {
   
     watch:{
         '$route'(to){
-            console.log(to.fullPath);
             if(to.fullPath === '/'){
                 this.isNavNeed = true;
             }else if(to.fullPath ==='/recent'){
@@ -66,6 +67,8 @@ export default {
             }else if(to.fullPath === '/notice'){
                 this.isNavNeed = true;
             }else if(to.fullPath==='/Write'){
+                this.isNavNeed =true;                
+            }else if(to.fullPath===`/update/${this.$route.params.postId}`){
                 this.isNavNeed =true;                
             }else{
                 this.isNavNeed = false;                
