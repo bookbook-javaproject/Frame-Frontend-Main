@@ -6,7 +6,7 @@
     <div class="header-items" >
         <input class="header-searchBox" type="text" v-model="q" placeholder="검색" @keydown.enter="search" />
         <img class="header-serachIcon" :src="headerSearchIcon" v-on:click="search" />
-        <img class="header-userImage" :src="imageUri ? imageUri : defaultProfileImage" alt="너의 사진"/>
+        <img class="header-userImage" :src="imageUri ? `http://52.79.253.30:5001/file?id=${imageUri}` : defaultProfileImage" alt="너의 사진"  @click="goMyPost"/>
         <div class="header-list">
          <img class="header-select" v-on:click="showUser" :src="headerSelectButtonIcon" v-bind:class="{headerSelected: showUserI}" alt="셀레그"/> 
          <modal :imageUri="imageUri ? imageUri: defaultProfileImage" :nickname="nickname" v-if="showUserI" /> <!-- showUserI means Show User Information-->
@@ -20,7 +20,7 @@
 import { frameLogo, headerSearchIcon, headerSelectButtonIcon, authArt } from "@/assets/img";
 import {modal} from './index';
 import router from '@/router';
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 
 export default {
     props:['nickname','imageUri'],
@@ -37,6 +37,7 @@ export default {
             defaultProfileImage: authArt,
         }
     },
+    computed: mapState(['user']),
     methods:{
         showUser(){
             this.showUserI= !this.showUserI
@@ -48,7 +49,11 @@ export default {
             'GET_SEARCH_POST'
         ]),
         search(){
+            this.$router.push('/')
             this.GET_SEARCH_POST({q:this.q})
+        },
+        goMyPost() {
+            this.$router.push(`/userpage/${this.user.email}`)
         }
     }
 
@@ -57,14 +62,15 @@ export default {
 
 <style>
     .header-container{
-
+        padding: 0 1rem;
         display:flex;
         flex-direction: row;
         color:red;
-        justify-content: space-around;        
+        justify-content: flex-start;
         align-items: center;
         height: 7.5rem;
-        
+        width: 1166px;
+        margin: 0 auto;
     }
     .header-logo{
         width: inherit;
@@ -72,11 +78,11 @@ export default {
     }
     .header-items{
         display: flex;
+        justify-content: flex-end;
         height: 5rem;
         width: inherit;
-        justify-content: center;
         align-items: center;
-
+        position: relative;
     }
   
  
@@ -84,9 +90,8 @@ export default {
         height: 3.5rem;
         width: 3.5rem;
         border-radius: 100px;
-                        margin-left: 1rem;
-
-      
+        margin-left: 1rem;
+        cursor: pointer;
     }
     .header-select{
         height: 1.5rem;
@@ -115,21 +120,9 @@ export default {
         cursor: pointer;
     }
     .headerSelected{
-                margin-left: 1rem;
-
-        position: relative;
-        top: 7.5rem;
         transform: rotate(180deg);
         transition: 0.3s;
-        
-
     }
     .headerSelectedMain .header-items{
-        position: relative;
-        left: 5.6rem;
-    }
-    .headerSelectedMain .header-logo{
-        position: relative;
-        left: 1.9rem;
     }
 </style>
