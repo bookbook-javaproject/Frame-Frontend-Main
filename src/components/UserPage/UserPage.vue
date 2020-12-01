@@ -27,20 +27,30 @@ export default {
             'GET_FOLLOW_NUMBER',
             'GET_MYPOST',
             'GET_USER_POSTS',
-            'GET_FOLLOW'
+            'GET_FOLLOW',
+            'GET_WRITER',
           ]) 
     },  
     async created(){
         await this.GET_USER(); 
         await this.GET_FOLLOW(this.$route.params.username);
     },
-    computed: mapState(['user', 'follow']),
+    computed: mapState(['user', 'follow', 'myPosts']),
     watch: {
-      async '$route'() {
-        await this.GET_USER(); 
-        await this.GET_FOLLOW(this.$route.params.username);
+      user: {
+        deep: true,
+        handler(data) {
+          if (data.email === this.$route.params.username) {
+            this.GET_MYPOST({ accessType: 'private'});
+          }
+        },
+      '$route'() {
+        this.GET_USER(); 
+        this.GET_FOLLOW(this.$route.params.username);
+        this.GET_WRITER(this.$route.params.username);
       }
     }
+  }
 }
 </script>
 
@@ -54,5 +64,9 @@ export default {
 }
 .UserPage-container user-select-menu{
   margin-top: 3rem;
+}
+
+.MyWritintForm-container {
+  padding-top: 1rem;
 }
 </style>
