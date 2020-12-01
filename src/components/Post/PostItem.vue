@@ -18,7 +18,10 @@
           <span v-if="post && post.writer && post.writer.email === user.email" @click="onClickDelete" >삭제</span>
       </div>
     </div>
-    <div class="postItem-card-content" v-on:click="postItemClicked">
+    <div class="postItem-card-content no-cursor" v-if="isNotice">
+            {{post.content}}
+    </div>
+    <div class="postItem-card-content" v-on:click="postItemClicked" v-else>
             {{post.content}}
     </div>
     <div class="postItem-card-ev"> <!-- ev means Evaluation-->
@@ -55,7 +58,7 @@ import router from '@/router';
 import {mapActions, mapState} from 'vuex';
 import { getClientAccessToken } from '../../api/client';
 export default {
-    props:['post', 'isNotice', 'isUserPage', 'isSympathetic'],
+    props:['post', 'isNotice', 'isUserPage', 'isSympathetic', 'isMyPosts'],
 
 
     data:function() {
@@ -76,8 +79,9 @@ export default {
                     this.GET_USER_POSTS(this.$route.params.username);
                 } else if (this.isSympathetic) {
                     this.GET_SYMPATHETIC();
-                }
-                else {
+                } else if (this.isMyPosts) {
+                    this.GET_MYPOST({ accessType: 'private' })
+                } else {
                     await this.GET_POST('trending');
                 }
             },
@@ -96,6 +100,7 @@ export default {
                 'PATCH_HEART',
                 'GET_USER_POSTS',
                 'GET_SYMPATHETIC',
+                'GET_MYPOST',
             ]),
             setLocalUser: function(){
                 console.log("로컬스토리지 셋 됨");
@@ -213,6 +218,9 @@ export default {
         
         
 
+    }
+    .no-cursor {
+        cursor: default;
     }
     .postItem-card-ev-items img{
         margin-right: 0.75rem;
