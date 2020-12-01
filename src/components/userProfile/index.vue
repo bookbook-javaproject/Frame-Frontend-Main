@@ -4,7 +4,7 @@
       <label for="file">
         <div class="image" v-bind:style="{ backgroundImage: 'url(' + previewImage + ') ',    backgroundPosition: 'center center'}">
             <div class="content" v-show="notSelected">
-                <img :src="selectImage"  />
+                <img :src="selectImage ? selectImage : user.imageUri ? user.imageUri : ''"  />
                 <input type="file"  @change="previewFiles" style="display:none" name="file" id="file" />
 
                 <div>프로필 사진 선택</div>
@@ -39,19 +39,33 @@
 
 <script>
 import {selectImage} from '@/assets/img'
-import {mapActions} from 'vuex';
+import {mapActions, mapState} from 'vuex';
 import router from '@/router';
 export default {
     data(){
+        console.log(this.user)
         return{
             notSelected:true,
             selectImage,
             previewImage:'',
             nickname: '',
-            description:'',
+            description: '',
             favoriteType:'',
             
 
+        }
+    },
+    computed: {
+        ...mapState(['user']),
+    },
+    watch: {
+        user: {
+            deep: true,
+            handler(value) {
+                console.log(value)
+                this.nickname = value.nickname;
+                this.description = value.description;
+            }
         }
     },
     methods:{
@@ -77,6 +91,9 @@ export default {
         returnMain(){
             router.push('/');
         }
+    },
+    created() {
+        this.$store.dispatch('GET_USER')
     }
 }
 </script>
