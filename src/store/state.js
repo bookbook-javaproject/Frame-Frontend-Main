@@ -9,18 +9,20 @@ const writerApplyData = () => {
 const state = {
   accessToken: null,
   refreshToken: null,
-  isFile : true,
-  file : null,
-  passwordError : false,
-  userError : false,
-  applyError : writerApplyData(),
+  isFile: true,
+  file: null,
+  passwordError: false,
+  userError: false,
+  applyError: writerApplyData(),
   highlightPost: {
     statusCode: null,
     data: [],
   },
-  posts:[],
-  posts_detail:[],
-  user:{}
+  posts: [],
+  posts_detail: [],
+  user: {},
+  patchHeartRequest: null,
+  notices: [],
 };
 
 export default state;
