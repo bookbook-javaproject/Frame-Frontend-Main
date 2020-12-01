@@ -4,7 +4,7 @@
       <label for="file">
         <div class="image" v-bind:style="{ backgroundImage: 'url(' + previewImage + ') ',    backgroundPosition: 'center center'}">
             <div class="content" v-show="notSelected">
-                <img :src="selectImage ? selectImage : user.imageUri ? user.imageUri : ''"  />
+                <img :src="selectImage ? selectImage : user.imageUri ? `http://52.79.253.30:5001/file?id=${user.imageUri}` : ''"  />
                 <input type="file"  @change="previewFiles" style="display:none" name="file" id="file" />
 
                 <div>프로필 사진 선택</div>
@@ -38,9 +38,10 @@
 </template>
 
 <script>
-import {selectImage} from '@/assets/img'
+import {selectImage} from '@/assets/img';
 import {mapActions, mapState} from 'vuex';
 import router from '@/router';
+import { uploadFile } from '../../api/client';
 export default {
     data(){
         console.log(this.user)
@@ -51,8 +52,7 @@ export default {
             nickname: '',
             description: '',
             favoriteType:'',
-            
-
+            imageFormData: new FormData(),
         }
     },
     computed: {
@@ -65,12 +65,14 @@ export default {
                 console.log(value)
                 this.nickname = value.nickname;
                 this.description = value.description;
+                this.favoriteType = value.favoriteType;
             }
         }
     },
     methods:{
         previewFiles(e){
                 const reader = new FileReader();
+                this.imageFormData = e.target.files[0];
                 reader.onload = (e) => {
                     this.notSelected = false;
                     this.previewImage = e.target.result;
@@ -80,13 +82,22 @@ export default {
         ...mapActions([
             'PUT_USER'
         ]),
-        setUserProfile(){
+        async setUserProfile(){
+            const formData = new FormData();
+            formData.append('file', this.imageFormData);
+            try {
+                const { data: { fileId } } =  await uploadFile.post('/image', formData);
                 this.PUT_USER({
-            imageUri:this.previewFiles,
-            nickname: this.nickname,
-            description:this.description,
-            favoriteType:this.favoriteType,
+                    imageUri: fileId,
+                    nickname: this.nickname,
+                    description:this.description,
+                    favoriteType:this.favoriteType,
                 })
+            } catch (_) {
+                alert('사진을 수정하는데 오류가 발생했습니다.')
+            }
+
+            
         },
         returnMain(){
             router.push('/');
@@ -120,6 +131,9 @@ export default {
     align-items: center;
     background-color:#707070; 
 
+}
+label {
+    cursor: pointer;
 }
 .userprofile .image .content{
     width:100%;
