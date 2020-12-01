@@ -43,7 +43,9 @@ export default {
             this.showUserI= !this.showUserI
         },
         frameLogoClick(){
-            router.push("/");
+            if (this.$route.fullPath !== '/') {
+                router.push("/");
+            }
         },
         ...mapActions([
             'GET_SEARCH_POST'
