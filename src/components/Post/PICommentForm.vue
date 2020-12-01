@@ -2,7 +2,7 @@
   <div class="PICommentForm-container PICommentForm-layout">
       <div class="PICommentForm-header PICommentForm-layout">
       <div  class="PICommentForm-header2">
-          <img class="PICommentForm-userImage" alt="프로필 사진" :src="post_detail.writer.imageUri ? post_detail.writer.imageUri : defaultProfileImage" />
+          <img class="PICommentForm-userImage" alt="프로필 사진" :src="post_detail.writer.imageUri ? `http://52.79.253.30:5001/file?id=${post_detail.writer.imageUri}` : defaultProfileImage" @click="goUserPage" />
           
           <div class="PICommentForm-userInformation">
               <div class="PICommentForm-userNickName"> 
@@ -14,6 +14,7 @@
           </div>
         </div>
         <div class="PICommentForm-backMain" @click="goHome">
+          <img :src="arrowHome" />
             메인으로
         </div>
       </div>
@@ -45,7 +46,7 @@
       
       </div>
       <div class="PICommentForm-footer PICommentForm-layout">
-          <img :src="post_detail.writer.imageUri ? post_detail.writer.imageUri : defaultProfileImage" class="PICommentForm-userImage" />
+          <img :src="post_detail.writer.imageUri ? `http://52.79.253.30:5001/file?id=${post_detail.writer}` : defaultProfileImage" class="PICommentForm-userImage" />
           <input type="text" placeholder="댓글을 입력하세요" class="PICommentForm-mainComment" v-model="comment">
           <div v-on:click="submitComment" class="PICommentForm-commentSubmit-button">입력</div>
       </div>
@@ -53,7 +54,7 @@
 </template>
 
 <script>
-import {emotionButton,emotionButtonClicked, commentButton, authArt } from '@/assets/img';
+import {emotionButton,emotionButtonClicked, commentButton, authArt, arrowHome } from '@/assets/img';
 import PICommentItem from './PICommentItem.vue';
 import {mapActions, mapState} from 'vuex';
 export default {
@@ -65,6 +66,7 @@ export default {
       comment:'',
       items:null,
       defaultProfileImage: authArt,
+      arrowHome,
     }
   },
    components:{PICommentItem},
@@ -72,7 +74,7 @@ export default {
           async patchHeartRequest() {
               await this.GET_POST_DETAIL( {postId: this.$route.params.id});
           },
-          post: {
+          post_detail: {
               deep: true,
               handler(data) {
                   if (data) {
@@ -87,18 +89,22 @@ export default {
        'PATCH_HEART',
        'GET_POST_DETAIL'
      ]),
-     submitComment: function(){
-       this.POST_COMMENT({comment:this.comment}).then(()=>{
-         console.log("성공")
+     goUserPage() {
+       this.$router.push(`/userpage/${this.post_detail.writer.email}`);
+     },
+     async submitComment(){
+       await this.POST_COMMENT({comment:this.comment, postId: this.post_detail.postId}).then(()=>{
+         this.GET_POST_DETAIL({ postId: this.$route.params.id });
+         this.comment = '';
        }).catch(()=>{
-         console.log("실패")
+         alert('댓글 작성에 실패하였습니다.')
        })
      },
      goHome() {
        this.$router.push('/')
      },
       empth :function(){ // empth means  공감
-        this.PATCH_HEART();
+        this.PATCH_HEART(this.post_detail.postId);
         
     },
    },
@@ -121,7 +127,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang='scss'>
  .PICommentForm-layout{
     margin-top: 1.5rem
   }
@@ -160,6 +166,7 @@ export default {
   }
   .PICommentForm-userImage {
     margin-right: 1rem;
+    cursor: pointer;
   }
   .PICommentForm-header{
     display:flex;
@@ -181,9 +188,13 @@ export default {
     border-top: 1px solid rgba(155,155,155,0.49);
   }
   .PICommentForm-backMain {
-    text-decoration: underline;
     cursor: pointer;
-    color: blue;
+    color: #86A4BF;
+    > img {
+      width: 16px;
+      height: 16px;
+      object-fit: contain;
+    }
   }
   .PICommentForm-article .PICommentForm-emotion{
     display:flex;
@@ -207,6 +218,8 @@ export default {
     padding-top:2rem;
   }
   .PICommentForm-commentSubmit-button{
+    width: 50px;
+    text-align: center;
     padding: 0.25rem 0.5rem 0.25rem 0.5rem;
     background-color:#0F4C81;
     color: white;
