@@ -1,5 +1,6 @@
 <template>
     <div class="MyWritintForm-container">
+        <h3 v-if="userPosts.length === 0">작성한 게시글이 없습니다.</h3>
         <post-item v-for="(item,index) in userPosts" v-bind:key="index" :post="item" :isUserPage="true" />
     </div>
 </template>
@@ -28,6 +29,10 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss">
+.MyWritintForm-container {
+    > h3 {
+        margin-top: 10px;
+    }    
+}
 </style>
