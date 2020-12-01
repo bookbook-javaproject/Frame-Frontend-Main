@@ -1,7 +1,7 @@
 <template>
   <div class="modal-container">
       <div>
-            <img :src="imageUri"  class="modal-userImage" @click="goUserPage" >
+            <img :src="imageUri ? `http://52.79.253.30:5001/file?id=${imageUri}` : defaultProfileImage" class="modal-userImage" @click="goUserPage" >
             <div style="font-weight: bold" @click="goUserPage">
             {{nickname}}
             </div>
