@@ -33,3 +33,4 @@ export { default as authFollow} from './auth-follow.svg';
 export { default as authFollowClicked} from './auth-followClicked.svg';
 export { default as selectImage} from './select-image.svg';
 export { default as closeButton} from './close-button.svg';
+export { default as arrowHome } from './arrow-home.svg';
