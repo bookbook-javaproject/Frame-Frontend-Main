@@ -6,6 +6,7 @@ import { getHighlightPosts } from '../api/highlight';
 import { GET_HIGLIGHT_POSTS_SUCCESS, GET_HIGLIGHT_POSTS_FAILURE } from './mutations';
 import {getFollowNumber} from '../api/follow';
 import router from "../router";
+import { getClientAccessToken } from '../api/client';
 
 export const GET_HIGLIGHT_POSTS = 'GET_HIGLIGHT_POSTS';
 
@@ -109,8 +110,8 @@ export default {
         commit('GET_POST', false);
       });
   },
-  PATCH_HEART({ commit }) {
-    return patchHeart()
+  PATCH_HEART({ commit }, postId) {
+    return patchHeart(postId)
       .then(() => {
         commit('PATCH_HEART', true);
       })
@@ -129,8 +130,8 @@ export default {
         commit('GET_POST_DETAIL', false);
       });
   },
-  POST_COMMENT(_, { comment }) {
-    return postComment(comment)
+  POST_COMMENT(_, { comment, postId }) {
+    return postComment(comment, postId)
       .then((res) => {
         console.log(res);
       })
@@ -141,8 +142,14 @@ export default {
   POST_CREATE_POST(_, { accessType, contentType, content }) {
     return postCraetePost(contentType, accessType, content);
   },
-  GET_MYPOST(_, { accessType }) {
-    return getMypost(accessType);
+  GET_MYPOST({ commit }, { accessType }) {
+    return getMypost(accessType)
+      .then(({ data: { posts } }) => {
+        commit('GET_MYPOST', posts);
+      })
+      .catch(() => {
+        commit('GET_MYPOST', false);
+      });
   },
   GET_FOLLOW_NUMBER(_, { email }) {
     return getFollowNumber(email);
@@ -178,4 +185,37 @@ export default {
   POST_REPORT(_, { content, postId }) {
     return postReport(content, postId);
   },
+  GET_WRITER({ commit }, email) {
+    getClientAccessToken()
+      .get(`/user?email=${email}`)
+      .then(({ data }) => {
+        commit('GET_WRITER', data);
+      })
+      .catch(() => {
+        commit('GET_WRITER', false);
+      });
+  },
+  FOLLOW_USER(_, email) {
+    return getClientAccessToken().put('/user/relation', {
+      email,
+    });
+  },
+  GET_USER_POSTS({ commit }, email) {
+    getClientAccessToken().get(`/post/user?email=${email}`).then(({ data: { posts } }) => {
+      commit('GET_USER_POSTS', posts);
+    }).catch(() => {
+      commit('GET_USER_POSTS', false);
+    })
+  },
+  GET_SYMPATHETIC({ commit }) {
+    getClientAccessToken()
+      .get('/post/my/sympathetic')
+      .then(({ data: { posts } }) => {
+        commit('GET_SYMPATHETIC', posts);
+      })
+      .catch(() => {
+        alert('공감한 게시글 불러오기에 실패하였습니다.');
+        commit('GET_SYMPATHETIC', false)
+      });
+  }
 };
