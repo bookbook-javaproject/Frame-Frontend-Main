@@ -1,6 +1,6 @@
 <template>
   <div class="PICommentItem-container">
-      <img alt="프로필 이미지" class="PICommentItem-userImage" :src="detail.writer.imageUri ? detail.writer.imageUri : defaultProfileImage" />
+      <img alt="프로필 이미지" class="PICommentItem-userImage" :src="detail.writer.imageUri ? `http://52.79.253.30:5001/file?id=${detail.writer.imageUri}` : defaultProfileImage" />
 
       <div class="PICommentItem-content">
           <div class="PICommentItem-userInformation">
