@@ -69,4 +69,10 @@ export default {
   GET_USER_POSTS(state, data) {
     state.userPosts = data;
   },
+  GET_SYMPATHETIC(state, data) {
+    state.sympatheticPosts = data;
+  },
+  GET_FOLLOW(state, data) {
+    state.follow = data;
+  }
 };

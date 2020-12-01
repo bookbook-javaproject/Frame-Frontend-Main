@@ -22,16 +22,21 @@ const state = {
   post_detail: {
     comments: [],
     hearts: [],
-    createdAt: "",
+    createdAt: '',
     writer: {
-      email: "",
+      email: '',
       imageUri: null,
-      nickname: "",
-    }
+      nickname: '',
+    },
   },
   user: {},
   patchHeartRequest: null,
   notices: [],
+  writer: null,
+  myPosts: [],
+  userPosts: [],
+  sympatheticPosts: [],
+  follow: null,
 };
 
 export default state;

@@ -10,3 +10,4 @@ export {default as UserPage} from './UserPage/UserPage.vue';
 export {default as userProfile} from './userProfile/index.vue';
 export { default as PageNotFound } from './PageNotFound/index.vue';
 export { default as PICommentForm } from './Post/PICommentForm';
+export { default as Update } from './Update/index.vue';

@@ -122,7 +122,6 @@ export default {
   GET_POST_DETAIL({ commit }, { postId }) {
     return getPostDetail(postId)
       .then(({ data }) => {
-        console.log(data);
         commit('GET_POST_DETAIL', data);
       })
       .catch((err) => {
@@ -131,13 +130,7 @@ export default {
       });
   },
   POST_COMMENT(_, { comment, postId }) {
-    return postComment(comment, postId)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    return postComment(comment, postId);
   },
   POST_CREATE_POST(_, { accessType, contentType, content }) {
     return postCraetePost(contentType, accessType, content);
@@ -199,6 +192,13 @@ export default {
     return getClientAccessToken().put('/user/relation', {
       email,
     });
+  },
+  GET_FOLLOW({ commit }, email) {
+    getClientAccessToken().get(`/user/relation?email=${email}`).then(({ data }) => {
+      commit('GET_FOLLOW', data);
+    }).catch(() => {
+      commit('GET_FOLLOW', false);
+    })
   },
   GET_USER_POSTS({ commit }, email) {
     getClientAccessToken().get(`/post/user?email=${email}`).then(({ data: { posts } }) => {

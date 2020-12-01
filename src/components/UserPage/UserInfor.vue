@@ -14,13 +14,14 @@
             <div class="UserInfor-content-container">
                 <div class="UserInfor-userFollwer-Infor" v-on:click="goFollowing">
                     <div class="UserInfor-following">팔로잉</div>
-                    <div class="UserInfor-followingSum">{{follow.following}}</div>
+                    <div class="UserInfor-followingSum">{{follow ? follow.following.length : 0}}</div>
                 </div>
                 <div class="UserInfor-userFollwer-Infor" v-on:click="goFollower">
                     <div class="UserInfor-follwer" >팔로워</div>
-                    <div class="UserInfor-follwerSum">{{follow.follower}}</div>
+                    <div class="UserInfor-follwerSum">{{follow ? follow.follower.length : 0}}</div>
                 </div>
                 <div class="UserInfor-application" @click="goApplyPage" v-if="writer ? writer.email === user.email : false">작가신청</div>
+                <div class="UserInfor-application" @click="onClickFollow" v-else-if="followRelation && ~followRelation.follower.findIndex((follower) => follower.email === user.email)">팔로잉</div>
                 <div class="UserInfor-application" @click="onClickFollow" v-else>팔로우</div>
             </div>
            
@@ -59,7 +60,9 @@ export default {
     },
     methods:{
         goUserPage() {
-           this.$router.push(`/userpage/${this.$route.params.username}`);
+            if (`/userpage/${this.$route.params.username}` !== this.$route.path) {
+                this.$router.push(`/userpage/${this.$route.params.username}`);
+            }
         },
         goFollowing() {
             this.$router.push(`/userpage/${this.$route.params.username}/userFollowing`)
@@ -72,7 +75,8 @@ export default {
         ...mapActions([
             'POST_REPORT',
             'GET_WRITER',
-            'FOLLOW_USER'
+            'FOLLOW_USER',
+            'GET_FOLLOW',
         ]),
         showLog: function(){
             this.$emit('showFollow', true);
@@ -92,14 +96,18 @@ export default {
         },
         async onClickFollow() {
             this.FOLLOW_USER(this.writer.email).then(() => {
-                alert('변화 성공')
+                console.log(this.$route.params)
+                this.GET_FOLLOW(this.$route.params.username);
             })
         }
     },
     created() {
         this.GET_WRITER(this.$route.params.username);
     },
-    computed: mapState(['writer'])
+    computed: mapState({
+        writer: (state) => state.writer,
+        followRelation: (state) => state.follow,
+    })
 }
 </script>
 

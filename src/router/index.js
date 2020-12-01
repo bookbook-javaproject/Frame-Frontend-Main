@@ -12,6 +12,7 @@ import {
   Write,
   userProfile,
   PageNotFound,
+  Update,
 } from '@/components';
 import {TrendingPostList,PICommentForm, RecentPostList, NoticePostList} from '@/components/Post/index.js';
 import {ILoveItForm, MyWritingForm,userFollowing,userFollower} from '@/components/UserPage/index.js';
@@ -55,6 +56,10 @@ export default new Router({
         {
           path: '/write',
           component: Write,
+        },
+        {
+          path: '/update/:postId',
+          component: Update,
         },
         {
           path: '/post/:id',
