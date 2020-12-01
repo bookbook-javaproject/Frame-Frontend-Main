@@ -10,7 +10,7 @@
               <div class="PICommentItem-userPostDate">
                 {{createdAtDate}}
               </div>
-              <img class="PICommentItem-Trashcomment-icon" :src="trashCommentIcon" />
+              <img class="PICommentItem-Trashcomment-icon" :src="trashCommentIcon" v-if="detail.writer.email === user.email"  @click="onClickDeleteComment" />
           </div>
           <div class="PICommentItem-comment-content">
               {{detail.comment}}
@@ -21,22 +21,42 @@
 
 <script>
 import {trashCommentIcon, authArt } from '@/assets/img';
+import { getClientAccessToken } from '../../api/client';
+import { mapActions, mapState } from 'vuex';
 
 export default {
-    props:['detail'],
+    props:['detail', 'index', 'postId'],
     computed:{
             createdAtDate: function(){
                 const Date = this.detail.createdAt.split('T')
                 return Date[0]
             },
+            ...mapState(['user']),
     },
     data(){
         return{
             trashCommentIcon,
             defaultProfileImage: authArt,
         }
-    }
-
+    },
+    methods: {
+        ...mapActions(['GET_POST_DETAIL']),
+        onClickDeleteComment() {
+            if (confirm('정말로 댓글을 삭제하시겠습니까?')) {
+                console.log(this.detail)
+                getClientAccessToken().delete('/post/comment', {
+                    data: {
+                        postId: this.postId,
+                        commentIndex: this.index,
+                    }
+                }).then(() => {
+                    this.GET_POST_DETAIL({ postId: this.postId });
+                }).catch(() => {
+                    alert('댓글을 삭제하는 중 오류가 발생하였습니다.')
+                })
+            }
+        }
+    },
 }
 </script>
 
