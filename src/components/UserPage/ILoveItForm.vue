@@ -1,12 +1,13 @@
 <template>
     <div class="ILoveItForm-container">
-        <post-item v-for="(item,index) in items" v-bind:key="index" :user="item.user" :post="item.post" />
+        <post-item v-for="(item,index) in sympatheticPosts" v-bind:key="index" :post="item" :isSympathetic='true' />
     </div>
 </template>
 
 <script>
-    import postItem from '../Post/PostItem';
-    import axios from 'axios';
+import { mapActions, mapState } from 'vuex';
+
+import postItem from '../Post/PostItem';
 
 export default {
     components:{postItem},
@@ -15,10 +16,10 @@ export default {
         items: null
       }
     },
-    async created(){
-        const data = await axios.get('https://raw.githubusercontent.com/zofqofhtltm8015/fs/master/db.json');
-        this.items = data.data;
-        
+    computed: mapState(['sympatheticPosts']),
+    methods: mapActions(['GET_SYMPATHETIC']),
+    created (){
+        this.GET_SYMPATHETIC();
     }
 }
 </script>
