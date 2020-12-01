@@ -1,9 +1,12 @@
 <template>
   <div class="modal-container">
-      <img :src="imageUri"  class="modal-userImage" >
-      <div style="font-weight: bold">
-        {{nickname}}
+      <div>
+            <img :src="imageUri"  class="modal-userImage" >
+            <div style="font-weight: bold">
+            {{nickname}}
+            </div>
       </div>
+      <div class="etc">
         <router-link to="/setProfile">
             <div>
                 계정설정
@@ -12,6 +15,7 @@
         <div class="modal-logout-button" @click="onLogOut">
             로그아웃
         </div>
+      </div>
   </div>
 </template>
 
@@ -24,23 +28,25 @@ export default {
             localStorage.removeItem('refreshToken');
             this.$router.push('/login');
         }
-    }
+    },
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
     .modal-container{
+        position: absolute;
         color: #707070; 
         display:flex;
         flex-direction: column;
         align-items: center;
-        justify-content: space-around;    
-        height: 15rem;
+        justify-content: space-between;
+        padding: 16px;
+        box-sizing: border-box;
+        height: 12rem;
         width: 10rem;
         box-shadow: 1px 1px 5px;
-        position: relative;
-        top: 10rem;
-        right: 3rem;
+        top: 5rem;
+        right: -4.5rem;
         font-size: 1.5rem;
         text-align: center;
         z-index: 1;
@@ -52,8 +58,25 @@ export default {
         height: 3rem;
         border-radius: 100px;
     }
+    .etc {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        > a {
+            font-size: 16px;
+            text-decoration: none;
+            color: #000000;
+            margin-bottom: 14px;
+        }
+    }
+    .header-list {
+        position: relative;
+        height: 1.5rem;
+    }
     .modal-logout-button {
         cursor:pointer;
+        font-size: 16px;
+        color: #FF0000;
     }
 
 </style>
