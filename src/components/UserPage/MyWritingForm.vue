@@ -1,12 +1,12 @@
 <template>
     <div class="MyWritintForm-container">
-        <post-item v-for="(item,index) in items" v-bind:key="index" :post="item" :isUserPage="true" />
+        <post-item v-for="(item,index) in userPosts" v-bind:key="index" :post="item" :isUserPage="true" />
     </div>
 </template>
 
 <script>
     import postItem from '../Post/PostItem';
-    import {mapActions} from 'vuex'
+    import {mapActions, mapState} from 'vuex'
 export default {
     components:{postItem},
             data(){
@@ -14,14 +14,16 @@ export default {
         items: null
       }
     },
+    computed: mapState(['myPosts', 'userPosts']),
     methods:{
         ...mapActions([
-            'GET_MYPOST'
+            'GET_MYPOST',
+            'GET_USER_POSTS',
         ])
     },
-    async created(){
-        const { data: { userPostPreviews } } =  await this.GET_MYPOST({accessType:"public"});
-        this.items = userPostPreviews;
+    created(){
+        // this.GET_MYPOST({accessType:"public"});
+        this.GET_USER_POSTS(this.$route.params.username);
     }
 }
 </script>
