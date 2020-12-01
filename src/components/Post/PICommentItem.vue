@@ -1,11 +1,11 @@
 <template>
   <div class="PICommentItem-container">
-      <img alt="미구현" class="PICommentItem-userImage"/>
+      <img alt="프로필 이미지" class="PICommentItem-userImage" :src="detail.writer.imageUri ? detail.writer.imageUri : defaultProfileImage" />
 
       <div class="PICommentItem-content">
           <div class="PICommentItem-userInformation">
               <div class="PICommentItem-userNickname">
-                {{detail.writer}}
+                {{detail.writer.nickname}}
               </div>
               <div class="PICommentItem-userPostDate">
                 {{createdAtDate}}
@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import {trashCommentIcon} from '@/assets/img';
+import {trashCommentIcon, authArt } from '@/assets/img';
 
 export default {
     props:['detail'],
@@ -33,6 +33,7 @@ export default {
     data(){
         return{
             trashCommentIcon,
+            defaultProfileImage: authArt,
         }
     }
 
