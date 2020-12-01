@@ -1,26 +1,27 @@
 <template>
     <div class="UserInfor-container">
-        <img class="UserInfor-userImage" :src="user.imageUri ? user.imageUri : defaultProfileImage" />
+        <img class="UserInfor-userImage" :src="writer ? writer.imageUri ? `http://52.79.253.30:5001/file?id=${writer.imageUri}` : defaultProfileImage : defaultProfileImage" @click="goUserPage" />
         <div class="UserInfor-content">
             <div class="UserInfor-infor">
-                <div class="UserInfor-userNickname">{{user.nickname}}</div>
-                <div class="UserInfor-userAction">
+                <div class="UserInfor-userNickname" @click="goUserPage">{{writer ? writer.nickname : ''}}</div>
+                <!-- <div class="UserInfor-userAction">
                     <img :src="authBlocked">
                     <img :src="authReport">
                     <img :src="authSponser" >
-                </div>
+                </div> -->
             </div>
-            <div class="UserInfor-introduce">{{user.description}}</div>
+            <div class="UserInfor-introduce">{{writer ? writer.description : ''}}</div>
             <div class="UserInfor-content-container">
-                <div class="UserInfor-userFollwer-Infor" v-on:click="showLog">
+                <div class="UserInfor-userFollwer-Infor" v-on:click="goFollowing">
                     <div class="UserInfor-following">팔로잉</div>
                     <div class="UserInfor-followingSum">{{follow.following}}</div>
                 </div>
-                <div class="UserInfor-userFollwer-Infor" v-on:click="showLog">
+                <div class="UserInfor-userFollwer-Infor" v-on:click="goFollower">
                     <div class="UserInfor-follwer" >팔로워</div>
                     <div class="UserInfor-follwerSum">{{follow.follower}}</div>
                 </div>
-                <div class="UserInfor-application" @click="goApplyPage">작가신청</div>
+                <div class="UserInfor-application" @click="goApplyPage" v-if="writer ? writer.email === user.email : false">작가신청</div>
+                <div class="UserInfor-application" @click="onClickFollow" v-else>팔로우</div>
             </div>
            
         </div>
@@ -40,7 +41,7 @@
 <script>
     
 import {authBlocked, authReport,frameLogo, authSponser,closeButton, authArt } from '@/assets/img';
-import {mapActions} from 'vuex';
+import {mapActions, mapState} from 'vuex';
 export default {
     props:['user','follow'],
     data(){
@@ -57,11 +58,24 @@ export default {
         }
     },
     methods:{
+        goUserPage() {
+           this.$router.push(`/userpage/${this.$route.params.username}`);
+        },
+        goFollowing() {
+            this.$router.push(`/userpage/${this.$route.params.username}/userFollowing`)
+            this.showLog();
+        },
+        goFollower() {
+            this.$router.push(`/userpage/${this.$route.params.username}/userFollower`)
+            this.showLog();
+        },
         ...mapActions([
-            'POST_REPORT'
+            'POST_REPORT',
+            'GET_WRITER',
+            'FOLLOW_USER'
         ]),
         showLog: function(){
-            this.$emit('showFollow');
+            this.$emit('showFollow', true);
         },
         report:function(){
             this.clickedReport= true
@@ -75,11 +89,17 @@ export default {
         },
         goApplyPage() {
             this.$router.push('/writer-apply')
+        },
+        async onClickFollow() {
+            this.FOLLOW_USER(this.writer.email).then(() => {
+                alert('변화 성공')
+            })
         }
     },
     created() {
-        console.log(this.user, this.follow)
-    }
+        this.GET_WRITER(this.$route.params.username);
+    },
+    computed: mapState(['writer'])
 }
 </script>
 
@@ -95,6 +115,7 @@ export default {
     margin-right: 2rem;
 }
 .UserInfor-userImage{
+    cursor: pointer;
     width: 7.5rem;
     height: 7.5rem;
     border-radius: 100px;
@@ -126,6 +147,7 @@ export default {
     align-items: center;
     margin-right: 2rem;
     color: #0F4C81;
+    cursor: pointer;
 }
 .UserInfor-application{
     padding: 0.25rem 1rem 0.25rem 1rem;
@@ -138,9 +160,9 @@ export default {
 }
 .UserInfor-introduce{
     font-size: 13px;
-    margin-left: -1rem;
 }
 .UserInfor-userNickname{
+    cursor: pointer;
     color: #0F4C81;
     font-size: 1.5rem;
     font-weight: bold;
