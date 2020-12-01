@@ -1,35 +1,50 @@
 <template>
   <span class="FollowItem-container">
     <span>
-        <img :src="userImage" class="FollowItem-userImage" />
+        <img :src="user.imageUri ? `http://52.79.253.30:5001/file?id=${user.imageUri}` : defaultProfileImage" class="FollowItem-userImage" />
             <div class="FollowItem-content">
-                <div class="FollowItem-userName">이근대위</div>
+                <div class="FollowItem-userName">{{ user.nickname }}</div>
                 <div class="FollowItem-navFollow">
-                    <div class="FollowItem-following">팔로우 {{user.follower}}</div>
-                    <div class="FollowItem-follower">팔로잉 {{user.following}}</div>
+                    <div class="FollowItem-following">팔로잉 {{ follow ? follow.following : 0}}</div>
+                    <div class="FollowItem-follower">팔로우 {{ follow ? follow.follower : 0}}</div>
                 </div>
             </div>
     </span>
-    <div class="FollowItem-button">{{Follow}}</div>
+    <div class="FollowItem-button" @click="goUserPage">구경하기</div>
   </span>
 </template>
 
 <script>
+import { authArt } from '@/assets/img'
+import { mapActions } from 'vuex'
+
 export default {
     props:['user'],
     data(){
         return{
             userImage: 'https://pbs.twimg.com/media/Ef8sDBhUcAAhv_c.jpg',
+            defaultProfileImage: authArt,
+            follow: null,
         }
     },
-    computed:{
-        Follow: function(){
-            return '팔로웅' // ready for Backend!
+    watch: {
+        user: {
+            deep: true,
+            handler(data) {
+                this.GET_FOLLOW_NUMBER({ email: data.email }).then(({ data }) => {
+                    this.follow = data;
+                }).catch(() => {
+                    alert('팔로우 수 불러오기에 실패하였습니다.')
+                })
+            }
         }
     },
-    created(){
-        console.log(this.user);
-    }
+    methods: {
+        goUserPage() {
+            this.$router.push(`/userpage/${this.user.email}`)
+        },
+        ...mapActions(['GET_FOLLOW_NUMBER']),
+    },
 }
 </script>
 
@@ -53,6 +68,10 @@ export default {
     color: #0F4C81;
     border: 1px solid #0F4C81;
     border-radius: 100px;
+}
+
+.FollowItem-button {
+    cursor: pointer;
 }
 
 .FollowItem-navFollow div{
