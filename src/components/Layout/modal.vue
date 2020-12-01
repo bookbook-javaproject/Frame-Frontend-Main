@@ -1,8 +1,8 @@
 <template>
   <div class="modal-container">
       <div>
-            <img :src="imageUri"  class="modal-userImage" >
-            <div style="font-weight: bold">
+            <img :src="imageUri"  class="modal-userImage" @click="goUserPage" >
+            <div style="font-weight: bold" @click="goUserPage">
             {{nickname}}
             </div>
       </div>
@@ -20,9 +20,16 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 export default {
     props:['imageUri','nickname'],
+    computed: mapState(['user']),
     methods: {
+        goUserPage() {
+            if (this.user && this.user.email) {
+                this.$router.push(`/userpage/${this.user.email}`)
+            }
+        },
         onLogOut() {
             localStorage.removeItem('accessToken');
             localStorage.removeItem('refreshToken');
@@ -51,6 +58,15 @@ export default {
         text-align: center;
         z-index: 1;
         background-color: #fdfdfd;
+
+        > div {
+            > img {
+                cursor: pointer;
+            }
+            > div {
+                cursor: pointer;
+            }
+        }
         
     }
     .modal-userImage{
