@@ -60,4 +60,13 @@ export default {
   GET_NOTICE(state, data) {
     state.notices = data;
   },
+  GET_WRITER(state, data) {
+    state.writer = data;
+  },
+  GET_MYPOST(state, data) {
+    state.myPosts = data;
+  },
+  GET_USER_POSTS(state, data) {
+    state.userPosts = data;
+  },
 };
