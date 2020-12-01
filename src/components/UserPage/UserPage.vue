@@ -1,7 +1,7 @@
 <template>
   <div class="UserPage-container">
     <user-infor :user="user" :follow="follow" v-on:showFollow="setShowFollow" />
-    <user-select-menu v-bind:showFollow="isShowFollow" />
+    <user-select-menu v-bind:showFollow="isShowFollow" :setShowFollow="setShowFollow" />
     <router-view />
   </div>
 </template>
@@ -15,28 +15,32 @@ export default {
     data(){
       return{
         isShowFollow: false,
-        follow: {},
       }
     },
     methods:{
-      setShowFollow:function(){
+      setShowFollow:function(data){
           console.log('setShowFollow 실행됨');
-          this.isShowFollow = !this.isShowFollow
+          this.isShowFollow = data;
       },
           ...mapActions([
             'GET_USER',
             'GET_FOLLOW_NUMBER',
-            'GET_MYPOST'
+            'GET_MYPOST',
+            'GET_USER_POSTS',
+            'GET_FOLLOW'
           ]) 
     },  
     async created(){
-        await this.GET_USER();   
-        const { data } =await this.GET_FOLLOW_NUMBER({email:this.$route.params.username});     
-        this.follow = data;
-        const { data: { userPostPreviews } } =  await this.GET_MYPOST({accessType:"public"});
-        this.items = userPostPreviews;
+        await this.GET_USER(); 
+        await this.GET_FOLLOW(this.$route.params.username);
     },
-    computed: mapState(['user'])
+    computed: mapState(['user', 'follow']),
+    watch: {
+      async '$route'() {
+        await this.GET_USER(); 
+        await this.GET_FOLLOW(this.$route.params.username);
+      }
+    }
 }
 </script>
 
