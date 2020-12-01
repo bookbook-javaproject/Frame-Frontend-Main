@@ -1,10 +1,10 @@
 <template>
   <div class="postItem-container" v-on:click="setLocalUser">
     <div class="postItem-card-title">
-      <img class="postItem-userImage" v-on:click="userImageClicked" alt="아직 구현 안됨" v-if="!isNotice" :src="post.writer.imageUri ? post.writer.imageUri : defaultProfileImage">
+      <img class="postItem-userImage" v-on:click="userImageClicked" alt="아직 구현 안됨" v-if="!isNotice" :src="post && post.writer ? post.writer.imageUri ? `http://52.79.253.30:5001/file?id=${post.writer.imageUri}` : defaultProfileImage : defaultProfileImage">
       <div class="postItem-card-subtitle">
         <p>
-            {{ isNotice ? `관리자 - ${post.title}` : post.writer.nickname}}
+            {{ isNotice ? `관리자 - ${post.title}` : post && post.writer ? post.writer.nickname : ''}}
         </p>
         <p style="color: #555555">
             {{createdAtDate}}
@@ -12,20 +12,20 @@
       </div>
       <div class="etc" v-if="!isNotice">
           <span @click="onToggleReportModal">신고</span>
-          <b v-if="post.writer.email === user.email">|</b>
-          <span v-if="post.writer.email === user.email">수정</span>
-          <b v-if="post.writer.email === user.email">|</b>
-          <span v-if="post.writer.email === user.email" >삭제</span>
+          <b v-if="post && post.writer && post && post.writer && post.writer.email === user.email">|</b>
+          <span v-if="post && post.writer && post.writer.email === user.email" @click="goUpdatePage">수정</span>
+          <b v-if="post && post.writer && post.writer.email === user.email">|</b>
+          <span v-if="post && post.writer && post.writer.email === user.email" @click="onClickDelete" >삭제</span>
       </div>
     </div>
     <div class="postItem-card-content" v-on:click="postItemClicked">
             {{post.content}}
     </div>
     <div class="postItem-card-ev"> <!-- ev means Evaluation-->
-        <div class="postItem-card-ev-items" v-if="!isNotice && !isUserPage">
-            <img :src="~post.hearts.indexOf(user.email) ? emotionButtonClicked :emotionButton"  v-on:click="empth"  />
+        <div class="postItem-card-ev-items" v-if="!isNotice">
+            <img :src="post && post.hearts && ~post.hearts.indexOf(user.email) ? emotionButtonClicked :emotionButton"  v-on:click="empth"  />
             <p>
-                {{post.hearts.length ? post.hearts.length : 0}}
+                {{post && post.hearts && post.hearts.length ? post.hearts.length : 0}}
             </p>
         </div>
         <div class="postItem-card-ev-items" v-if="!isNotice" @click="postItemClicked">
@@ -53,8 +53,9 @@
 import {commentButton,emotionButton,emotionButtonClicked, authArt,closeButton,frameLogo } from '@/assets/img'
 import router from '@/router';
 import {mapActions, mapState} from 'vuex';
+import { getClientAccessToken } from '../../api/client';
 export default {
-    props:['post', 'isNotice', 'isUserPage'],
+    props:['post', 'isNotice', 'isUserPage', 'isSympathetic'],
 
 
     data:function() {
@@ -71,7 +72,14 @@ export default {
         },
         watch: {
             async patchHeartRequest() {
-                await this.GET_POST('trending');
+                if (this.isUserPage) {
+                    this.GET_USER_POSTS(this.$route.params.username);
+                } else if (this.isSympathetic) {
+                    this.GET_SYMPATHETIC();
+                }
+                else {
+                    await this.GET_POST('trending');
+                }
             },
             post: {
                 deep: true,
@@ -85,13 +93,15 @@ export default {
         methods:{
             ...mapActions([
                 'GET_POST',
-                'PATCH_HEART'
+                'PATCH_HEART',
+                'GET_USER_POSTS',
+                'GET_SYMPATHETIC',
             ]),
             setLocalUser: function(){
                 console.log("로컬스토리지 셋 됨");
             },
             empth :function(){ // empth means  공감
-                this.PATCH_HEART();
+                this.PATCH_HEART(this.post.postId);
                 
             },
             postItemClicked: function(){
@@ -115,12 +125,34 @@ export default {
                     alert('게시물 신고 실패')
                 }
             },
+            onClickDelete() {
+                if (confirm('정말 게시글을 삭제하시겠습니까?')) {
+                    getClientAccessToken().delete('/post', {
+                        data: {
+                            postId: this.post.postId
+                        }
+                    }).then(() => {
+                        this.GET_POST('trending');
+                        this.$router.push('/');
+                    }).catch(() => {
+                        alert('게시글 삭제에 실패하였습니다.')
+                    })
+                }
+            },
+            goUpdatePage() {
+                this.$router.push(`/update/${this.post.postId}`)
+            }
         },
         computed:{
             ...mapState(['patchHeartRequest', 'user']),
             createdAtDate: function(){
-                const Date = this.post.createdAt.split('T')
+                if (this.post.createdAt) {
+
+                    const Date = this.post.createdAt.split('T')
                 return Date[0]
+                } else {
+                    return new Date();
+                }
             }
         },
         created(){
@@ -130,7 +162,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
     .postItem-container{
             display:flex;
             flex-direction: column;
