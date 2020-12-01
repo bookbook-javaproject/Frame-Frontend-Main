@@ -17,16 +17,12 @@ export const getPostDetail =(postId)=>{
     return getClientAccessToken().get(`/post/detail?post-id=${postId}`);
 }
 
-export const postComment =(comment)=>{
+export const postComment =(comment, postId)=>{
     return getClientAccessToken()
       .post('/post/comment', {
         comment: comment,
-        postId: localStorage.getItem('postId'),
+        postId
       })
-      .then(() => {
-        alert('회원가입 완료');
-        window.location.reload();
-      });
 }
 
 export const postCraetePost =(contentType,accessType,content)=>{
