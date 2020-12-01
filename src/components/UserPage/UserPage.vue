@@ -15,7 +15,7 @@ export default {
     data(){
       return{
         isShowFollow: false,
-        follow:[]
+        follow: {},
       }
     },
     methods:{
@@ -25,13 +25,16 @@ export default {
       },
           ...mapActions([
             'GET_USER',
-            'GET_FOLLOW_NUMBER'
-    ]) 
+            'GET_FOLLOW_NUMBER',
+            'GET_MYPOST'
+          ]) 
     },  
     async created(){
         await this.GET_USER();   
-        this.follow = await this.GET_FOLLOW_NUMBER({email:this.$route.params.username});     
-        console.log(this.follow);
+        const { data } =await this.GET_FOLLOW_NUMBER({email:this.$route.params.username});     
+        this.follow = data;
+        const { data: { userPostPreviews } } =  await this.GET_MYPOST({accessType:"public"});
+        this.items = userPostPreviews;
     },
     computed: mapState(['user'])
 }

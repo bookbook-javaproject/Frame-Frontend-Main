@@ -6,6 +6,14 @@ $main-color: #0f4c81;
   font-family: AppleSDGothicNeo;
 }
 
+img {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
 body {
   margin: 0;
   padding: 0;

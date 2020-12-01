@@ -19,7 +19,16 @@ const state = {
     data: [],
   },
   posts: [],
-  posts_detail: [],
+  post_detail: {
+    comments: [],
+    hearts: [],
+    createdAt: "",
+    writer: {
+      email: "",
+      imageUri: null,
+      nickname: "",
+    }
+  },
   user: {},
   patchHeartRequest: null,
   notices: [],

@@ -2,49 +2,50 @@
   <div class="PICommentForm-container PICommentForm-layout">
       <div class="PICommentForm-header PICommentForm-layout">
       <div  class="PICommentForm-header2">
-          <img class="PICommentForm-userImage" alt="미구현" />
+          <img class="PICommentForm-userImage" alt="프로필 사진" :src="post_detail.writer.imageUri ? post_detail.writer.imageUri : defaultProfileImage" />
+          
           <div class="PICommentForm-userInformation">
               <div class="PICommentForm-userNickName"> 
-                {{posts_detail.writer}}
+                {{post_detail.writer.nickname}}
               </div>
               <div class="PICommentForm-WroteDate"> 
                 {{createdAtDate}}
               </div>
           </div>
         </div>
-        <div class="PICommentForm-backMain">
+        <div class="PICommentForm-backMain" @click="goHome">
             메인으로
         </div>
       </div>
 
       <div class="PICommentForm-section PICommentForm-layout">
           <div class="PICommentForm-postContent"> 
-              {{posts_detail.content}}
+              {{post_detail.content}}
           </div>
       </div>
       <div class="PICommentForm-article PICommentForm-layout">
           <div class="PICommentForm-emotion"> 
-            <img :src="emotionButton" />
-            <div class="PICommentForm-emotionSum"> 
-              {{posts_detail.hearts.length}}
+            <img class="empth" :src="~post_detail.hearts.indexOf(user.email) ? emotionButtonClicked :emotionButton" @click="empth"  /> 
+            <div class="PICommentForm-emotionSum" > 
+              {{post_detail.hearts.length}}
             </div>
           </div>
           <div class="PICommentForm-emotion"> 
             <img :src="commentButton" />
             <div class="PICommentForm-emotionSum">
-              {{posts_detail.comments.length  }}
+              {{post_detail.comments.length  }}
             </div>
           </div>
       </div>
       <div class="PICommentForm-content PICommentForm-layout" >
         <div class="PICommentForm-commentList">
-          <PICommentItem v-for="(item,index) of this.posts_detail.comments" v-bind:key="index" :detail="item" />   
+          <PICommentItem v-for="(item,index) of this.post_detail.comments" v-bind:key="index" :detail="item" />   
             
         </div>
       
       </div>
       <div class="PICommentForm-footer PICommentForm-layout">
-          <img  :src="userImage" class="PICommentForm-userImage" />
+          <img :src="post_detail.writer.imageUri ? post_detail.writer.imageUri : defaultProfileImage" class="PICommentForm-userImage" />
           <input type="text" placeholder="댓글을 입력하세요" class="PICommentForm-mainComment" v-model="comment">
           <div v-on:click="submitComment" class="PICommentForm-commentSubmit-button">입력</div>
       </div>
@@ -52,46 +53,67 @@
 </template>
 
 <script>
-import {emotionButton,emotionButtonClicked, commentButton} from '@/assets/img';
+import {emotionButton,emotionButtonClicked, commentButton, authArt } from '@/assets/img';
 import PICommentItem from './PICommentItem.vue';
-import {mapActions} from 'vuex';
+import {mapActions, mapState} from 'vuex';
 export default {
-  props:['posts_detail'],
   data(){
     return{
-      userImage: 'https://images8.alphacoders.com/958/958091.jpg',
       emotionButton,
       emotionButtonClicked,
       commentButton,
       comment:'',
-      items:null
+      items:null,
+      defaultProfileImage: authArt,
     }
   },
    components:{PICommentItem},
+    watch: {
+          async patchHeartRequest() {
+              await this.GET_POST_DETAIL( {postId: this.$route.params.id});
+          },
+          post: {
+              deep: true,
+              handler(data) {
+                  if (data) {
+                      this.$store.commit('PATCH_HEART', false);
+                  }
+              }
+          }
+      },
    methods:{
      ...mapActions([
-       'POST_COMMENT'
+       'POST_COMMENT',
+       'PATCH_HEART',
+       'GET_POST_DETAIL'
      ]),
      submitComment: function(){
-       console.log(this.comment);
        this.POST_COMMENT({comment:this.comment}).then(()=>{
          console.log("성공")
        }).catch(()=>{
          console.log("실패")
        })
-     }
+     },
+     goHome() {
+       this.$router.push('/')
+     },
+      empth :function(){ // empth means  공감
+        this.PATCH_HEART();
+        
+    },
    },
-           computed:{
-            createdAtDate: function(){
-                const Date = this.posts_detail.createdAt.split('T')
-                return Date[0]
-            },
+    computed:{
+      ...mapState(['post_detail', 'user', 'patchHeartRequest']),
+    createdAtDate: function(){
+        const Date = this.post_detail.createdAt.split('T')
+        return Date[0]
+    },
 
-           },
-          created(){
-            console.log(`ficl ${this.posts_detail}`)
-          },
-          
+    },
+  created(){
+    this.GET_POST_DETAIL({ postId: this.$route.params.id });
+  }
+  
           
       
 
@@ -136,6 +158,9 @@ export default {
     border:none;
     width: 85%;
   }
+  .PICommentForm-userImage {
+    margin-right: 1rem;
+  }
   .PICommentForm-header{
     display:flex;
     flex-direction: row;
@@ -154,7 +179,11 @@ export default {
     padding-top:2rem;
     margin-top: 2rem;
     border-top: 1px solid rgba(155,155,155,0.49);
-
+  }
+  .PICommentForm-backMain {
+    text-decoration: underline;
+    cursor: pointer;
+    color: blue;
   }
   .PICommentForm-article .PICommentForm-emotion{
     display:flex;
@@ -182,6 +211,9 @@ export default {
     background-color:#0F4C81;
     color: white;
     border-radius: 100px;
+    cursor: pointer;
+  }
+  .empth {
     cursor: pointer;
   }
 

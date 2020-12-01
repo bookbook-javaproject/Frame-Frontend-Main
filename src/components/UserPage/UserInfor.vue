@@ -1,12 +1,12 @@
 <template>
     <div class="UserInfor-container">
-        <img class="UserInfor-userImage" :src="user.imageUri" />
+        <img class="UserInfor-userImage" :src="user.imageUri ? user.imageUri : defaultProfileImage" />
         <div class="UserInfor-content">
             <div class="UserInfor-infor">
                 <div class="UserInfor-userNickname">{{user.nickname}}</div>
                 <div class="UserInfor-userAction">
                     <img :src="authBlocked">
-                    <img :src="authReport" v-on:click="report" >
+                    <img :src="authReport">
                     <img :src="authSponser" >
                 </div>
             </div>
@@ -20,7 +20,7 @@
                     <div class="UserInfor-follwer" >팔로워</div>
                     <div class="UserInfor-follwerSum">{{follow.follower}}</div>
                 </div>
-                <div class="UserInfor-application">작가신청</div>
+                <div class="UserInfor-application" @click="goApplyPage">작가신청</div>
             </div>
            
         </div>
@@ -39,7 +39,7 @@
 
 <script>
     
-import {authBlocked, authReport,frameLogo, authSponser,closeButton} from '@/assets/img';
+import {authBlocked, authReport,frameLogo, authSponser,closeButton, authArt } from '@/assets/img';
 import {mapActions} from 'vuex';
 export default {
     props:['user','follow'],
@@ -52,7 +52,8 @@ export default {
             clickedReport:false,
             closeButton,
             frameLogo,
-            reportContent:''
+            reportContent:'',
+            defaultProfileImage: authArt,
         }
     },
     methods:{
@@ -71,9 +72,14 @@ export default {
         },
         submit_report:function(){
             this.POST_REPORT(this.reportContent);
+        },
+        goApplyPage() {
+            this.$router.push('/writer-apply')
         }
-    
     },
+    created() {
+        console.log(this.user, this.follow)
+    }
 }
 </script>
 

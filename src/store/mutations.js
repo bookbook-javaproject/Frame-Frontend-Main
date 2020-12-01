@@ -52,8 +52,7 @@ export default {
     state.posts = data;
   },
   GET_POST_DETAIL(state, data) {
-    console.log(data);
-    state.posts_detail = data;
+    state.post_detail = data;
   },
   PATCH_HEART(state, data) {
     state.patchHeartRequest = data;

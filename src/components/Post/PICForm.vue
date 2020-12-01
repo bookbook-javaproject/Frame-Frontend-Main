@@ -1,5 +1,5 @@
 <template>
-  <PICommentForm v-bind:posts_detail="posts_detail" ></PICommentForm>
+  <PICommentForm v-bind:post_detail="post_detail" ></PICommentForm>
 </template>
 
 <script>
@@ -14,7 +14,7 @@ export default {
         ])
     },
     computed: mapState({
-          posts_detail: state=>state.posts_detail
+          post_detail: state=>state.post_detail
     }),
       async created(){
         localStorage.setItem('postId',this.$route.params.id)  

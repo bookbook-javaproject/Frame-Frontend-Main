@@ -118,8 +118,8 @@ export default {
         commit('PATCH_HEART', false);
       });
   },
-  GET_POST_DETAIL({ commit }) {
-    return getPostDetail()
+  GET_POST_DETAIL({ commit }, { postId }) {
+    return getPostDetail(postId)
       .then(({ data }) => {
         console.log(data);
         commit('GET_POST_DETAIL', data);
@@ -169,19 +169,13 @@ export default {
   GET_SEARCH_POST({ commit }, { q }) {
     return getSearchPost(q)
       .then(({ data: { posts } }) => {
-        commit('GET_POST', posts)
+        commit('GET_POST', posts);
       })
       .catch(() => {
         commit('GET_POST', false);
       });
   },
-  POST_REPORT(_, { content }) {
-    return postReport(content)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  POST_REPORT(_, { content, postId }) {
+    return postReport(content, postId);
   },
 };

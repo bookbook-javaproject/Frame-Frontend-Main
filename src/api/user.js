@@ -32,15 +32,14 @@ export const passwordResetAuth = (email) => {
 };
 
 export const getUser = () =>{
-    return getClientAccessToken.get("/user");
+    return getClientAccessToken().get("/user/my");
 }
 
 export const getMypost = (accessType)=>{
-    console.log(accessType)
-    return getClientAccessToken.get(`/post/my?access-type=${accessType}`);
+    return getClientAccessToken().get(`/post/my?access-type=${accessType}`);
 }
 export const putUser = (description,nickname,favoriteType,imageUri)=>{
-    return getClientAccessToken.put('/user/profile',{
+    return getClientAccessToken().put('/user/profile',{
         description,
         nickname,
         favoriteType,
