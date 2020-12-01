@@ -32,7 +32,6 @@ export default {
     },
     created:function(){
             let path = window.location.pathname;
-            console.log(path)
             if(path ==="/"){
                 this.SelectItem1=true
             }
