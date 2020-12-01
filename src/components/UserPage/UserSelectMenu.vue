@@ -105,14 +105,14 @@ export default {
             if(e===1 && !this.isClicked1){
                 this.isClicked1 = true;
                 this.isClicked2 = false;
-                if(this.showFollow) router.push("/userpage/" + this.username + "/userFollowing")
-                else router.push("/userpage/"+ this.username)
+                if(this.showFollow) router.push("/userpage/" + this.$route.params.username + "/userFollowing")
+                else router.push("/userpage/"+ this.$route.params.username)
 
             }else if(e===2 && !this.isClicked2){
                 this.isClicked2 = true;
                 this.isClicked1 = false;
-                if(this.showFollow) router.push("/userpage/"+ this.username + "/userFollower")
-                else router.push('/userpage/'+ this.username + '/ILoveItForm');
+                if(this.showFollow) router.push("/userpage/"+ this.$route.params.username + "/userFollower")
+                else router.push('/userpage/'+ this.$route.params.username + '/ILoveItForm');
             }else{
                 alert('현재 보시고 계신 페이지입니다.');
             }
