@@ -13,7 +13,7 @@
       <div class="etc" v-if="!isNotice">
           <span @click="onToggleReportModal">신고</span>
           <b v-if="post.writer.email === user.email">|</b>
-          <span v-if="post.writer.email === user.email">편집</span>
+          <span v-if="post.writer.email === user.email">수정</span>
           <b v-if="post.writer.email === user.email">|</b>
           <span v-if="post.writer.email === user.email" >삭제</span>
       </div>
