@@ -2,11 +2,11 @@
     <div class="UserSelectMenu-container">
         <div class="UserSelectMenu-content" v-bind:class="{UserSelectMenuContentIsClicked : isClicked1}" v-on:click="isClickedItem(1)">
             <img :src="firstImage" >
-            <div class="UserSelectMenu-content-text">{{showFollow ? '팔로잉' : '내 글'}}</div>
+            <div class="UserSelectMenu-content-text">{{showFollow ? '팔로잉' : this.$route.params.username === user.email ? '내 글' : '쓴 글'}}</div>
         </div>
         <div class="UserSelectMenu-content" v-bind:class="{UserSelectMenuContentIsClicked : isClicked2}" v-on:click="isClickedItem(2)">
-            <img :src="secondImage">
-            <div class="UserSelectMenu-content-text">{{showFollow ? '팔로우' : '마음에 들어요'}}</div>            
+            <img :src="secondImage" v-if="user.email === this.$route.params.username || showFollow">
+            <div class="UserSelectMenu-content-text">{{showFollow ? '팔로워' : user.email === this.$route.params.username ? '마음에 들어요' : ''}}</div>            
         </div>
     </div>
 </template>
@@ -14,9 +14,10 @@
 <script>
 import {myWritingList,heart,authFollow,authFollowClicked} from '@/assets/img';
 import router from '@/router';
+import { mapActions, mapState } from 'vuex';
 
 export default {
-    props:['showFollow'],
+    props:['showFollow', 'setShowFollow'],
     data(){
         return{
             myWritingList,
@@ -29,7 +30,7 @@ export default {
         }
     },
     computed:{
-        
+        ...mapState(['user']),
             firstImage: function(){
                  return this.showFollow ? this.authFollow :  this.myWritingList
             },
@@ -43,41 +44,64 @@ export default {
     watch:{
         '$route'(to){
             const link = to.fullPath;
-            console.log(`to fullPath is : ${to.fullPath}`);
-            console.log(link);
-            console.log(`"/userpage/:username/userFollowing"`)
-            if(link ==="/userpage/:username" || link==="/userpage/:username/userFollowing"){
+            if(link === "/userpage/" + this.$route.params.username) {
                 this.isClicked1=true;
                 this.isClicked2=false;
+                this.setShowFollow(false)
             }
-            else if(link ==="/userpage/:username/IloveItForm" || link==="/userpage/:username/userFollower"){
-                this.isClicked2=true;
+            else if(link === "/userpage/" + this.$route.params.username + "/userFollowing"){
+                this.isClicked1=true;
+                this.isClicked2=false;
+                this.setShowFollow(true);
+            }
+            else if(link === "/userpage/" + this.$route.params.username + "/ILoveItForm")  {
+                console.log(this.user.email)
+                if (this.user.email !== this.$route.params.username) {
+                    alert('접근 권한이 없습니다.')
+                    this.$router.push('/userpage/' + this.$route.params.username);
+                }
                 this.isClicked1=false;
+                this.isClicked2=true;
+                this.setShowFollow(false);
+            }
+            else if(link==="/userpage/" + this.$route.params.username +"/userFollower") {
+                this.isClicked1 = false;
+                this.isClicked2 = true;
+                this.setShowFollow(true);
             }
         },
     },
     created(){
         let to = window.location.pathname;
-        console.log(`to : ${to}`);
-        console.log("link : " +   "/userpage/" + this.username + "/userFollowing");
-        if(to === "/userpage/" + this.username)this.isClicked1=true;
-        else if(to === "/userpage/" + this.username + "/userFollowing"){
+        if(to === "/userpage/" + this.$route.params.username) {
             this.isClicked1=true;
-            this.showFollow = true;
+            this.isClicked2=false;
+            this.setShowFollow(false);
         }
-        else if(to === "/userpage/" + this.username + "/IloveItForm")  this.isClicked2=true;
-        else if(to==="/userpage/" + this.username +"/userFollower") {
+        else if(to === "/userpage/" + this.$route.params.username + "/userFollowing"){
+            this.isClicked1=true;
+            this.isClicked2 = false;
+            this.setShowFollow(true);
+        }
+        else if(to === "/userpage/" + this.$route.params.username + "/ILoveItForm")  {
+            if (this.user.email && this.user.email !== this.$route.params.username) {
+                alert('접근할 권한이 없습니다.')
+                this.$router.push('/userpage/' + this.$route.params.username);
+            }
+            this.isClicked1=false;
             this.isClicked2=true;
-            this.showFollow = true;
+            this.setShowFollow(false);
         }
-        else {
-            alert("존재하지 않는 유저 이거나 올바르지 않은 접근입니다.");
-            router.push('/');
+        else if(to==="/userpage/" + this.$route.params.username +"/userFollower") {
+            this.isClicked1=false;
+            this.isClicked2 = true;
+            this.setShowFollow(true);
         }
+        this.GET_FOLLOW(this.$route.params.username);
     },
     methods:{
+        ...mapActions(['GET_FOLLOW']),
         isClickedItem(e){
-            console.log(this.showFollow);
             if(e===1 && !this.isClicked1){
                 this.isClicked1 = true;
                 this.isClicked2 = false;
@@ -111,6 +135,7 @@ export default {
     flex-direction: row;
     align-items: center;
     margin-right: 2rem;
+    cursor: pointer;
 }
 .UserSelectMenu-content img{
     margin-right: 1rem;     
