@@ -4,7 +4,7 @@
         <img :src="frameLogo" v-on:click="frameLogoClick"  alt="로고오브프레임" />
     </div>
     <div class="header-items" >
-        <input class="header-searchBox" type="text" v-model="q" placeholder="검색" />
+        <input class="header-searchBox" type="text" v-model="q" placeholder="검색" @keydown.enter="search" />
         <img class="header-serachIcon" :src="headerSearchIcon" v-on:click="search" />
         <img class="header-userImage" :src="imageUri ? imageUri : defaultProfileImage" alt="너의 사진"/>
         <div class="header-list">
