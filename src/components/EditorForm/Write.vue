@@ -1,7 +1,7 @@
 <template>
   <div class="Write-container">
     <div class="Write-content">
-        <img  class="Write-content-userImage" :src="user.imageUri ? user.imageUri : defaultProfileImage">
+        <img  class="Write-content-userImage" :src="user.imageUri ? `http://52.79.253.30:5001/file?id=${user.imageUri}` : defaultProfileImage">
         <textarea class="Write-content-editor" v-model="content" />
     </div>
     <div class="Write-footer">
@@ -47,8 +47,8 @@ export default {
   data(){
     return{ 
       profileImage: 'https://i.pinimg.com/originals/28/37/5f/28375f1b51f3f4c40c6da45ff4ef2f0a.jpg',
-      contentType:'',
-      accessType:'',
+      contentType: 'SENSIBILITY',
+      accessType:'PUBLIC',
       content:'',
       defaultProfileImage: authArt
     }
@@ -105,7 +105,8 @@ export default {
     width: 50rem;
     height: 10rem;
     outline:none;
-    
+    padding: 1rem;
+    resize: none;
   }
   
   .Write-nature-item{
@@ -137,6 +138,7 @@ export default {
           margin-left: 1rem;
 
   }
+  
   .Write-edit-button:hover{
       opacity: 1;
       font-weight: bold;
@@ -162,7 +164,9 @@ export default {
         -webkit-box-shadow: 5px 6px 13px -2px rgba(0,0,0,0.33); 
 box-shadow: 5px 6px 13px -2px rgba(0,0,0,0.33);
     }
-
+input[type='radio'] {
+  cursor: pointer;
+}
 .Write-footer input[type='radio']:checked:after {
         width: 0.75rem;
         height: 0.75rem;
