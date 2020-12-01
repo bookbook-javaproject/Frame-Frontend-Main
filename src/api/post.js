@@ -6,8 +6,8 @@ export const getPost = () => {
     console.log();
     return getClientAccessToken().get(`/post?sort-type=recency`,)
 };
-export const patchHeart = () =>{
-    return getClientAccessToken().patch('/post/heart',{postId:localStorage.getItem('postId')}).then((res)=>{
+export const patchHeart = (postId) =>{
+    return getClientAccessToken().patch('/post/heart',{postId}).then((res)=>{
         console.log(res)
     }).catch((err)=>{
         console.log(err)
