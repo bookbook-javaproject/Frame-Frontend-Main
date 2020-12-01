@@ -2,11 +2,11 @@
   <div class="PICommentForm-container PICommentForm-layout">
       <div class="PICommentForm-header PICommentForm-layout">
       <div  class="PICommentForm-header2">
-          <img class="PICommentForm-userImage" alt="프로필 사진" :src="post_detail.writer.imageUri ? `http://52.79.253.30:5001/file?id=${post_detail.writer.imageUri}` : defaultProfileImage" @click="goUserPage" />
+          <img class="PICommentForm-userImage" alt="프로필 사진" :src="post_detail ? post_detail.writer.imageUri ? `http://52.79.253.30:5001/file?id=${post_detail.writer.imageUri}` : defaultProfileImage : defaultProfileImage" @click="goUserPage" />
           
           <div class="PICommentForm-userInformation">
               <div class="PICommentForm-userNickName"> 
-                {{post_detail.writer.nickname}}
+                {{ post_detail ? post_detail.writer.nickname : '...'}}
               </div>
               <div class="PICommentForm-WroteDate"> 
                 {{createdAtDate}}
@@ -21,32 +21,32 @@
 
       <div class="PICommentForm-section PICommentForm-layout">
           <div class="PICommentForm-postContent"> 
-              {{post_detail.content}}
+              {{ post_detail ?  post_detail.content : '...'}}
           </div>
       </div>
       <div class="PICommentForm-article PICommentForm-layout">
           <div class="PICommentForm-emotion"> 
-            <img class="empth" :src="~post_detail.hearts.indexOf(user.email) ? emotionButtonClicked :emotionButton" @click="empth"  /> 
+            <img class="empth" :src="post_detail && ~post_detail.hearts.indexOf(user.email) ? emotionButtonClicked :emotionButton" @click="empth"  /> 
             <div class="PICommentForm-emotionSum" > 
-              {{post_detail.hearts.length}}
+              {{post_detail ? post_detail.hearts.length : 0}}
             </div>
           </div>
           <div class="PICommentForm-emotion"> 
             <img :src="commentButton" />
             <div class="PICommentForm-emotionSum">
-              {{post_detail.comments.length  }}
+              {{post_detail ? post_detail.comments.length : 0 }}
             </div>
           </div>
       </div>
       <div class="PICommentForm-content PICommentForm-layout" >
         <div class="PICommentForm-commentList">
-          <PICommentItem v-for="(item,index) of this.post_detail.comments" v-bind:key="index" :detail="item" />   
+          <PICommentItem v-for="(item,index) of post_detail && post_detail.comments" v-bind:key="index" :detail="item" :index="index" :postId="post_detail ? post_detail.postId : 0" />   
             
         </div>
       
       </div>
       <div class="PICommentForm-footer PICommentForm-layout">
-          <img :src="post_detail.writer.imageUri ? `http://52.79.253.30:5001/file?id=${post_detail.writer}` : defaultProfileImage" class="PICommentForm-userImage" />
+          <img :src="post_detail ? post_detail.writer.imageUri ? `http://52.79.253.30:5001/file?id=${post_detail.writer}` : defaultProfileImage : defaultProfileImage" class="PICommentForm-userImage" />
           <input type="text" placeholder="댓글을 입력하세요" class="PICommentForm-mainComment" v-model="comment">
           <div v-on:click="submitComment" class="PICommentForm-commentSubmit-button">입력</div>
       </div>
@@ -90,15 +90,19 @@ export default {
        'GET_POST_DETAIL'
      ]),
      goUserPage() {
-       this.$router.push(`/userpage/${this.post_detail.writer.email}`);
+       if (this.post_detail) {
+         this.$router.push(`/userpage/${this.post_detail.writer.email}`);
+       }
      },
-     async submitComment(){
-       await this.POST_COMMENT({comment:this.comment, postId: this.post_detail.postId}).then(()=>{
-         this.GET_POST_DETAIL({ postId: this.$route.params.id });
-         this.comment = '';
-       }).catch(()=>{
-         alert('댓글 작성에 실패하였습니다.')
-       })
+    submitComment(){
+       if (this.post_detail) {
+         this.POST_COMMENT({comment:this.comment, postId: this.post_detail.postId}).then(()=>{
+           this.GET_POST_DETAIL({ postId: this.$route.params.id });
+           this.comment = '';
+         }).catch(()=>{
+           alert('댓글 작성에 실패하였습니다.')
+         })
+       }
      },
      goHome() {
        this.$router.push('/')
@@ -111,8 +115,11 @@ export default {
     computed:{
       ...mapState(['post_detail', 'user', 'patchHeartRequest']),
     createdAtDate: function(){
-        const Date = this.post_detail.createdAt.split('T')
+       if (this.post_detail) {
+         const Date = this.post_detail.createdAt.split('T')
         return Date[0]
+       }
+       return new Date();
     },
 
     },
