@@ -1,6 +1,9 @@
 <template>
-    <div class="postList-container">
-        <post-item v-for="(item,index) of posts" v-bind:key="index" v-bind:post="item" ></post-item>
+    <div class="postList-container" v-if="isSearch">
+        <post-item  v-for="(item,index) of searchPosts" v-bind:key="index" v-bind:post="item" ></post-item>
+    </div>
+    <div class="postList-container" v-else>
+        <post-item  v-for="(item,index) of posts" v-bind:key="index" v-bind:post="item" ></post-item>
     </div>
 
 </template>
@@ -19,9 +22,15 @@ export default {
             items: null 
         }
     },
-    computed: mapState({
-        posts: state=>state.posts
-    }),
+    computed: {
+        ...mapState({
+            posts: state=>state.posts,
+            searchPosts: state => state.searchPosts,
+        }),
+        isSearch() {
+            return this.$route.query.query ? true : false;
+        }
+    },
     methods:{
         ...mapActions([
             'GET_POST'
