@@ -78,7 +78,8 @@ export default {
                 reader.readAsDataURL(e.target.files[0]);
         },
         ...mapActions([
-            'PUT_USER'
+            'PUT_USER',
+            'GET_USER',
         ]),
         async setUserProfile(){
             const formData = new FormData();
@@ -86,19 +87,21 @@ export default {
             try {
                 if (this.imageFormData) {
                     const { data: { fileId } } =  await uploadFile.post('/image', formData);
-                    this.PUT_USER({
+                    await this.PUT_USER({
                         imageUri: fileId,
                         nickname: this.nickname,
                         description:this.description,
                         favoriteType:this.favoriteType,
                     })
-                }
-                this.PUT_USER({
-                        imageUri: '',
+                } else {
+                    await this.PUT_USER({
+                        imageUri: this.user.imageUri,
                         nickname: this.nickname,
                         description:this.description,
                         favoriteType:this.favoriteType,
                     })
+                }
+                this.GET_USER();
             } catch (_) {
                 alert('사진을 수정하는데 오류가 발생했습니다.')
             }
