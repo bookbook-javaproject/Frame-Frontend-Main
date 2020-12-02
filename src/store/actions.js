@@ -46,8 +46,8 @@ export default {
   },
   FILE_UPLOAD({ commit }, { file }) {
     return fileUpload(file)
-      .then((data) => {
-        commit('FILE_UPLOAD', data);
+      .then(({ data: { fileId }}) => {
+        commit('FILE_UPLOAD', fileId);
       })
       .catch(() => {
         commit('IS_FILE', false);
