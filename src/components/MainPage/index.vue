@@ -41,7 +41,9 @@ export default {
     async created (){
         await this.GET_USER();
             let path = window.location.pathname;
-            if(path === '/'){
+            if (window.location.search) {
+                this.isNavNeed = false;
+            } else if(path === '/'){
                 this.isNavNeed = true;
             }else if(path ==='/recent'){
                 this.isNavNeed = true;                
