@@ -74,5 +74,8 @@ export default {
   },
   GET_FOLLOW(state, data) {
     state.follow = data;
-  }
+  },
+  GET_SEARCH_POST(state, data) {
+    state.searchPosts = data;
+  },
 };
