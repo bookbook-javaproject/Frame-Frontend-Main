@@ -1,9 +1,9 @@
 <template>
   <div class="modal-container">
       <div>
-            <img :src="imageUri ? `http://52.79.253.30:5001/file?id=${imageUri}` : defaultProfileImage" class="modal-userImage" @click="goUserPage" >
+            <img :src="user ? user.imageUri ? `http://52.79.253.30:5001/file?id=${user.imageUri}` : defaultProfileImage : defaultProfileImage" class="modal-userImage" @click="goUserPage" >
             <div style="font-weight: bold" @click="goUserPage">
-            {{nickname}}
+            {{ user ? user.nickname ? user.nickname : '' : ''}}
             </div>
       </div>
       <div class="etc">
@@ -21,8 +21,15 @@
 
 <script>
 import { mapState } from 'vuex';
+
+import { authArt } from '@/assets/img'
+
 export default {
-    props:['imageUri','nickname'],
+    data() {
+        return {
+            defaultProfileImage: authArt,
+        }
+    },
     computed: mapState(['user']),
     methods: {
         goUserPage() {

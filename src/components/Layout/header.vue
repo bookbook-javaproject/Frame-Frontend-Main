@@ -6,10 +6,10 @@
     <div class="header-items" >
         <input class="header-searchBox" type="text" v-model="q" placeholder="검색" @keydown.enter="search" />
         <img class="header-serachIcon" :src="headerSearchIcon" v-on:click="search" />
-        <img class="header-userImage" :src="imageUri ? `http://52.79.253.30:5001/file?id=${imageUri}` : defaultProfileImage" alt="너의 사진"  @click="goMyPost"/>
+        <img class="header-userImage" :src="user ? user.imageUri ? `http://52.79.253.30:5001/file?id=${user.imageUri}` : defaultProfileImage : defaultProfileImage" alt="너의 사진"  @click="goMyPost"/>
         <div class="header-list">
          <img class="header-select" v-on:click="showUser" :src="headerSelectButtonIcon" v-bind:class="{headerSelected: showUserI}" alt="셀레그"/> 
-         <modal :imageUri="imageUri ? imageUri: defaultProfileImage" :nickname="nickname" v-if="showUserI" /> <!-- showUserI means Show User Information-->
+         <modal v-if="showUserI" /> <!-- showUserI means Show User Information-->
         </div>
     </div>
 
@@ -23,7 +23,6 @@ import router from '@/router';
 import { mapActions, mapState } from 'vuex';
 
 export default {
-    props:['nickname','imageUri'],
     name:'MainHeader',
     components:{modal},
     data(){

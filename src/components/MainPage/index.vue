@@ -1,7 +1,7 @@
 <template>
     <div class="mainPage-container">
         <div class="mainPage-header">
-            <main-header :imageUri="user.imageUri" v-bind:nickname="user.nickname"></main-header>
+            <main-header />
         </div>
         <div class="mainPage-nav" v-show="isNavNeed" >
             <main-select-list></main-select-list>
