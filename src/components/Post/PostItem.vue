@@ -78,15 +78,20 @@ export default {
         };
     },
         watch: {
-            async patchHeartRequest() {
-                if (this.isUserPage) {
-                    this.GET_USER_POSTS(this.$route.params.username);
-                } else if (this.isSympathetic) {
-                    this.GET_SYMPATHETIC();
-                } else if (this.isMyPosts) {
-                    this.GET_MYPOST({ accessType: 'private' })
-                } else {
-                    await this.GET_POST('trending');
+            async patchHeartRequest(value) {
+                if (value) {
+                    if (this.$route.query.query) {
+                        await this.GET_SEARCH_POST({q:this.$route.query.query })
+                    }
+                    else if (this.isUserPage) {
+                        this.GET_USER_POSTS(this.$route.params.username);
+                    } else if (this.isSympathetic) {
+                        this.GET_SYMPATHETIC();
+                    } else if (this.isMyPosts) {
+                        this.GET_MYPOST({ accessType: 'private' })
+                    } else {
+                        await this.GET_POST('trending');
+                    }
                 }
             },
             post: {
@@ -105,6 +110,7 @@ export default {
                 'GET_USER_POSTS',
                 'GET_SYMPATHETIC',
                 'GET_MYPOST',
+                'GET_SEARCH_POST'
             ]),
             setLocalUser: function(){
                 console.log("로컬스토리지 셋 됨");
@@ -199,6 +205,9 @@ export default {
         align-items: center;
         margin-left: 1rem;
         position: relative;
+    }
+    .postItem-card-subtitle > p {
+        margin-left: 1rem;
     }
     .postItem-card-subtitle div{
         margin-left: 1rem;
