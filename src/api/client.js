@@ -16,6 +16,6 @@ export const getClientAccessToken = () => axios.create({
 });
 
 export const uploadFile = axios.create({
-  baseURL: process.env.VUE_APP_FILE_API_URL,
-  headers: { 'content-type': 'application/x-www-form-urlencoded' },
-});
+         baseURL: process.env.VUE_APP_FILE_API_URL,
+         headers: { 'content-type': 'multipart/form-data' },
+       });
