@@ -64,10 +64,10 @@ export default {
     state.writer = data;
   },
   GET_MYPOST(state, data) {
-    state.myPosts = data;
+    state.myPosts = data.reverse();
   },
   GET_USER_POSTS(state, data) {
-    state.userPosts = data;
+    state.userPosts = data.reverse();
   },
   GET_SYMPATHETIC(state, data) {
     state.sympatheticPosts = data;

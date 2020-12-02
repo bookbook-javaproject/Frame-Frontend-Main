@@ -1,6 +1,6 @@
 <template>
   <div class="UserPage-container">
-    <user-infor :user="user" :follow="follow" v-on:showFollow="setShowFollow" />
+    <user-infor :follow="follow" v-on:showFollow="setShowFollow" />
     <user-select-menu v-bind:showFollow="isShowFollow" :setShowFollow="setShowFollow" />
     <router-view />
   </div>
@@ -19,7 +19,6 @@ export default {
     },
     methods:{
       setShowFollow:function(data){
-          console.log('setShowFollow 실행됨');
           this.isShowFollow = data;
       },
           ...mapActions([
@@ -35,7 +34,7 @@ export default {
         await this.GET_USER(); 
         await this.GET_FOLLOW(this.$route.params.username);
     },
-    computed: mapState(['user', 'follow', 'myPosts']),
+    computed: mapState(['user', 'follow', 'myPosts', 'writer']),
     watch: {
       user: {
         deep: true,
@@ -44,11 +43,6 @@ export default {
             this.GET_MYPOST({ accessType: 'private'});
           }
         },
-      '$route'() {
-        this.GET_USER(); 
-        this.GET_FOLLOW(this.$route.params.username);
-        this.GET_WRITER(this.$route.params.username);
-      }
     }
   }
 }

@@ -7,6 +7,8 @@
           <div class="PICommentForm-userInformation">
               <div class="PICommentForm-userNickName"> 
                 {{ post_detail ? post_detail.writer.nickname : '...'}}
+                <img :src="checkBadge" v-if="post_detail && post_detail.writer && post_detail.writer.userType === 'AUTHOR'" class="badge" @mouseover="badgeOver" @mouseleave="badgeLeave" />
+                <p v-if="isHoveredBadge">이 사용자는 작가 인증을 받았습니다.</p>
               </div>
               <div class="PICommentForm-WroteDate"> 
                 {{createdAtDate}}
@@ -54,7 +56,7 @@
 </template>
 
 <script>
-import {emotionButton,emotionButtonClicked, commentButton, authArt, arrowHome } from '@/assets/img';
+import {emotionButton,emotionButtonClicked, commentButton, authArt, arrowHome, checkBadge } from '@/assets/img';
 import PICommentItem from './PICommentItem.vue';
 import {mapActions, mapState} from 'vuex';
 export default {
@@ -67,6 +69,8 @@ export default {
       items:null,
       defaultProfileImage: authArt,
       arrowHome,
+      isHoveredBadge: false,
+      checkBadge
     }
   },
    components:{PICommentItem},
@@ -94,6 +98,12 @@ export default {
          this.$router.push(`/userpage/${this.post_detail.writer.email}`);
        }
      },
+     badgeOver() {
+                this.isHoveredBadge = true;
+            },
+            badgeLeave() {
+                this.isHoveredBadge = false;
+            },
     submitComment(){
        if (this.post_detail) {
          this.POST_COMMENT({comment:this.comment, postId: this.post_detail.postId}).then(()=>{
@@ -135,6 +145,13 @@ export default {
 </script>
 
 <style lang='scss'>
+.PICommentForm-userNickName {
+  display: flex;
+
+  > img {
+    margin: 0 4px;
+  }
+}
  .PICommentForm-layout{
     margin-top: 1.5rem
   }
@@ -156,7 +173,7 @@ export default {
     justify-content: space-around;
 
   }
-  .PICommentForm-header img{
+  .PICommentForm-header > div > img{
     width: 3rem;
     height: 3rem;
     border-radius: 100px;

@@ -5,7 +5,7 @@
             <div class="UserInfor-infor">
                 <div class="UserInfor-userNickname" @click="goUserPage">
                     {{writer ? writer.nickname : ''}}
-                    <img :src="checkBadge" v-if="user.email" class="badge" @mouseover="badgeOver" @mouseleave="badgeLeave" />
+                    <img :src="checkBadge" v-if="writer && writer.userType === 'AUTHOR'" class="badge" @mouseover="badgeOver" @mouseleave="badgeLeave" />
                     <p v-if="isHoveredBadge">이 사용자는 작가 인증을 받았습니다.</p>
                 </div>
                 <!-- <div class="UserInfor-userAction">
@@ -48,7 +48,7 @@
 import {authBlocked, authReport,frameLogo, authSponser,closeButton, authArt, checkBadge } from '@/assets/img';
 import {mapActions, mapState} from 'vuex';
 export default {
-    props:['user','follow'],
+    props:['follow'],
     data(){
         return{
             UserImage: 'https://pbs.twimg.com/media/Ef8sDBhUcAAhv_c.jpg',
@@ -119,6 +119,7 @@ export default {
     computed: mapState({
         writer: (state) => state.writer,
         followRelation: (state) => state.follow,
+        user: (state) => state.user,
     })
 }
 </script>
