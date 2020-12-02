@@ -34,6 +34,7 @@ export default {
     methods: {
         goUserPage() {
             if (this.user && this.user.email) {
+                if (this.$route.path !== `/userpage/${this.user.email}`)
                 this.$router.push(`/userpage/${this.user.email}`)
             }
         },
