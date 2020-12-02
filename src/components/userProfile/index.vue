@@ -44,7 +44,6 @@ import router from '@/router';
 import { uploadFile } from '../../api/client';
 export default {
     data(){
-        console.log(this.user)
         return{
             notSelected:true,
             selectImage,
@@ -52,7 +51,7 @@ export default {
             nickname: '',
             description: '',
             favoriteType:'',
-            imageFormData: new FormData(),
+            imageFormData: null,
         }
     },
     computed: {
@@ -62,10 +61,9 @@ export default {
         user: {
             deep: true,
             handler(value) {
-                console.log(value)
                 this.nickname = value.nickname;
                 this.description = value.description;
-                this.favoriteType = value.favoriteType;
+                this.favoriteType = value.favoriteType === "null" ? 'SENSIBILITY' : value.favoriteType;
             }
         }
     },
@@ -86,13 +84,21 @@ export default {
             const formData = new FormData();
             formData.append('file', this.imageFormData);
             try {
-                const { data: { fileId } } =  await uploadFile.post('/image', formData);
+                if (this.imageFormData) {
+                    const { data: { fileId } } =  await uploadFile.post('/image', formData);
+                    this.PUT_USER({
+                        imageUri: fileId,
+                        nickname: this.nickname,
+                        description:this.description,
+                        favoriteType:this.favoriteType,
+                    })
+                }
                 this.PUT_USER({
-                    imageUri: fileId,
-                    nickname: this.nickname,
-                    description:this.description,
-                    favoriteType:this.favoriteType,
-                })
+                        imageUri: '',
+                        nickname: this.nickname,
+                        description:this.description,
+                        favoriteType:this.favoriteType,
+                    })
             } catch (_) {
                 alert('사진을 수정하는데 오류가 발생했습니다.')
             }
