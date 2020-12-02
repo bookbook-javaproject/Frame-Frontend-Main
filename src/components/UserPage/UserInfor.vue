@@ -16,18 +16,22 @@
             </div>
             <div class="UserInfor-introduce">{{writer ? writer.description : ''}}</div>
             <div class="UserInfor-content-container">
-                <div class="UserInfor-userFollwer-Infor" v-on:click="goFollowing">
-                    <div class="UserInfor-following">팔로잉</div>
-                    <div class="UserInfor-followingSum">{{follow ? follow.following.length : 0}}</div>
+                <div>
+                    <div class="UserInfor-userFollwer-Infor" v-on:click="goFollowing">
+                        <div class="UserInfor-following">팔로잉</div>
+                        <div class="UserInfor-followingSum">{{follow ? follow.following.length : 0}}</div>
+                    </div>
+                    <div class="UserInfor-userFollwer-Infor" v-on:click="goFollower">
+                        <div class="UserInfor-follwer" >팔로워</div>
+                        <div class="UserInfor-follwerSum">{{follow ? follow.follower.length : 0}}</div>
+                    </div>
                 </div>
-                <div class="UserInfor-userFollwer-Infor" v-on:click="goFollower">
-                    <div class="UserInfor-follwer" >팔로워</div>
-                    <div class="UserInfor-follwerSum">{{follow ? follow.follower.length : 0}}</div>
+                <div>
+                    <div class="UserInfor-application" @click="goApplyPage" v-if="writer ? writer.email === user.email : false">작가신청</div>
+                    <div class="UserInfor-application" @click="goApplyPoem" v-if="writer ? writer.email === user.email : false">시집신청</div>
+                    <div class="UserInfor-application" @click="onClickFollow" v-else-if="followRelation && ~followRelation.follower.findIndex((follower) => follower.email === user.email)">팔로잉</div>
+                    <div class="UserInfor-application" @click="onClickFollow" v-else>팔로우</div>
                 </div>
-                <div class="UserInfor-application" @click="goApplyPage" v-if="writer ? writer.email === user.email : false">작가신청</div>
-                <div class="UserInfor-application" @click="goApplyPoem" v-if="writer ? writer.email === user.email : false">시집신청</div>
-                <div class="UserInfor-application" @click="onClickFollow" v-else-if="followRelation && ~followRelation.follower.findIndex((follower) => follower.email === user.email)">팔로잉</div>
-                <div class="UserInfor-application" @click="onClickFollow" v-else>팔로우</div>
             </div>
            
         </div>
@@ -150,6 +154,7 @@ export default {
     height: 0.75rem;
 }
 .UserInfor-content{
+    flex: 1;
     display:flex;
     flex-direction: column;
     justify-content: space-around;
@@ -158,9 +163,14 @@ export default {
 }
 .UserInfor-content-container{
     display:flex;
+    justify-content: space-between;
     align-items: center;
-    > .UserInfor-application:last-child {
-        margin-left: 10px;
+    > div {
+        display: flex;
+        
+        > .UserInfor-application:last-child {
+            margin-left: 10px;
+        }
     }
 }
 .UserInfor-infor{
@@ -183,8 +193,6 @@ export default {
     border-radius: 100px;
     color: #ffffff;
     cursor: pointer;
-    position: relative;
-    left: 30rem;
 }
 .UserInfor-introduce{
     font-size: 13px;
