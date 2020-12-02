@@ -4,8 +4,8 @@
       <label for="file">
         <div class="image" v-bind:style="{ backgroundImage: 'url(' + previewImage + ') ',    backgroundPosition: 'center center'}">
             <div class="content" v-show="notSelected">
-                <img :src="selectImage ? selectImage : user.imageUri ? `http://52.79.253.30:5001/file?id=${user.imageUri}` : ''"  />
-                <input type="file"  @change="previewFiles" style="display:none" name="file" id="file" />
+                <img :src="selectImage ? selectImage : user.imageUri ? `http://52.79.253.30:5001/file?id=${user.imageUri}` : ''"   />
+                <input type="file"  @change="previewFiles" style="display:none" name="file" id="file" accept="image/png, image/jpeg, image/jpg" />
 
                 <div>프로필 사진 선택</div>
             </div>

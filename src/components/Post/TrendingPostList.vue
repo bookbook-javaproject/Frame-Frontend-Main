@@ -30,7 +30,6 @@ export default {
     
     async created(){
         await this.GET_POST('trending');
-         console.log(this.posts)
     },
  
 }

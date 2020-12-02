@@ -130,8 +130,13 @@ export default {
                         })
                         alert('신고가 접수되었습니다.')
                         this.onToggleReportModal();
-                } catch (_) {
-                    alert('게시물 신고 실패')
+                        this.reportContent = '';
+                } catch (error) {
+                    if (error.response.status === 400) {
+                        alert('이미 신고한 게시글 입니다.')
+                    } else {
+                        alert('게시물 신고에 실패하였습니다.')
+                    }
                 }
             },
             onClickDelete() {
@@ -279,10 +284,14 @@ export default {
     
 }
 .UserInfor-report-modal-container{
-    width: 70rem;
-    position: fixed;
-    left: 10%;
-    top: 10%;
+    min-width: 500px;
+    width: 90%;
+    position: absolute;
+    padding: 2rem 5rem;
+    box-sizing: border-box;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     height: 40rem;
     opacity: 1;
     display:flex;
@@ -297,33 +306,31 @@ export default {
 }
 .UserInfor-report-modal-button{
     padding: 0.5rem 2rem 0.5rem 2rem; 
+    margin-left: auto;
     background-color: #0F4C81;
     color:white;
     cursor: pointer;
 }
 .UserInfor-report-modal-container .report-content{
-    width: 50rem;
+    width: 100%;
     height: 20rem;
+    margin: 8px 0;
 }
 .UserInfor-report-modal-container .close-button{
+    width: 26px;
+    height: 26px;
+    object-fit: contain;
     margin-left: auto;
     cursor: pointer;
 }
-.UserInfor-report-modal-container .reaport-logo{
-    margin-left: 5rem;
-}
-.UserInfor-report-modal-container h1{
-        margin-left: 5rem;
-}
-.UserInfor-report-modal-container div{
-        margin-left: 5rem;
-}
+
 .UserInfor-report-modal-container textarea{
-    margin-left: 5rem;
+    resize: none;
     font-size: 1.5rem;
     color: #838383;
     outline: none;
     padding: 1rem;
+    box-sizing: border-box;
 }
 </style>    
 
