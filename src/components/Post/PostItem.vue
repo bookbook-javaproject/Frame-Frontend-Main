@@ -3,9 +3,11 @@
     <div class="postItem-card-title">
       <img class="postItem-userImage" v-on:click="userImageClicked" alt="아직 구현 안됨" v-if="!isNotice" :src="post && post.writer ? post.writer.imageUri ? `http://52.79.253.30:5001/file?id=${post.writer.imageUri}` : defaultProfileImage : defaultProfileImage">
       <div class="postItem-card-subtitle">
-        <p>
+        <div>
             {{ isNotice ? `관리자 - ${post.title}` : post && post.writer ? post.writer.nickname : ''}}
-        </p>
+            <img :src="checkBadge" v-if="user.email" class="badge" @mouseover="badgeOver" @mouseleave="badgeLeave" />
+            <p v-if="isHoveredBadge">이 사용자는 작가 인증을 받았습니다.</p>
+        </div>
         <p style="color: #555555">
             {{createdAtDate}}
         </p>
@@ -53,7 +55,7 @@
 </template>
 
 <script>
-import {commentButton,emotionButton,emotionButtonClicked, authArt,closeButton,frameLogo } from '@/assets/img'
+import {commentButton,emotionButton,emotionButtonClicked, authArt,closeButton,frameLogo, checkBadge } from '@/assets/img'
 import router from '@/router';
 import {mapActions, mapState} from 'vuex';
 import { getClientAccessToken } from '../../api/client';
@@ -64,15 +66,17 @@ export default {
     data:function() {
         return {
             frameLogo,
-                closeButton,
-                commentButton,
-                emotionButton,
-                emotionButtonClicked,
-                defaultProfileImage: authArt,
-                clickedReport:false,
-                reportContent: '',
-            };
-        },
+            closeButton,
+            commentButton,
+            emotionButton,
+            emotionButtonClicked,
+            defaultProfileImage: authArt,
+            clickedReport:false,
+            reportContent: '',
+            checkBadge,
+            isHoveredBadge: false
+        };
+    },
         watch: {
             async patchHeartRequest() {
                 if (this.isUserPage) {
@@ -86,7 +90,7 @@ export default {
                 }
             },
             post: {
-                deep: true,
+                deep: false,
                 handler(data) {
                     if (data) {
                         this.$store.commit('PATCH_HEART', false);
@@ -146,6 +150,12 @@ export default {
             },
             goUpdatePage() {
                 this.$router.push(`/update/${this.post.postId}`)
+            },
+            badgeOver() {
+                this.isHoveredBadge = true;
+            },
+            badgeLeave() {
+                this.isHoveredBadge = false;
             }
         },
         computed:{
@@ -185,10 +195,21 @@ export default {
         margin-left: 1rem;
         position: relative;
     }
-    .postItem-card-subtitle p{
+    .postItem-card-subtitle div{
         margin-left: 1rem;
         margin-top: 0.1rem;
+        display: flex;
+        align-items: center;
 
+        img {
+            margin-left: 4px;
+        }
+
+        p {
+            margin-left: 4px;
+            width: 200px;
+            font-size: 14px;
+        }  
     }
     .postItem-userImage{
         width: 3rem;

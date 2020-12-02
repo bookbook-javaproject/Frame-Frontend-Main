@@ -3,7 +3,11 @@
         <img class="UserInfor-userImage" :src="writer ? writer.imageUri ? `http://52.79.253.30:5001/file?id=${writer.imageUri}` : defaultProfileImage : defaultProfileImage" @click="goUserPage" />
         <div class="UserInfor-content">
             <div class="UserInfor-infor">
-                <div class="UserInfor-userNickname" @click="goUserPage">{{writer ? writer.nickname : ''}}</div>
+                <div class="UserInfor-userNickname" @click="goUserPage">
+                    {{writer ? writer.nickname : ''}}
+                    <img :src="checkBadge" v-if="user.email" class="badge" @mouseover="badgeOver" @mouseleave="badgeLeave" />
+                    <p v-if="isHoveredBadge">이 사용자는 작가 인증을 받았습니다.</p>
+                </div>
                 <!-- <div class="UserInfor-userAction">
                     <img :src="authBlocked">
                     <img :src="authReport">
@@ -41,7 +45,7 @@
 
 <script>
     
-import {authBlocked, authReport,frameLogo, authSponser,closeButton, authArt } from '@/assets/img';
+import {authBlocked, authReport,frameLogo, authSponser,closeButton, authArt, checkBadge } from '@/assets/img';
 import {mapActions, mapState} from 'vuex';
 export default {
     props:['user','follow'],
@@ -56,6 +60,8 @@ export default {
             frameLogo,
             reportContent:'',
             defaultProfileImage: authArt,
+            checkBadge,
+            isHoveredBadge: false
         }
     },
     methods:{
@@ -99,6 +105,12 @@ export default {
                 console.log(this.$route.params)
                 this.GET_FOLLOW(this.$route.params.username);
             })
+        },
+        badgeOver() {
+            this.isHoveredBadge = true;
+        },
+        badgeLeave() {
+            this.isHoveredBadge = false;
         }
     },
     created() {
@@ -111,7 +123,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 
 .UserInfor-container{
     display:flex;
@@ -174,6 +186,16 @@ export default {
     color: #0F4C81;
     font-size: 1.5rem;
     font-weight: bold;
+    position: relative;;
+
+    > p {
+        position: absolute;
+        top: 7px;
+        right: -174px;
+        width: 200px;
+        font-size: 14px;
+        display: block;
+    }
 }
 .UserInfor-report-modal{
     z-index:3;
@@ -228,5 +250,20 @@ export default {
     margin-left: 5rem;
     font-size: 1.5rem;
     color: #838383;
+}
+
+.badge {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+
+    &:hover {
+        &::after { 
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            content: '아삐싸'
+        }
+    }
 }
 </style>
