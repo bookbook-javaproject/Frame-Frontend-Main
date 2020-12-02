@@ -52,13 +52,22 @@ export default {
     watch: {
         '$route'(to) {
             this.showUserI = false;
-            console.log(to)
             if (to.fullPath === '/') {
                 this.q = '';
             }
             if (this.$route.query && this.$route.query.query) {
                 this.GET_SEARCH_POST({q:this.$route.query.query})
-            } else {
+            } else if (this.$route.params.username) {
+                this.$store.state.follow = null;
+                this.$store.state.writer = null;
+                this.$store.state.myPosts = [];
+                this.$store.state.userPosts = [];
+            
+
+                this.GET_FOLLOW(this.$route.params.username);
+                this.GET_WRITER(this.$route.params.username);
+            } 
+            else {
                 this.GET_POST();
             }
         }
@@ -75,6 +84,8 @@ export default {
         ...mapActions([
             'GET_SEARCH_POST',
             'GET_POST',
+            'GET_FOLLOW',
+            'GET_WRITER',
         ]),
         search(){
             if (this.q) {
@@ -86,7 +97,9 @@ export default {
             }
         },
         goMyPost() {
-            this.$router.push(`/userpage/${this.user.email}`)
+            if (this.$route.path !== `/userpage/${this.user.email}`) {
+                this.$router.push(`/userpage/${this.user.email}`)
+            }
         }
     }
 
