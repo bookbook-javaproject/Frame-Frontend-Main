@@ -25,6 +25,7 @@
                     <div class="UserInfor-follwerSum">{{follow ? follow.follower.length : 0}}</div>
                 </div>
                 <div class="UserInfor-application" @click="goApplyPage" v-if="writer ? writer.email === user.email : false">작가신청</div>
+                <div class="UserInfor-application" @click="goApplyPoem" v-if="writer ? writer.email === user.email : false">시집신청</div>
                 <div class="UserInfor-application" @click="onClickFollow" v-else-if="followRelation && ~followRelation.follower.findIndex((follower) => follower.email === user.email)">팔로잉</div>
                 <div class="UserInfor-application" @click="onClickFollow" v-else>팔로우</div>
             </div>
@@ -111,6 +112,9 @@ export default {
         },
         badgeLeave() {
             this.isHoveredBadge = false;
+        },
+        goApplyPoem() {
+            this.$router.push('/poembook-apply')
         }
     },
     created() {
@@ -155,6 +159,9 @@ export default {
 .UserInfor-content-container{
     display:flex;
     align-items: center;
+    > .UserInfor-application:last-child {
+        margin-left: 10px;
+    }
 }
 .UserInfor-infor{
     display:flex;
