@@ -107,6 +107,13 @@ export default {
 </script>
 
 <style lang="scss">
+.mainPage-header {
+    > div {
+        > h1 {
+            margin: 0 auto;
+        }
+    }
+}
     .header-container{
         padding: 0 1rem;
         display:flex;
