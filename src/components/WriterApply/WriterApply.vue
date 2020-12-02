@@ -5,7 +5,7 @@
                 <h1>작가 신청</h1>
                 <div class="form-line"></div>
                 <p>가입 시 등록한 이메일을 입력해주세요.</p>
-                <form class="writer-form">
+                <form class="writer-form" @submit="onSubmit">
                     <input type="text" placeholder="Email" v-model="email">
                     <p class="form-error">{{ emailError }}</p>
                 </form>
@@ -36,6 +36,9 @@ export default {
         ...mapActions([
             "WRITER_AUTH"
         ]),
+        onSubmit(e) {
+            e.preventDefault();
+        },
         onWriterApplyAuth () {
             if(!this.validEmail(this.email)) {
                 this.emailError = "이메일을 올바르게 입력하세요.";
