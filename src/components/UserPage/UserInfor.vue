@@ -197,60 +197,7 @@ export default {
         display: block;
     }
 }
-.UserInfor-report-modal{
-    z-index:3;
-    height: 100%;
-    width: 100%;
-    position: fixed;
-    right: 0%;
-    top: 0%;
-    background-color: rgba(80, 80, 80, 0.9);
-    
-}
-.UserInfor-report-modal-container{
-    width: 70rem;
-    position: fixed;
-    left: 10%;
-    top: 10%;
-    height: 40rem;
-    opacity: 1;
-    display:flex;
-    flex-direction: column;
-    justify-content: space-around;
-    background-color: white;
-    color: #838383;
-    align-items:flex-start;
-}
-.UserInfor-report-modal-container h1{
-    color: #0F4C81;
-}
-.UserInfor-report-modal-button{
-    padding: 0.5rem 2rem 0.5rem 2rem; 
-    background-color: #0F4C81;
-    color:white;
-}
-.UserInfor-report-modal-container .report-content{
-    width: 50rem;
-    height: 20rem;
-}
-.UserInfor-report-modal-container .close-button{
-    margin-left: auto;
-    cursor: pointer;
-}
-.UserInfor-report-modal-container .reaport-logo{
-    margin-left: 5rem;
-}
-.UserInfor-report-modal-container h1{
-        margin-left: 5rem;
-}
-.UserInfor-report-modal-container div{
-        margin-left: 5rem;
-}
-.UserInfor-report-modal-container textarea{
-    margin-left: 5rem;
-    font-size: 1.5rem;
-    color: #838383;
-}
+
 
 .badge {
     width: 20px;
