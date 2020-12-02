@@ -14,7 +14,8 @@
         </div>
     </div>
       </div>
-    <h1 v-if="isSearch">검색 결과</h1>
+    <h1 v-if="isSearch && searchPosts.length !== 0">검색 결과</h1>
+    <h1 v-else-if="isSearch && searchPosts.length === 0">검색 결과가 없습니다.</h1>
 </div>
 </template>
 
@@ -38,13 +39,12 @@ export default {
         }
     },
     computed: {
-        ...mapState(['user']),
+        ...mapState(['user', 'searchPosts']),
         isSearch() {
             return this.$route.query.query ? true : false;
         }
     },
     created() {
-        console.log(this.$route.query.query)
         if (this.$route.query && this.$route.query.query) {
             this.GET_SEARCH_POST({q:this.$route.query.query})
         }
