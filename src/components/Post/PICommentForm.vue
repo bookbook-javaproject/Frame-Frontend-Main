@@ -46,7 +46,7 @@
       
       </div>
       <div class="PICommentForm-footer PICommentForm-layout">
-          <img :src="post_detail ? post_detail.writer.imageUri ? `http://52.79.253.30:5001/file?id=${post_detail.writer}` : defaultProfileImage : defaultProfileImage" class="PICommentForm-userImage" />
+          <img :src="user ? user.imageUri ? `http://52.79.253.30:5001/file?id=${user.imageUri}` : defaultProfileImage : defaultProfileImage" class="PICommentForm-userImage" />
           <input type="text" placeholder="댓글을 입력하세요" class="PICommentForm-mainComment" v-model="comment">
           <div v-on:click="submitComment" class="PICommentForm-commentSubmit-button">입력</div>
       </div>
