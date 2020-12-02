@@ -37,6 +37,7 @@ const state = {
   userPosts: [],
   sympatheticPosts: [],
   follow: null,
+  searchPosts: [],
 };
 
 export default state;
