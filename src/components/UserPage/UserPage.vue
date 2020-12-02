@@ -54,6 +54,7 @@ export default {
   flex-direction: column;
   justify-content: space-around;
   flex-wrap: wrap;
+  width: 1166px;
 
 }
 .UserPage-container user-select-menu{
