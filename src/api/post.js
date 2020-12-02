@@ -7,11 +7,7 @@ export const getPost = () => {
     return getClientAccessToken().get(`/post?sort-type=recency`,)
 };
 export const patchHeart = (postId) =>{
-    return getClientAccessToken().patch('/post/heart',{postId}).then((res)=>{
-        console.log(res)
-    }).catch((err)=>{
-        console.log(err)
-    })
+    return getClientAccessToken().patch('/post/heart',{postId})
 }
 export const getPostDetail =(postId)=>{
     return getClientAccessToken().get(`/post/detail?post-id=${postId}`);
