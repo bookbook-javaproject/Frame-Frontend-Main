@@ -89,7 +89,7 @@ export default {
         ]),
         search(){
             if (this.q.trim()) {
-                this.$router.push(`/?query=${this.q}`);
+                this.$router.push(`/?query=${this.q.trim()}`);
 
             } else {
                 this.$router.push('/')
