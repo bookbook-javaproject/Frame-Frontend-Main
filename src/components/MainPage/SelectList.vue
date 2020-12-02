@@ -32,7 +32,11 @@ export default {
     },
     created:function(){
             let path = window.location.pathname;
-            if(path ==="/"){
+            if (window.location.search) {
+                this.SelectItem1=false
+                this.SelectItem2=false
+                this.SelectItem3=false
+            } else if(path ==="/"){
                 this.SelectItem1=true
             }
             else if(path ==="/recent"){
@@ -49,7 +53,6 @@ export default {
     },
     watch:{
             '$route'(to) {
-               
             if( to.fullPath ==="/"){
                 this.SelectItem1=true
                 this.SelectItem2=false
