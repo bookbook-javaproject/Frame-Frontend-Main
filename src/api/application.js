@@ -1,7 +1,7 @@
 import { getClientAccessToken, uploadFile} from "./client";
 
 export const fileUpload = (file) => {
-    return uploadFile.post("/file", {file})
+    return uploadFile.post("/file", file)
 };
 
 export const poembookApplycation = (link, fileId) => {
