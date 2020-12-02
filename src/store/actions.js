@@ -169,10 +169,10 @@ export default {
   GET_SEARCH_POST({ commit }, { q }) {
     return getSearchPost(q)
       .then(({ data: { posts } }) => {
-        commit('GET_POST', posts);
+        commit('GET_SEARCH_POST', posts);
       })
       .catch(() => {
-        commit('GET_POST', false);
+        commit('GET_SEARCH_POST', false);
       });
   },
   POST_REPORT(_, { content, postId }) {
