@@ -174,7 +174,7 @@ export default {
     justify-content: space-around;
 
   }
-  .PICommentForm-header > div > img{
+  .PICommentForm-header2 > img {
     width: 3rem;
     height: 3rem;
     border-radius: 100px;
