@@ -160,6 +160,7 @@ export default {
     flex-direction: column;
     width: 60%;
     border: 1rem solid rgba(15,76,129,0.06);
+    background-color: #ffffff;
     padding: 0rem 1rem 1rem 1rem;
   }
   .PICommentForm-userInformation{
