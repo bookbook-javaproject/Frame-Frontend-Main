@@ -51,26 +51,26 @@ export default {
             "POEMBOOK_APPLYCATION",
             "FILE_UPLOAD"
         ]),
-        onPoembookApply () {
+        async onPoembookApply () {
             if(localStorage.getItem("accessToken")) {
                 this.fileObj = this.$refs.fileObj.files[0];
                 let formData = new FormData();   
-                console.log(this.fileObj)
                 formData.append('file', this.fileObj);   
-
-                this.FILE_UPLOAD({file : formData})
-                this.fileId = this.fileState;
-                
-                if(this.isFile === true) {
-                    this.POEMBOOK_APPLYCATION({link : this.link, fileId : this.fileId})
-                    .then(() => {
-                        this.isPoembookApply = false;
-                        this.$emit("onPoembookApply", this.isPoembookApply);
-                    })
+                if (this.fileObj) {
+                    await this.FILE_UPLOAD({file : formData})
+                    this.fileId = this.fileState;
+                    
+                    if(this.isFile === true) {
+                        this.POEMBOOK_APPLYCATION({link : this.link, fileId : this.fileId})
+                        .then(() => {
+                            this.isPoembookApply = false;
+                            this.$emit("onPoembookApply", this.isPoembookApply);
+                        })
+                    }
+                    else {
+                        alert("파일 업로드에 실패하였습니다. 다시 시도해주세요.");
+                    }  
                 }
-                else {
-                    alert("파일 업로드에 실패하였습니다. 다시 시도해주세요.");
-                }  
             }
             else {
                 alert("로그인을 먼저 해주세요.");
