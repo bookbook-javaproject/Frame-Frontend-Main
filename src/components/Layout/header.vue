@@ -1,6 +1,7 @@
 <template>
-  <div class="header-container" v-bind:class="{headerSelectedMain: showUserI}">
-    <div class="header-logo" >
+    <div >
+    <div class="header-container" v-bind:class="{headerSelectedMain: showUserI}">
+          <div class="header-logo" >
         <img :src="frameLogo" v-on:click="frameLogoClick"  alt="로고오브프레임" />
     </div>
     <div class="header-items" >
@@ -12,7 +13,8 @@
          <modal v-if="showUserI" /> <!-- showUserI means Show User Information-->
         </div>
     </div>
-
+      </div>
+    <h1 v-if="isSearch">검색 결과</h1>
 </div>
 </template>
 
@@ -35,10 +37,30 @@ export default {
             defaultProfileImage: authArt,
         }
     },
-    computed: mapState(['user']),
+    computed: {
+        ...mapState(['user']),
+        isSearch() {
+            return this.$route.query.query ? true : false;
+        }
+    },
+    created() {
+        console.log(this.$route.query.query)
+        if (this.$route.query && this.$route.query.query) {
+            this.GET_SEARCH_POST({q:this.$route.query.query})
+        }
+    },
     watch: {
-        '$route'() {
+        '$route'(to) {
             this.showUserI = false;
+            console.log(to)
+            if (to.fullPath === '/') {
+                this.q = '';
+            }
+            if (this.$route.query && this.$route.query.query) {
+                this.GET_SEARCH_POST({q:this.$route.query.query})
+            } else {
+                this.GET_POST();
+            }
         }
     },
     methods:{
@@ -51,11 +73,17 @@ export default {
             }
         },
         ...mapActions([
-            'GET_SEARCH_POST'
+            'GET_SEARCH_POST',
+            'GET_POST',
         ]),
         search(){
-            this.$router.push('/')
-            this.GET_SEARCH_POST({q:this.q})
+            if (this.q) {
+                this.$router.push(`/?query=${this.q}`);
+
+            } else {
+                this.$router.push('/')
+                this.GET_POST();
+            }
         },
         goMyPost() {
             this.$router.push(`/userpage/${this.user.email}`)
@@ -65,7 +93,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
     .header-container{
         padding: 0 1rem;
         display:flex;
@@ -80,6 +108,9 @@ export default {
     .header-logo{
         width: inherit;
         cursor: pointer;
+    }
+    .flex {
+        display: flex;
     }
     .header-items{
         display: flex;
@@ -129,5 +160,9 @@ export default {
         transition: 0.3s;
     }
     .headerSelectedMain .header-items{
+    }
+    div > h1 {
+        width: 1166px;
+        margin: 0 auto;
     }
 </style>
