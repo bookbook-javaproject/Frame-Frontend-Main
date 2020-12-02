@@ -106,6 +106,7 @@ export default {
 .mainPage-content{
     display: flex;
     justify-content: center;
+    padding-bottom: 2rem;
 
 }
 .mainPage-footer{
