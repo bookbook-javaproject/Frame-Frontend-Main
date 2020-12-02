@@ -88,7 +88,7 @@ export default {
             'GET_WRITER',
         ]),
         search(){
-            if (this.q) {
+            if (this.q.trim()) {
                 this.$router.push(`/?query=${this.q}`);
 
             } else {
