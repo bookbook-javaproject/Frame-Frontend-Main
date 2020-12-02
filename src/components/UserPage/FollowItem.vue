@@ -27,24 +27,21 @@ export default {
             follow: null,
         }
     },
-    watch: {
-        user: {
-            deep: true,
-            handler(data) {
-                this.GET_FOLLOW_NUMBER({ email: data.email }).then(({ data }) => {
-                    this.follow = data;
-                }).catch(() => {
-                    alert('팔로우 수 불러오기에 실패하였습니다.')
-                })
-            }
-        }
-    },
     methods: {
         goUserPage() {
             this.$router.push(`/userpage/${this.user.email}`)
         },
         ...mapActions(['GET_FOLLOW_NUMBER']),
     },
+    created() {
+        if (this.user) {
+            this.GET_FOLLOW_NUMBER({ email: this.user.email }).then(({ data }) => {
+                    this.follow = data;
+                }).catch(() => {
+                    alert('팔로우 수 불러오기에 실패하였습니다.')
+                })
+        }
+    }
 }
 </script>
 
