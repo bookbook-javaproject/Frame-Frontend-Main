@@ -176,6 +176,5 @@ export default {
     }
     div > h1 {
         width: 1166px;
-        margin: 0 auto;
     }
 </style>
