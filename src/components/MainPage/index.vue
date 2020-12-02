@@ -105,8 +105,7 @@ export default {
 
 .mainPage-content{
     display: flex;
-    flex-direction: column;
-      margin-left: 20rem;
+    justify-content: center;
 
 }
 .mainPage-footer{
