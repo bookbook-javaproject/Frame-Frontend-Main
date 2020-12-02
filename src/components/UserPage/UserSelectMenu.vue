@@ -113,8 +113,6 @@ export default {
                 this.isClicked1 = false;
                 if(this.showFollow) router.push("/userpage/"+ this.$route.params.username + "/userFollower")
                 else router.push('/userpage/'+ this.$route.params.username + '/ILoveItForm');
-            }else{
-                alert('현재 보시고 계신 페이지입니다.');
             }
         },
            

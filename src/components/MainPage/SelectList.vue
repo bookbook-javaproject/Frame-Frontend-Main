@@ -89,10 +89,6 @@ export default {
             else if(e === 3 && !this.SelectItem3 ) {
                  router.push('/notice');
             }
-            else{
-                alert(" 보시고 계신 페이지입니다.")
-            }
-
         }
       }
     }
