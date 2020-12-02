@@ -5,7 +5,7 @@
       <div class="postItem-card-subtitle">
         <div>
             {{ isNotice ? `관리자 - ${post.title}` : post && post.writer ? post.writer.nickname : ''}}
-            <img :src="checkBadge" v-if="user.email" class="badge" @mouseover="badgeOver" @mouseleave="badgeLeave" />
+            <img :src="checkBadge" v-if="post && post.writer && post.writer.userType === 'AUTHOR'" class="badge" @mouseover="badgeOver" @mouseleave="badgeLeave" />
             <p v-if="isHoveredBadge">이 사용자는 작가 인증을 받았습니다.</p>
         </div>
         <p style="color: #555555">
