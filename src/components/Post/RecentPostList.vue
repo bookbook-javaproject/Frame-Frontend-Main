@@ -44,7 +44,6 @@ export default {
         flex-direction: column;
         align-items: center;
         justify-content: space-around;
-              margin-left: -20rem;
 
     }
 </style>
