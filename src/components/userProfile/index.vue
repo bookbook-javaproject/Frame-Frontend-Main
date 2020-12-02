@@ -126,8 +126,7 @@ export default {
     justify-content: space-between;
     height: 500px;
     margin:auto;
-    position: relative;
-    right: 10rem;
+    width: 25rem;
 
 }
 .userprofile .image{
