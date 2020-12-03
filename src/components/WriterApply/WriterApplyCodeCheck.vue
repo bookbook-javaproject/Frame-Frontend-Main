@@ -49,6 +49,7 @@ export default {
             else if(localStorage.getItem("accessToken")){
                 this.WRITER_CHECK_CODE({code : this.authCode})
                 .then(() => {
+                    console.log('then', this.isApp)
                     if(this.isApplyError.codeCheck == true) {
                         this.isApplyCodeCheck = false;
                         this.$emit("onApplyCodeCheck", this.isApplyCodeCheck);
@@ -58,6 +59,9 @@ export default {
                     }
                 })
             }
+        },
+        onSubmit(e) {
+            e.preventDefault();
         }
     }
 }
