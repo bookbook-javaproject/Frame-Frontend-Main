@@ -18,7 +18,7 @@
       <div v-else class="post-item-wrapper">
         <h1>인기 게시물이 존재하지 않습니다.</h1>
       </div>
-      <img v-if="hasPosts && currentPage < posts.length" v-bind:src="prevButton" alt="다음버튼" @click="goNextPage" />
+      <img class="next" v-if="hasPosts && currentPage < posts.length" v-bind:src="prevButton" alt="다음버튼" @click="goNextPage" />
     </main>
     <footer />
   </common-main>
@@ -108,7 +108,7 @@ main {
     width: auto;
     height: 40px;
 
-    &:last-of-type {
+    > .right {
       transform: rotate(180deg);
     }
   }
