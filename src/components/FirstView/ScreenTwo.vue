@@ -5,7 +5,7 @@
       <p>프레임에서 현재 인기있는 게시물들을 확인해보세요</p>
     </header>
     <main>
-      <img v-if="hasPosts" v-bind:src="prevButton" alt="이전버튼" @click="goPrevPage" />
+      <img v-if="hasPosts && currentPage > 1" v-bind:src="prevButton" alt="이전버튼" @click="goPrevPage" />
       <div class="post-item-wrapper" v-if="hasPosts">
         <post-item
           v-for="(post, i) in posts"
@@ -18,7 +18,7 @@
       <div v-else class="post-item-wrapper">
         <h1>인기 게시물이 존재하지 않습니다.</h1>
       </div>
-      <img v-if="hasPosts" v-bind:src="prevButton" alt="다음버튼" @click="goNextPage" />
+      <img v-if="hasPosts && currentPage < posts.length" v-bind:src="prevButton" alt="다음버튼" @click="goNextPage" />
     </main>
     <footer />
   </common-main>
