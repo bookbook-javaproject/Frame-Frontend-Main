@@ -38,7 +38,7 @@ export default {
     highlightPost: {
       deep: true,
       handler({ status }) {
-        if (Math.floor(status / 100) === 4) {
+        if (status !== 404 && Math.floor(status / 100) === 4) {
           alert('하이라이트 게시글을 불러오는데 실패하였습니다.')
         }
       },
