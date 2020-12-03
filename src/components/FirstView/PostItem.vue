@@ -41,8 +41,8 @@ export default {
         commentButton,
         emotionButton,
         reTweetButton,
-        defaultProfileImage: authArt,
-      }
+      },
+      defaultProfileImage: authArt,
     };
     return returnData;
   },
