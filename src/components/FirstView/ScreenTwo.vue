@@ -108,7 +108,7 @@ main {
     width: auto;
     height: 40px;
 
-    > .next {
+    &.next {
       transform: rotate(180deg);
     }
   }
