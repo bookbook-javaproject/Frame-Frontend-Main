@@ -5,7 +5,7 @@
                 <h1>작가 신청</h1>
                 <div class="form-line"></div>
                 <p>이메일로 발송된 본인인증 코드를 입력해주세요.</p>
-                <form class="writer-form">
+                <form class="writer-form" @submit="onSubmit">
                     <input type="text" placeholder="Code" v-model="authCode">
                     <p class="form-error">{{ codeError }}</p>
                 </form>

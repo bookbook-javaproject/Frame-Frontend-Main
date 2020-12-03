@@ -121,6 +121,9 @@ export default {
         top: 0;
     }
 }
+.flex {
+    display: flex;
+}
 .PICommentItem-userPostDate{
     font-size: 0.75rem;
     margin-right: 0.2rem;

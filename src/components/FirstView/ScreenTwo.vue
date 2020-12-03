@@ -57,7 +57,10 @@ export default {
       if (this.currentPage < this.posts.length) {
         this.currentPage++;
       }
-    }
+    },
+    onSubmit(e) {
+      e.preventDefault();
+    },
   },
   components: {
     "common-main": CommonMain,
