@@ -1,7 +1,7 @@
 <template>
   <div class="post-item-box" :style="slideStyle">
     <header>
-      <img src="https://picsum.photos/200/300" alt="프로필" class="profile-image" />
+      <img :src="post && post.writer ? post.writer.imageUri ? `http://52.79.253.30:5001/file?id=${post.writer.imageUri}` : defaultProfileImage : defaultProfileImage"/>
       <div class="profile-box">
         <span v-text="post.writer.email" />
         <span v-text="createdAt" />
@@ -18,7 +18,7 @@
 
 <script>
 import EtcButton from './EtcButton';
-import { commentButton, emotionButton, reTweetButton } from '@/assets/img';
+import { commentButton, emotionButton, reTweetButton, authArt } from '@/assets/img';
 import { getDate } from '@/utils/date';
 
 export default {
@@ -40,7 +40,8 @@ export default {
       etcImage: {
         commentButton,
         emotionButton,
-        reTweetButton
+        reTweetButton,
+        defaultProfileImage: authArt,
       }
     };
     return returnData;
