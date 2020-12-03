@@ -3,7 +3,7 @@
     <header>
       <img src="https://picsum.photos/200/300" alt="프로필" class="profile-image" />
       <div class="profile-box">
-        <span v-text="post.writerEmail" />
+        <span v-text="post.writer.email" />
         <span v-text="createdAt" />
       </div>
     </header>
